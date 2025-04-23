@@ -7,8 +7,12 @@ import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import AuthRequire from "./AuthRequire";
+import AdminPage from "../pages/AdminPage";
+import UserPage from "../pages/UserPage";
+import useAuth from "../hooks/useAuth";
 
 function Router() {
+  const { user } = useAuth();
   return (
     <Routes>
       <Route
@@ -27,6 +31,22 @@ function Router() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
+      <Route
+        path="/admin"
+        element={
+          <AuthRequire>
+            {user && user.role === "admin" ? <AdminPage /> : <NotFoundPage />}
+          </AuthRequire>
+        }
+      />
+      <Route
+        path="/user"
+        element={
+          <AuthRequire>
+            {user && user.role === "user" ? <UserPage /> : <NotFoundPage />}
+          </AuthRequire>
+        }
+      />
     </Routes>
   );
 }

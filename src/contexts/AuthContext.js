@@ -46,11 +46,11 @@ function AuthProvider({ children }) {
     const initialize = async () => {
       try {
         const username = window.localStorage.getItem("username");
-
-        if (username) {
+        const role = window.localStorage.getItem("role");
+        if (username && role) {
           dispatch({
             type: INITIALIZE,
-            payload: { isAuthenticated: true, user: { username } },
+            payload: { isAuthenticated: true, user: { username, role } },
           });
         } else {
           dispatch({
@@ -72,17 +72,19 @@ function AuthProvider({ children }) {
     initialize();
   }, []);
 
-  const login = async (username, callback) => {
+  const login = async (username, role, callback) => {
     window.localStorage.setItem("username", username);
+    window.localStorage.setItem("role", role);
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: { user: { username } },
+      payload: { user: { username, role } },
     });
     callback();
   };
 
   const logout = async (callback) => {
     window.localStorage.removeItem("username");
+    window.localStorage.removeItem("role");
     dispatch({ type: LOGOUT });
     callback();
   };

@@ -7,7 +7,11 @@ const apiService = axios.create({
 
 apiService.interceptors.request.use(
   (request) => {
-    console.log("Start Request", request);
+    // Attach JWT token if available
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      request.headers["Authorization"] = `Bearer ${token}`;
+    }
     return request;
   },
   function (error) {
