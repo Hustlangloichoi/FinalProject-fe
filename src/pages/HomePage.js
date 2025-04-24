@@ -27,6 +27,8 @@ function HomePage() {
   });
   const { watch, reset } = methods;
   const filters = watch();
+  console.log('products before filter', products);
+  console.log('filters', filters);
   const filterProducts = applyFilter(products, filters);
 
   useEffect(() => {
@@ -34,7 +36,9 @@ function HomePage() {
       setLoading(true);
       try {
         const res = await apiService.get("/products");
-        setProducts(res.data);
+        console.log(res.data); // Debug: check the response structure
+        const products = res.data.data.products || [];
+        setProducts(products.map((p) => ({ ...p, id: p._id })));
         setError("");
       } catch (error) {
         console.log(error);
@@ -73,6 +77,8 @@ function HomePage() {
               {error ? (
                 <Alert severity="error">{error}</Alert>
               ) : (
+                // Debug: log filtered products
+                console.log('filterProducts', filterProducts),
                 <ProductList products={filterProducts} />
               )}
             </>
