@@ -42,6 +42,20 @@ function MainHeader() {
             CoderStore
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
+          <Button
+            color="inherit"
+            sx={{ mr: 1 }}
+            onClick={() => navigate("/about")}
+          >
+            About Us
+          </Button>
+          <Button
+            color="inherit"
+            sx={{ mr: 2 }}
+            onClick={() => navigate("/contact")}
+          >
+            Contact Us
+          </Button>
           {isAuthenticated ? (
             <>
               {user?.role === "admin" && (

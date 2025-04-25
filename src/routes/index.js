@@ -9,6 +9,8 @@ import AuthRequire from "./AuthRequire";
 import AdminPage from "../pages/AdminPage";
 import UserPage from "../pages/UserPage";
 import useAuth from "../hooks/useAuth";
+import AboutPage from "../pages/AboutPage";
+import ContactPage from "../pages/ContactPage";
 
 function Router() {
   const { user } = useAuth();
@@ -17,6 +19,8 @@ function Router() {
       <Route element={<MainLayout />}>
         <Route index element={<HomePage />} />
         <Route path="product/:id" element={<DetailPage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="contact" element={<ContactPage />} />
       </Route>
 
       <Route element={<BlankLayout />}>
