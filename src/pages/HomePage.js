@@ -9,6 +9,10 @@ import { useForm } from "react-hook-form";
 import apiService from "../app/apiService";
 import orderBy from "lodash/orderBy";
 import LoadingScreen from "../components/LoadingScreen";
+import HeroSection from "../components/HeroSection";
+import CategorySection from "../components/CategorySection";
+import PromoBannerSection from "../components/PromoBannerSection";
+import TestimonialSection from "../components/TestimonialSection";
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -27,8 +31,8 @@ function HomePage() {
   });
   const { watch, reset } = methods;
   const filters = watch();
-  console.log('products before filter', products);
-  console.log('filters', filters);
+  console.log("products before filter", products);
+  console.log("filters", filters);
   const filterProducts = applyFilter(products, filters);
 
   useEffect(() => {
@@ -50,42 +54,46 @@ function HomePage() {
   }, []);
 
   return (
-    <Container sx={{ display: "flex", minHeight: "100vh", mt: 3 }}>
-      <Stack>
-        <FormProvider methods={methods}>
-          <ProductFilter resetFilter={reset} />
-        </FormProvider>
-      </Stack>
-      <Stack sx={{ flexGrow: 1 }}>
-        <FormProvider methods={methods}>
-          <Stack
-            spacing={2}
-            direction={{ xs: "column", sm: "row" }}
-            alignItems={{ sm: "center" }}
-            justifyContent="space-between"
-            mb={2}
-          >
-            <ProductSearch />
-            <ProductSort />
-          </Stack>
-        </FormProvider>
-        <Box sx={{ position: "relative", height: 1 }}>
-          {loading ? (
-            <LoadingScreen />
-          ) : (
-            <>
-              {error ? (
-                <Alert severity="error">{error}</Alert>
-              ) : (
-                // Debug: log filtered products
-                console.log('filterProducts', filterProducts),
-                <ProductList products={filterProducts} />
-              )}
-            </>
-          )}
-        </Box>
-      </Stack>
-    </Container>
+    <>
+      <HeroSection />
+      <CategorySection />
+      <PromoBannerSection />
+      <Container sx={{ display: "flex", minHeight: "100vh", mt: 3 }}>
+        <Stack>
+          <FormProvider methods={methods}>
+            <ProductFilter resetFilter={reset} />
+          </FormProvider>
+        </Stack>
+        <Stack sx={{ flexGrow: 1 }}>
+          <FormProvider methods={methods}>
+            <Stack
+              spacing={2}
+              direction={{ xs: "column", sm: "row" }}
+              alignItems={{ sm: "center" }}
+              justifyContent="space-between"
+              mb={2}
+            >
+              <ProductSearch />
+              <ProductSort />
+            </Stack>
+          </FormProvider>
+          <Box sx={{ position: "relative", height: 1 }}>
+            {loading ? (
+              <LoadingScreen />
+            ) : (
+              <>
+                {error ? (
+                  <Alert severity="error">{error}</Alert>
+                ) : (
+                  <ProductList products={filterProducts} />
+                )}
+              </>
+            )}
+          </Box>
+        </Stack>
+      </Container>
+      <TestimonialSection />
+    </>
   );
 }
 
