@@ -1,0 +1,240 @@
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Typography,
+  Paper,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  TextField,
+  DialogActions,
+  DialogContent,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
+import apiService from "../../app/apiService";
+import styled from "styled-components";
+
+const TableContainerStyled = styled(Box)`
+  margin-bottom: 24px;
+`;
+
+const FlexHeader = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+`;
+
+const DialogContentStyled = styled(DialogContent)`
+  min-width: 320px;
+`;
+
+const ActionsCell = styled(TableCell)`
+  min-width: 120px;
+`;
+
+/**
+ * Generic management table for CRUD operations.
+ * Props:
+ * - title: string
+ * - fetchUrl: string
+ * - addUrl: string
+ * - editUrl: (item) => string
+ * - deleteUrl: (item) => string
+ * - columns: [{ label, render: (item) => node }]
+ * - formFields: [{ label, key, type, required }]
+ * - getInitialItem: () => object
+ */
+function ManagementTable({
+  title,
+  fetchUrl,
+  addUrl,
+  editUrl,
+  deleteUrl,
+  columns,
+  formFields,
+  getInitialItem,
+  dataKey, // <-- new prop for specifying the key to extract array from response
+}) {
+  const [items, setItems] = useState([]);
+  const [openAdd, setOpenAdd] = useState(false);
+  const [newItem, setNewItem] = useState(getInitialItem());
+  const [openEdit, setOpenEdit] = useState(false);
+  const [editItem, setEditItem] = useState(null);
+
+  const fetchItems = async () => {
+    try {
+      const res = await apiService.get(fetchUrl);
+      let arr = [];
+      if (dataKey && res.data && res.data[dataKey]) {
+        arr = res.data[dataKey];
+      } else if (dataKey && res.data.data && res.data.data[dataKey]) {
+        arr = res.data.data[dataKey];
+      } else if (Array.isArray(res.data)) {
+        arr = res.data;
+      } else if (Array.isArray(res.data.data)) {
+        arr = res.data.data;
+      } else if (res.data.data && typeof res.data.data === "object") {
+        const firstArray = Object.values(res.data.data).find(Array.isArray);
+        arr = firstArray || [];
+      } else if (typeof res.data === "object") {
+        const firstArray = Object.values(res.data).find(Array.isArray);
+        arr = firstArray || [];
+      }
+      setItems(arr);
+    } catch (err) {
+      alert("Failed to fetch data");
+    }
+  };
+
+  useEffect(() => {
+    fetchItems();
+    // eslint-disable-next-line
+  }, []);
+
+  const handleDelete = async (item) => {
+    if (!window.confirm("Delete this item?")) return;
+    try {
+      await apiService.delete(deleteUrl(item));
+      setItems(items.filter((i) => i._id !== item._id));
+    } catch (err) {
+      alert("Failed to delete");
+    }
+  };
+
+  const handleAdd = async () => {
+    try {
+      await apiService.post(addUrl, newItem);
+      setOpenAdd(false);
+      setNewItem(getInitialItem());
+      fetchItems();
+    } catch (err) {
+      alert("Failed to add");
+    }
+  };
+
+  const handleEditOpen = (item) => {
+    setEditItem({ ...item });
+    setOpenEdit(true);
+  };
+
+  const handleEditSave = async () => {
+    try {
+      await apiService.put(editUrl(editItem), editItem);
+      setOpenEdit(false);
+      setEditItem(null);
+      fetchItems();
+    } catch (err) {
+      alert("Failed to update");
+    }
+  };
+
+  return (
+    <Box>
+      <FlexHeader>
+        <Typography variant="h6">{title}</Typography>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => setOpenAdd(true)}
+        >
+          Add
+        </Button>
+      </FlexHeader>
+      <TableContainerStyled component={Paper}>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              {columns.map((col) => (
+                <TableCell key={col.label}>{col.label}</TableCell>
+              ))}
+              <ActionsCell>Actions</ActionsCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {items.map((item) => (
+              <TableRow key={item._id}>
+                {columns.map((col) => (
+                  <TableCell key={col.label}>{col.render(item)}</TableCell>
+                ))}
+                <ActionsCell>
+                  <IconButton
+                    color="primary"
+                    onClick={() => handleEditOpen(item)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton color="error" onClick={() => handleDelete(item)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </ActionsCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainerStyled>
+      {/* Add Dialog */}
+      <Dialog open={openAdd} onClose={() => setOpenAdd(false)}>
+        <DialogTitle>Add {title.replace(" Management", "")}</DialogTitle>
+        <DialogContentStyled>
+          {formFields.map((field) => (
+            <TextField
+              key={field.key}
+              label={field.label}
+              type={field.type || "text"}
+              value={newItem[field.key] || ""}
+              onChange={(e) =>
+                setNewItem({ ...newItem, [field.key]: e.target.value })
+              }
+              fullWidth
+              sx={{ mb: 2 }}
+              required={field.required}
+            />
+          ))}
+        </DialogContentStyled>
+        <DialogActions>
+          <Button onClick={() => setOpenAdd(false)}>Cancel</Button>
+          <Button onClick={handleAdd} variant="contained">
+            Add
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* Edit Dialog */}
+      <Dialog open={openEdit} onClose={() => setOpenEdit(false)}>
+        <DialogTitle>Edit {title.replace(" Management", "")}</DialogTitle>
+        <DialogContentStyled>
+          {formFields.map((field) => (
+            <TextField
+              key={field.key}
+              label={field.label}
+              type={field.type || "text"}
+              value={editItem?.[field.key] || ""}
+              onChange={(e) =>
+                setEditItem({ ...editItem, [field.key]: e.target.value })
+              }
+              fullWidth
+              sx={{ mb: 2 }}
+              required={field.required}
+            />
+          ))}
+        </DialogContentStyled>
+        <DialogActions>
+          <Button onClick={() => setOpenEdit(false)}>Cancel</Button>
+          <Button onClick={handleEditSave} variant="contained">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  );
+}
+
+export default ManagementTable;

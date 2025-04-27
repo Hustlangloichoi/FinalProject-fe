@@ -13,11 +13,15 @@ import HeroSection from "../components/HeroSection";
 import CategorySection from "../components/CategorySection";
 import PromoBannerSection from "../components/PromoBannerSection";
 import TestimonialSection from "../components/TestimonialSection";
+import Pagination from "@mui/material/Pagination";
 
 function HomePage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [page, setPage] = useState(1);
+  const productsPerPage = 12;
+  const [totalProducts, setTotalProducts] = useState(0);
 
   const defaultValues = {
     gender: [],
@@ -34,24 +38,31 @@ function HomePage() {
   console.log("products before filter", products);
   console.log("filters", filters);
   const filterProducts = applyFilter(products, filters);
+  const totalPages = Math.ceil(totalProducts / productsPerPage);
+  const paginatedProducts = filterProducts.slice(
+    (page - 1) * productsPerPage,
+    page * productsPerPage
+  );
 
   useEffect(() => {
     const getProducts = async () => {
       setLoading(true);
       try {
-        const res = await apiService.get("/products");
-        console.log(res.data); // Debug: check the response structure
+        const res = await apiService.get(
+          `/products?page=${page}&limit=${productsPerPage}`
+        );
         const products = res.data.data.products || [];
         setProducts(products.map((p) => ({ ...p, id: p._id })));
+        setTotalProducts(res.data.data.total || 0);
         setError("");
       } catch (error) {
-        console.log(error);
         setError(error.message);
       }
       setLoading(false);
     };
     getProducts();
-  }, []);
+    // eslint-disable-next-line
+  }, [page]);
 
   return (
     <>
@@ -85,7 +96,26 @@ function HomePage() {
                 {error ? (
                   <Alert severity="error">{error}</Alert>
                 ) : (
-                  <ProductList products={filterProducts} />
+                  <>
+                    <ProductList products={filterProducts} />
+                    {totalPages > 1 && (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          mt: 3,
+                          mb: 6,
+                        }}
+                      >
+                        <Pagination
+                          count={totalPages}
+                          page={page}
+                          onChange={(_, value) => setPage(value)}
+                          color="primary"
+                        />
+                      </Box>
+                    )}
+                  </>
                 )}
               </>
             )}
@@ -103,42 +133,39 @@ function applyFilter(products, filters) {
 
   // SORT BY
   if (sortBy === "featured") {
-    filteredProducts = orderBy(products, ["sold"], ["desc"]);
+    filteredProducts = orderBy(filteredProducts, ["sold"], ["desc"]);
   }
   if (sortBy === "newest") {
-    filteredProducts = orderBy(products, ["createdAt"], ["desc"]);
+    filteredProducts = orderBy(filteredProducts, ["createdAt"], ["desc"]);
   }
   if (sortBy === "priceDesc") {
-    filteredProducts = orderBy(products, ["price"], ["desc"]);
+    filteredProducts = orderBy(filteredProducts, ["price"], ["desc"]);
   }
   if (sortBy === "priceAsc") {
-    filteredProducts = orderBy(products, ["price"], ["asc"]);
+    filteredProducts = orderBy(filteredProducts, ["price"], ["asc"]);
   }
 
-  // FILTER PRODUCTS
-  if (filters.gender.length > 0) {
-    filteredProducts = products.filter((product) =>
-      filters.gender.includes(product.gender)
-    );
-  }
-  if (filters.category !== "All") {
-    filteredProducts = products.filter(
-      (product) => product.category === filters.category
-    );
-  }
-  if (filters.priceRange) {
-    filteredProducts = products.filter((product) => {
+  // COMBINED FILTER: Category AND Price
+  filteredProducts = filteredProducts.filter((product) => {
+    let categoryMatch = true;
+    let priceMatch = true;
+    if (filters.category && filters.category !== "All") {
+      categoryMatch = product.category === filters.category;
+    }
+    if (filters.priceRange) {
       if (filters.priceRange === "below") {
-        return product.price < 25;
+        priceMatch = product.price < 25;
+      } else if (filters.priceRange === "between") {
+        priceMatch = product.price >= 25 && product.price <= 75;
+      } else if (filters.priceRange === "above") {
+        priceMatch = product.price > 75;
       }
-      if (filters.priceRange === "between") {
-        return product.price >= 25 && product.price <= 75;
-      }
-      return product.price > 75;
-    });
-  }
+    }
+    return categoryMatch && priceMatch;
+  });
+
   if (filters.searchQuery) {
-    filteredProducts = products.filter((product) =>
+    filteredProducts = filteredProducts.filter((product) =>
       product.name.toLowerCase().includes(filters.searchQuery.toLowerCase())
     );
   }

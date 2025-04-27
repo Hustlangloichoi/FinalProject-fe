@@ -9,16 +9,19 @@ export const SORT_BY_OPTIONS = [
   { value: "priceAsc", label: "Price: Low-High" },
 ];
 
-export const FILTER_GENDER_OPTIONS = ["Men", "Women", "Kids"];
-
 export const FILTER_CATEGORY_OPTIONS = [
   "All",
-  "Shose",
-  "Apparel",
-  "Accessories",
+  "Diagnostic Equipment",
+  "Monitoring Devices",
+  "Therapeutic Devices",
+  "Surgical Instruments",
+  "Medical Consumables",
+  "PPE",
+  "Mobility Aids",
 ];
 
 export const FILTER_PRICE_OPTIONS = [
+  { value: "all", label: "All" },
   { value: "below", label: "Below $25" },
   { value: "between", label: "Between $25 - $75" },
   { value: "above", label: "Above $75" },
@@ -27,17 +30,6 @@ export const FILTER_PRICE_OPTIONS = [
 function ProductFilter({ resetFilter }) {
   return (
     <Stack spacing={3} sx={{ p: 3, width: 250 }}>
-      <Stack spacing={1}>
-        <Typography variant="h6" sx={{ fontWeight: 600 }}>
-          Gender
-        </Typography>
-        <FMultiCheckbox
-          name="gender"
-          options={FILTER_GENDER_OPTIONS}
-          sx={{ width: 1 }}
-        />
-      </Stack>
-
       <Stack spacing={1}>
         <Typography variant="h6" sx={{ fontWeight: 600 }}>
           Category

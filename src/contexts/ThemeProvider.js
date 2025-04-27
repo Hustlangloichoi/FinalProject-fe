@@ -1,4 +1,3 @@
-import { CssBaseline } from "@mui/material";
 import {
   createTheme,
   ThemeProvider as MuiThemeProvider,
