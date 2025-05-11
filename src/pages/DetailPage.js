@@ -16,9 +16,7 @@ function DetailPage() {
       setLoading(true);
       try {
         const res = await apiService.get(`/products/${id}`);
-        setProduct(
-          res.data.data.product || res.data.data || res.data.product || res.data
-        );
+        setProduct(res.data.data.product || res.data.data || res.data.product || res.data);
         setError("");
       } catch (err) {
         setError("Product not found");
@@ -35,18 +33,19 @@ function DetailPage() {
     );
 
   return (
-    <Box sx={{ maxWidth: 2250, mx: "auto", mt: 6, p: 2 }}>
+    <Box sx={{ width: '90vw', maxWidth: 1600, mx: 'auto', mt: 6, p: 2 }}>
       <Paper
         sx={{
           p: 3,
-          display: "flex",
+          display: 'flex',
           gap: 4,
-          alignItems: "flex-start",
+          alignItems: 'flex-start',
           minHeight: 600,
+          width: '100%',
         }}
         elevation={3}
       >
-        <Box sx={{ minWidth: 800, maxWidth: 1000, flex: 1, minHeight: 600 }}>
+        <Box sx={{ flex: 1, minHeight: 400 }}>
           <img
             src={product.image || product.cover || "/logo.png"}
             alt={product.name}
@@ -54,21 +53,34 @@ function DetailPage() {
               width: "100%",
               borderRadius: 16,
               objectFit: "cover",
-              height: "600px",
+              height: "400px",
             }}
           />
         </Box>
-        <Box sx={{ flex: 2 }}>
+        <Box sx={{ flex: 1, minHeight: 400, display: 'flex', flexDirection: 'column' }}>
           <Typography variant="h4" fontWeight={700} gutterBottom>
             {product.name}
           </Typography>
-          <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+          <Typography
+            variant="subtitle1"
+            color="text.secondary"
+            gutterBottom
+            sx={{
+              minHeight: '16em',
+              maxHeight: '24em',
+              overflowY: 'auto',
+              display: '-webkit-box',
+              WebkitLineClamp: 16,
+              WebkitBoxOrient: 'vertical',
+              whiteSpace: 'pre-line',
+            }}
+          >
             {product.description}
           </Typography>
           <Divider sx={{ my: 2 }} />
           <Stack direction="row" spacing={2} alignItems="center" mb={2}>
             <Typography variant="h5" color="primary.main" fontWeight={600}>
-              {fCurrency(product.price)}
+              {fCurrency ? fCurrency(product.price) : product.price}
             </Typography>
             {product.quantity !== undefined && (
               <Typography variant="body2" color="text.secondary">
