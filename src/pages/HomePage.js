@@ -33,7 +33,7 @@ function HomePage() {
   const methods = useForm({
     defaultValues,
   });
-  const { watch, reset } = methods;
+  const { watch, reset, setValue } = methods;
   const filters = watch();
   console.log("products before filter", products);
   console.log("filters", filters);
@@ -64,12 +64,31 @@ function HomePage() {
     // eslint-disable-next-line
   }, [page]);
 
+  // Handler for HeroSection search
+  const handleHeroSearch = (query) => {
+    setValue("searchQuery", query, { shouldValidate: true, shouldDirty: true });
+    setPage(1); // Optionally reset to first page on new search
+    // Scroll to product list
+    setTimeout(() => {
+      const productSection = document.getElementById("product-list-section");
+      if (productSection) {
+        productSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
+  };
+
   return (
     <>
-      <HeroSection />
+      <HeroSection
+        searchQuery={filters.searchQuery}
+        onSearch={handleHeroSearch}
+      />
       <CategorySection />
       <PromoBannerSection />
-      <Container sx={{ display: "flex", minHeight: "100vh", mt: 3 }}>
+      <Container
+        sx={{ display: "flex", minHeight: "100vh", mt: 3 }}
+        id="product-list-section"
+      >
         <Stack>
           <FormProvider methods={methods}>
             <ProductFilter resetFilter={reset} />
