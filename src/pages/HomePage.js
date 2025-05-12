@@ -35,8 +35,6 @@ function HomePage() {
   });
   const { watch, reset, setValue } = methods;
   const filters = watch();
-  console.log("products before filter", products);
-  console.log("filters", filters);
   const filterProducts = applyFilter(products, filters);
   const totalPages = Math.ceil(totalProducts / productsPerPage);
   const paginatedProducts = filterProducts.slice(
