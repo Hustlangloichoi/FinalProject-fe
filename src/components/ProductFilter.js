@@ -1,6 +1,6 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
 import { FMultiCheckbox, FRadioGroup } from "./form";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
+import styled from "styled-components";
 
 export const SORT_BY_OPTIONS = [
   { value: "featured", label: "Featured" },
@@ -27,44 +27,57 @@ export const FILTER_PRICE_OPTIONS = [
   { value: "above", label: "Above $75" },
 ];
 
+const FilterWrapper = styled.div`
+  padding: 24px;
+  width: 250px;
+`;
+const SectionTitle = styled.h6`
+  font-weight: 600;
+  margin: 0 0 8px 0;
+`;
+const ClearButton = styled.button`
+  font-size: 1rem;
+  padding: 8px 16px;
+  border: 1px solid #1976d2;
+  background: #fff;
+  color: #1976d2;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.2s, color 0.2s;
+  &:hover {
+    background: #1976d2;
+    color: #fff;
+  }
+`;
+
 function ProductFilter({ resetFilter }) {
   return (
-    <Stack spacing={3} sx={{ p: 3, width: 250 }}>
-      <Stack spacing={1}>
-        <Typography variant="h6" sx={{ fontWeight: 600 }}>
-          Category
-        </Typography>
+    <FilterWrapper>
+      <div style={{ marginBottom: 24 }}>
+        <SectionTitle>Category</SectionTitle>
         <FRadioGroup
           name="category"
           options={FILTER_CATEGORY_OPTIONS}
           row={false}
         />
-      </Stack>
-
-      <Stack spacing={1}>
-        <Typography variant="h6" sx={{ fontWeight: 600 }}>
-          Price
-        </Typography>
+      </div>
+      <div style={{ marginBottom: 24 }}>
+        <SectionTitle>Price</SectionTitle>
         <FRadioGroup
           name="priceRange"
           options={FILTER_PRICE_OPTIONS.map((item) => item.value)}
           getOptionLabel={FILTER_PRICE_OPTIONS.map((item) => item.label)}
         />
-      </Stack>
-
-      <Box>
-        <Button
-          size="large"
-          type="submit"
-          color="inherit"
-          variant="outlined"
-          onClick={resetFilter}
-          startIcon={<ClearAllIcon />}
-        >
-          Clear All
-        </Button>
-      </Box>
-    </Stack>
+      </div>
+      <ClearButton type="button" onClick={resetFilter}>
+        <ClearAllIcon style={{ fontSize: 20 }} />
+        Clear All
+      </ClearButton>
+    </FilterWrapper>
   );
 }
 

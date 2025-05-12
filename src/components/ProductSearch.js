@@ -1,22 +1,29 @@
-import { InputAdornment } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import styled from "styled-components";
 import React from "react";
-import { FTextField } from "./form";
 
-function ProductSearch() {
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledInput = styled.input`
+  padding: 8px;
+  width: 300px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+function ProductSearch({ value, onChange }) {
   return (
-    <FTextField
-      name="searchQuery"
-      sx={{ width: 300 }}
-      size="small"
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        ),
-      }}
-    />
+    <Wrapper>
+      <StyledInput
+        type="text"
+        placeholder="Search for products..."
+        value={value}
+        onChange={onChange}
+      />
+    </Wrapper>
   );
 }
 

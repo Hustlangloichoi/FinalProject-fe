@@ -1,12 +1,17 @@
+import styled from "styled-components";
 import { Link as RouterLink } from "react-router-dom";
-import { Box } from "@mui/material";
 import logoImg from "../logo.png";
 
-function Logo({ disabledLink = false, sx }) {
+const LogoBox = styled.div`
+  width: 40px;
+  height: 40px;
+`;
+
+function Logo({ disabledLink = false }) {
   const logo = (
-    <Box sx={{ width: 40, height: 40, ...sx }}>
+    <LogoBox>
       <img src={logoImg} alt="logo" width="100%" />
-    </Box>
+    </LogoBox>
   );
 
   if (disabledLink) {

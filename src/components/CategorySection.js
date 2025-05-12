@@ -1,4 +1,29 @@
+import styled from "styled-components";
 import React from "react";
+
+const Section = styled.section`
+  padding: 30px 0;
+  background: #fff;
+`;
+
+const Title = styled.h2`
+  text-align: center;
+`;
+
+const CategoriesWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+`;
+
+const CategoryItem = styled.div`
+  text-align: center;
+`;
+
+const CategoryIcon = styled.div`
+  font-size: 2.5rem;
+`;
 
 const categories = [
   { name: "Vitamins", icon: "💊" },
@@ -8,27 +33,17 @@ const categories = [
 ];
 
 const CategorySection = () => (
-  <section
-    className="category-section"
-    style={{ padding: "30px 0", background: "#fff" }}
-  >
-    <h2 style={{ textAlign: "center" }}>Shop by Category</h2>
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        gap: "30px",
-        marginTop: "20px",
-      }}
-    >
+  <Section className="category-section">
+    <Title>Shop by Category</Title>
+    <CategoriesWrapper>
       {categories.map((cat) => (
-        <div key={cat.name} style={{ textAlign: "center" }}>
-          <div style={{ fontSize: "2.5rem" }}>{cat.icon}</div>
+        <CategoryItem key={cat.name}>
+          <CategoryIcon>{cat.icon}</CategoryIcon>
           <div>{cat.name}</div>
-        </div>
+        </CategoryItem>
       ))}
-    </div>
-  </section>
+    </CategoriesWrapper>
+  </Section>
 );
 
 export default CategorySection;

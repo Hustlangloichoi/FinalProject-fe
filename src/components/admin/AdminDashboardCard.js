@@ -1,31 +1,39 @@
-import { Paper, Typography } from "@mui/material";
+import styled from "styled-components";
+
+const Card = styled.div`
+  padding: 24px;
+  margin-bottom: 24px;
+  min-width: 300px;
+  width: 320px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background: #fff;
+  border-radius: 8px;
+  transition: box-shadow 0.2s;
+  &:hover {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.16);
+  }
+`;
+const Title = styled.h6`
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+`;
+const Desc = styled.p`
+  color: #666;
+`;
 
 function AdminDashboardCard({ title, description, onClick }) {
   return (
-    <Paper
-      elevation={3}
-      sx={{
-        p: 3,
-        mb: 3,
-        minWidth: 300,
-        width: 320,
-        height: 120,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
-        cursor: "pointer",
-        transition: "box-shadow 0.2s",
-        "&:hover": { boxShadow: 6 },
-      }}
-      onClick={onClick}
-    >
-      <Typography variant="h6" sx={{ mb: 1 }}>
-        {title}
-      </Typography>
-      <Typography color="text.secondary">{description}</Typography>
-    </Paper>
+    <Card onClick={onClick}>
+      <Title>{title}</Title>
+      <Desc>{description}</Desc>
+    </Card>
   );
 }
 

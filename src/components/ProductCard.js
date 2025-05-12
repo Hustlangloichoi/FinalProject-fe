@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -7,10 +8,14 @@ import { CardActionArea, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { fCurrency } from "../utils";
 
+const StyledCard = styled(Card)`
+  cursor: pointer;
+`;
+
 function ProductCard({ product }) {
   const navigate = useNavigate();
   return (
-    <Card onClick={() => navigate(`/product/${product.id}`)}>
+    <StyledCard onClick={() => navigate(`/product/${product.id}`)}>
       <CardActionArea>
         <CardMedia
           component="img"
@@ -42,7 +47,7 @@ function ProductCard({ product }) {
           </Stack>
         </CardContent>
       </CardActionArea>
-    </Card>
+    </StyledCard>
   );
 }
 

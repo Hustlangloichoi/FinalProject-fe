@@ -1,13 +1,32 @@
-import { Grid } from "@mui/material";
+import styled from "styled-components";
 import ProductCard from "./ProductCard";
 
-function ProductList({ products, loading }) {
+const Grid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 8px;
+`;
+const GridItem = styled.div`
+  flex: 1 1 45%;
+  max-width: 24%;
+  min-width: 200px;
+  box-sizing: border-box;
+  @media (max-width: 900px) {
+    max-width: 32%;
+  }
+  @media (max-width: 600px) {
+    max-width: 48%;
+  }
+`;
+
+function ProductList({ products }) {
   return (
-    <Grid container spacing={2} mt={1}>
-      {products.map((product, index) => (
-        <Grid key={product.id} item xs={6} md={4} lg={3}>
+    <Grid>
+      {products.map((product) => (
+        <GridItem key={product.id}>
           <ProductCard product={product} />
-        </Grid>
+        </GridItem>
       ))}
     </Grid>
   );

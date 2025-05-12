@@ -1,20 +1,21 @@
-import { Box, CircularProgress } from "@mui/material";
+import styled from "styled-components";
 import React from "react";
+import { CircularProgress } from "@mui/material";
+
+const Wrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 function LoadingScreen() {
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <Wrapper>
       <CircularProgress />
-    </Box>
+    </Wrapper>
   );
 }
 

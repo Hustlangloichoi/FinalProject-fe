@@ -1,4 +1,33 @@
+import styled from "styled-components";
 import React from "react";
+
+const Section = styled.section`
+  padding: 30px 0;
+  background: #33acff;
+`;
+
+const Title = styled.h2`
+  text-align: center;
+`;
+
+const TestimonialsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+`;
+
+const TestimonialCard = styled.div`
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 200px;
+`;
+
+const TestimonialName = styled.div`
+  font-weight: bold;
+  margin-top: 10px;
+`;
 
 const testimonials = [
   { name: "Alice", text: "Great service and fast delivery!" },
@@ -7,37 +36,17 @@ const testimonials = [
 ];
 
 const TestimonialSection = () => (
-  <section
-    className="testimonial-section"
-    style={{ padding: "30px 0", background: "#33acff" }}
-  >
-    <h2 style={{ textAlign: "center" }}>What Our Customers Say</h2>
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        gap: "30px",
-        marginTop: "20px",
-      }}
-    >
+  <Section className="testimonial-section">
+    <Title>What Our Customers Say</Title>
+    <TestimonialsWrapper>
       {testimonials.map((t, idx) => (
-        <div
-          key={idx}
-          style={{
-            background: "#fff",
-            padding: "20px",
-            borderRadius: "8px",
-            minWidth: "200px",
-          }}
-        >
+        <TestimonialCard key={idx}>
           <p>"{t.text}"</p>
-          <div style={{ fontWeight: "bold", marginTop: "10px" }}>
-            - {t.name}
-          </div>
-        </div>
+          <TestimonialName>- {t.name}</TestimonialName>
+        </TestimonialCard>
       ))}
-    </div>
-  </section>
+    </TestimonialsWrapper>
+  </Section>
 );
 
 export default TestimonialSection;
