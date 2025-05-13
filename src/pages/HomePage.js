@@ -7,7 +7,6 @@ import ProductList from "../components/ProductList";
 import { FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
 import apiService from "../app/apiService";
-import orderBy from "lodash/orderBy";
 import LoadingScreen from "../components/LoadingScreen";
 import HeroSection from "../components/HeroSection";
 import CategorySection from "../components/CategorySection";
@@ -36,12 +35,7 @@ function HomePage() {
   });
   const { watch, reset, setValue } = methods;
   const filters = watch();
-  const filterProducts = applyFilter(products, filters);
   const totalPages = Math.ceil(totalProducts / productsPerPage);
-  const paginatedProducts = filterProducts.slice(
-    (page - 1) * productsPerPage,
-    page * productsPerPage
-  );
 
   useEffect(() => {
     const getProducts = async () => {
@@ -60,7 +54,7 @@ function HomePage() {
           }
         }
         if (filters.priceRange) params.append("priceRange", filters.priceRange);
-        if (filters.sortBy) params.append("sort", filters.sortBy);
+        if (filters.sortBy) params.append("sortBy", filters.sortBy);
         params.append("page", page);
         params.append("limit", productsPerPage);
         // This is where the search request is sent to the backend
@@ -76,7 +70,7 @@ function HomePage() {
     };
     getProducts();
     // eslint-disable-next-line
-  }, [page, filters.searchQuery, searchTrigger, filters.category]); // ADD filters.category
+  }, [page, filters.searchQuery, searchTrigger, filters.category, filters.priceRange, filters.sortBy]);
 
   // Handler for HeroSection search
   const handleHeroSearch = (query) => {
@@ -146,7 +140,7 @@ function HomePage() {
                   <Alert severity="error">{error}</Alert>
                 ) : (
                   <>
-                    <ProductList products={filterProducts} />
+                    <ProductList products={products} />
                     {totalPages > 1 && (
                       <Box
                         sx={{
@@ -174,42 +168,6 @@ function HomePage() {
       <TestimonialSection />
     </>
   );
-}
-
-function applyFilter(products, filters) {
-  const { sortBy } = filters;
-  let filteredProducts = products;
-
-  // SORT BY
-  if (sortBy === "featured") {
-    filteredProducts = orderBy(filteredProducts, ["sold"], ["desc"]);
-  }
-  if (sortBy === "newest") {
-    filteredProducts = orderBy(filteredProducts, ["createdAt"], ["desc"]);
-  }
-  if (sortBy === "priceDesc") {
-    filteredProducts = orderBy(filteredProducts, ["price"], ["desc"]);
-  }
-  if (sortBy === "priceAsc") {
-    filteredProducts = orderBy(filteredProducts, ["price"], ["asc"]);
-  }
-
-  // Only filter by price on the frontend
-  filteredProducts = filteredProducts.filter((product) => {
-    let priceMatch = true;
-    if (filters.priceRange) {
-      if (filters.priceRange === "below") {
-        priceMatch = product.price < 25;
-      } else if (filters.priceRange === "between") {
-        priceMatch = product.price >= 25 && product.price <= 75;
-      } else if (filters.priceRange === "above") {
-        priceMatch = product.price > 75;
-      }
-    }
-    return priceMatch;
-  });
-
-  return filteredProducts;
 }
 
 export default HomePage;
