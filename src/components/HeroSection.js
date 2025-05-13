@@ -55,53 +55,8 @@ const Desc = styled.p`
   margin-top: 0px;
 `;
 
-const Form = styled.form`
-  margin: 0px 0;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  overflow: hidden;
-`;
-
-const SearchInput = styled.input`
-  padding: 8px;
-  width: 100%;
-  max-width: 250px;
-  margin-bottom: 0;
-  margin-right: 8px;
-  box-sizing: border-box;
-  overflow: hidden;
-  white-space: normal;
-`;
-
-const SearchButton = styled.button`
-  padding: 8px 10px;
-  background: #1976d2;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  width: auto;
-  max-width: 100px;
-  box-sizing: border-box;
-  overflow: hidden;
-  white-space: normal;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  &:hover {
-    background: #1251a3;
-  }
-`;
-
 const HeroSection = ({ searchQuery = "", onSearch }) => {
   const [input, setInput] = useState(searchQuery);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (onSearch) onSearch(input);
-  };
 
   return (
     <Wrapper>
@@ -117,15 +72,6 @@ const HeroSection = ({ searchQuery = "", onSearch }) => {
         <Desc>
           Your trusted medical device supplier. Fast delivery, best prices!
         </Desc>
-        <Form onSubmit={handleSearch}>
-          <SearchInput
-            type="text"
-            placeholder="Search for products..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <SearchButton type="submit">Search</SearchButton>
-        </Form>
       </Content>
     </Wrapper>
   );

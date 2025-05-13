@@ -22,6 +22,7 @@ function HomePage() {
   const [page, setPage] = useState(1);
   const productsPerPage = 12;
   const [totalProducts, setTotalProducts] = useState(0);
+  const [searchTrigger, setSearchTrigger] = useState(0); // NEW
 
   const defaultValues = {
     gender: [],
@@ -46,9 +47,17 @@ function HomePage() {
     const getProducts = async () => {
       setLoading(true);
       try {
-        const res = await apiService.get(
-          `/products?page=${page}&limit=${productsPerPage}`
-        );
+        // Build query params from filters and page
+        const params = new URLSearchParams();
+        if (filters.searchQuery) params.append("keyword", filters.searchQuery);
+        if (filters.category && filters.category !== "All")
+          params.append("category", filters.category);
+        if (filters.priceRange) params.append("priceRange", filters.priceRange);
+        if (filters.sortBy) params.append("sort", filters.sortBy);
+        params.append("page", page);
+        params.append("limit", productsPerPage);
+        // This is where the search request is sent to the backend
+        const res = await apiService.get(`/products?${params.toString()}`);
         const products = res.data.data.products || [];
         setProducts(products.map((p) => ({ ...p, id: p._id })));
         setTotalProducts(res.data.data.total || 0);
@@ -60,7 +69,7 @@ function HomePage() {
     };
     getProducts();
     // eslint-disable-next-line
-  }, [page]);
+  }, [page, filters.searchQuery, searchTrigger]); // ADD searchTrigger
 
   // Handler for HeroSection search
   const handleHeroSearch = (query) => {
@@ -77,10 +86,7 @@ function HomePage() {
 
   return (
     <>
-      <HeroSection
-        searchQuery={filters.searchQuery}
-        onSearch={handleHeroSearch}
-      />
+      <HeroSection />
       <CategorySection />
       <PromoBannerSection />
       <Container
@@ -101,7 +107,22 @@ function HomePage() {
               justifyContent="space-between"
               mb={2}
             >
-              <ProductSearch />
+              <ProductSearch
+                value={filters.searchQuery}
+                onChange={(e) => {
+                  setValue(
+                    "searchQuery",
+                    e.target.value,
+                    { shouldValidate: true, shouldDirty: true }
+                  );
+                  setPage(1);
+                }}
+                onSearch={(query) => {
+                  setValue("searchQuery", query, { shouldValidate: true, shouldDirty: true });
+                  setPage(1);
+                  setSearchTrigger((t) => t + 1); // TRIGGER SEARCH
+                }}
+              />
               <ProductSort />
             </Stack>
           </FormProvider>
@@ -181,11 +202,6 @@ function applyFilter(products, filters) {
     return categoryMatch && priceMatch;
   });
 
-  if (filters.searchQuery) {
-    filteredProducts = filteredProducts.filter((product) =>
-      product.name.toLowerCase().includes(filters.searchQuery.toLowerCase())
-    );
-  }
   return filteredProducts;
 }
 

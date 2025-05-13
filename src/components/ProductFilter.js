@@ -1,23 +1,14 @@
 import { FMultiCheckbox, FRadioGroup } from "./form";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 import styled from "styled-components";
+import React, { useEffect, useState } from "react";
+import apiService from "../app/apiService";
 
 export const SORT_BY_OPTIONS = [
   { value: "featured", label: "Featured" },
   { value: "newest", label: "Newest" },
   { value: "priceDesc", label: "Price: High-Low" },
   { value: "priceAsc", label: "Price: Low-High" },
-];
-
-export const FILTER_CATEGORY_OPTIONS = [
-  "All",
-  "Diagnostic Equipment",
-  "Monitoring Devices",
-  "Therapeutic Devices",
-  "Surgical Instruments",
-  "Medical Consumables",
-  "PPE",
-  "Mobility Aids",
 ];
 
 export const FILTER_PRICE_OPTIONS = [
@@ -55,13 +46,29 @@ const ClearButton = styled.button`
 `;
 
 function ProductFilter({ resetFilter }) {
+  const [categories, setCategories] = useState(["All"]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const res = await apiService.get("/categories");
+        // Support both { category: [...] } and { categories: [...] }
+        const cats = res.data.category || res.data.categories || res.data.data?.category || [];
+        setCategories(["All", ...cats.map((c) => c.name)]);
+      } catch (err) {
+        setCategories(["All"]);
+      }
+    }
+    fetchCategories();
+  }, []);
+
   return (
     <FilterWrapper>
       <div style={{ marginBottom: 24 }}>
         <SectionTitle>Category</SectionTitle>
         <FRadioGroup
           name="category"
-          options={FILTER_CATEGORY_OPTIONS}
+          options={categories}
           row={false}
         />
       </div>

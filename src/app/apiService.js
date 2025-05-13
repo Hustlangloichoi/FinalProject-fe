@@ -12,6 +12,7 @@ apiService.interceptors.request.use(
     if (token) {
       request.headers["Authorization"] = `Bearer ${token}`;
     }
+    console.log("[API REQUEST]", request.method?.toUpperCase(), request.url, request.params || "");
     return request;
   },
   function (error) {
