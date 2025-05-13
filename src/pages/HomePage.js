@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Alert, Box, Container, Stack } from "@mui/material";
-import ProductFilter from "../components/ProductFilter";
+import ProductFilter, { SORT_BY_OPTIONS } from "../components/ProductFilter";
 import ProductSearch from "../components/ProductSearch";
 import ProductSort from "../components/ProductSort";
 import ProductList from "../components/ProductList";
@@ -123,7 +123,11 @@ function HomePage() {
                   setSearchTrigger((t) => t + 1); // TRIGGER SEARCH
                 }}
               />
-              <ProductSort />
+              <ProductSort
+                value={filters.sortBy}
+                onChange={(e) => setValue("sortBy", e.target.value, { shouldValidate: true, shouldDirty: true })}
+                options={SORT_BY_OPTIONS}
+              />
             </Stack>
           </FormProvider>
           <Box sx={{ position: "relative", height: 1 }}>
