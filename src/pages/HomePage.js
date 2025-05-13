@@ -26,7 +26,7 @@ function HomePage() {
 
   const defaultValues = {
     gender: [],
-    category: "All",
+    category: [], // FIX: should be an array, not 'All'
     priceRange: "",
     sortBy: "featured",
     searchQuery: "",
@@ -50,8 +50,15 @@ function HomePage() {
         // Build query params from filters and page
         const params = new URLSearchParams();
         if (filters.searchQuery) params.append("keyword", filters.searchQuery);
-        if (filters.category && filters.category !== "All")
-          params.append("category", filters.category);
+        if (filters.category && filters.category !== "All") {
+          if (Array.isArray(filters.category)) {
+            filters.category.forEach((cat) => {
+              if (cat && cat !== "All") params.append("category", cat);
+            });
+          } else {
+            params.append("category", filters.category);
+          }
+        }
         if (filters.priceRange) params.append("priceRange", filters.priceRange);
         if (filters.sortBy) params.append("sort", filters.sortBy);
         params.append("page", page);
@@ -69,7 +76,7 @@ function HomePage() {
     };
     getProducts();
     // eslint-disable-next-line
-  }, [page, filters.searchQuery, searchTrigger]); // ADD searchTrigger
+  }, [page, filters.searchQuery, searchTrigger, filters.category]); // ADD filters.category
 
   // Handler for HeroSection search
   const handleHeroSearch = (query) => {
@@ -187,13 +194,9 @@ function applyFilter(products, filters) {
     filteredProducts = orderBy(filteredProducts, ["price"], ["asc"]);
   }
 
-  // COMBINED FILTER: Category AND Price
+  // Only filter by price on the frontend
   filteredProducts = filteredProducts.filter((product) => {
-    let categoryMatch = true;
     let priceMatch = true;
-    if (filters.category && filters.category !== "All") {
-      categoryMatch = product.category === filters.category;
-    }
     if (filters.priceRange) {
       if (filters.priceRange === "below") {
         priceMatch = product.price < 25;
@@ -203,7 +206,7 @@ function applyFilter(products, filters) {
         priceMatch = product.price > 75;
       }
     }
-    return categoryMatch && priceMatch;
+    return priceMatch;
   });
 
   return filteredProducts;

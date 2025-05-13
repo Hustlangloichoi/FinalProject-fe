@@ -1,4 +1,5 @@
 import { FMultiCheckbox, FRadioGroup } from "./form";
+import { useFormContext } from "react-hook-form";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 import styled from "styled-components";
 import React, { useEffect, useState } from "react";
@@ -47,12 +48,13 @@ const ClearButton = styled.button`
 
 function ProductFilter({ resetFilter }) {
   const [categories, setCategories] = useState(["All"]);
+  const { setValue, watch } = useFormContext();
+  const selectedCategories = watch("category") || [];
 
   useEffect(() => {
     async function fetchCategories() {
       try {
         const res = await apiService.get("/categories");
-        // Support both { category: [...] } and { categories: [...] }
         const cats = res.data.category || res.data.categories || res.data.data?.category || [];
         setCategories(["All", ...cats.map((c) => c.name)]);
       } catch (err) {
@@ -62,6 +64,25 @@ function ProductFilter({ resetFilter }) {
     fetchCategories();
   }, []);
 
+  // Custom handler for category selection
+  const handleCategoryChange = (option) => {
+    if (option === "All") {
+      setValue("category", ["All"]);
+    } else {
+      let newValue = selectedCategories.filter((cat) => cat !== "All");
+      if (selectedCategories.includes(option)) {
+        newValue = newValue.filter((cat) => cat !== option);
+      } else {
+        newValue = [...newValue, option];
+      }
+      if (newValue.length === 0) {
+        setValue("category", ["All"]);
+      } else {
+        setValue("category", newValue);
+      }
+    }
+  };
+
   return (
     <FilterWrapper>
       <div style={{ marginBottom: 24 }}>
@@ -69,6 +90,8 @@ function ProductFilter({ resetFilter }) {
         <FMultiCheckbox
           name="category"
           options={categories}
+          onChange={handleCategoryChange}
+          value={selectedCategories}
         />
       </div>
       <div style={{ marginBottom: 24 }}>
