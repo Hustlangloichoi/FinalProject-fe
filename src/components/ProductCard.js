@@ -20,8 +20,8 @@ function ProductCard({ product }) {
         <CardMedia
           component="img"
           height="200"
-          image={product.cover}
-          alt="green iguana"
+          image={product.image || "/logo.png"}
+          alt={product.name}
         />
         <CardContent>
           <Typography gutterBottom variant="body1" component="div" noWrap>

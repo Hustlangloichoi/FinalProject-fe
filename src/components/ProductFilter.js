@@ -66,10 +66,9 @@ function ProductFilter({ resetFilter }) {
     <FilterWrapper>
       <div style={{ marginBottom: 24 }}>
         <SectionTitle>Category</SectionTitle>
-        <FRadioGroup
+        <FMultiCheckbox
           name="category"
           options={categories}
-          row={false}
         />
       </div>
       <div style={{ marginBottom: 24 }}>

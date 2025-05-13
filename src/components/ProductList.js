@@ -8,15 +8,18 @@ const Grid = styled.div`
   margin-top: 8px;
 `;
 const GridItem = styled.div`
-  flex: 1 1 45%;
+  flex: 1 1 22%;
   max-width: 24%;
   min-width: 200px;
   box-sizing: border-box;
-  @media (max-width: 900px) {
+  @media (max-width: 1200px) {
     max-width: 32%;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     max-width: 48%;
+  }
+  @media (max-width: 600px) {
+    max-width: 100%;
   }
 `;
 
