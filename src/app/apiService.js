@@ -43,7 +43,12 @@ apiService.interceptors.response.use(
         return apiService(originalRequest);
       } catch (refreshError) {
         window.localStorage.removeItem("token");
-        // Optionally, redirect to login or notify user
+        // Redirect to homepage and show error
+        window.location.href = "/";
+        setTimeout(() => {
+          alert("Your session has expired. Please log in again.");
+        }, 100);
+        return Promise.reject(refreshError);
       }
     }
     return Promise.reject(error);
