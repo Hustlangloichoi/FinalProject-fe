@@ -3,6 +3,7 @@ import { BASE_URL } from "./config";
 
 const apiService = axios.create({
   baseURL: BASE_URL,
+  withCredentials: true, // Send cookies with requests
 });
 
 apiService.interceptors.request.use(
@@ -26,10 +27,43 @@ apiService.interceptors.response.use(
     console.log("Response", response);
     return response;
   },
-  function (error) {
+  async function (error) {
     console.log("RESPONSE ERROR", error);
+    const originalRequest = error.config;
+    // Prevent infinite loop
+    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        await refreshAccessToken();
+        // Update Authorization header with new token
+        const token = window.localStorage.getItem("token");
+        if (token) {
+          originalRequest.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return apiService(originalRequest);
+      } catch (refreshError) {
+        window.localStorage.removeItem("token");
+        // Optionally, redirect to login or notify user
+      }
+    }
     return Promise.reject(error);
   }
 );
+
+// Call /auth/refresh to get a new access token using the refresh token cookie
+export async function refreshAccessToken() {
+  try {
+    const response = await apiService.post("/auth/refresh");
+    const { token } = response.data.data;
+    if (token) {
+      window.localStorage.setItem("token", token);
+      return token;
+    }
+    throw new Error("No token in refresh response");
+  } catch (err) {
+    window.localStorage.removeItem("token");
+    throw err;
+  }
+}
 
 export default apiService;
