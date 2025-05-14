@@ -30,8 +30,13 @@ apiService.interceptors.response.use(
   async function (error) {
     console.log("RESPONSE ERROR", error);
     const originalRequest = error.config;
-    // Prevent infinite loop
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+    // Prevent infinite loop: do not refresh for /auth/refresh
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url.includes("/auth/refresh")
+    ) {
       originalRequest._retry = true;
       try {
         await refreshAccessToken();

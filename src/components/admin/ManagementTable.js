@@ -23,6 +23,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import apiService from "../../app/apiService";
 import styled from "styled-components";
+import Pagination from "@mui/material/Pagination";
 
 const TableContainerStyled = styled(Box)`
   margin-bottom: 24px;
@@ -64,19 +65,45 @@ function ManagementTable({
   columns,
   formFields,
   getInitialItem,
-  dataKey, // <-- new prop for specifying the key to extract array from response
+  dataKey,
 }) {
   const [items, setItems] = useState([]);
   const [openAdd, setOpenAdd] = useState(false);
   const [newItem, setNewItem] = useState(getInitialItem());
   const [openEdit, setOpenEdit] = useState(false);
   const [editItem, setEditItem] = useState(null);
+  // Pagination state for all resources
+  const isPaginatedTable = ["/products", "/orders", "/users", "/categories"].includes(fetchUrl);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 12;
 
-  const fetchItems = async () => {
+  const fetchItems = async (pageNum = page) => {
     try {
-      const res = await apiService.get(fetchUrl);
+      let url = fetchUrl;
+      if (isPaginatedTable) {
+        // Add pagination params
+        const params = new URLSearchParams();
+        params.append("page", pageNum);
+        params.append("limit", limit);
+        url = `${fetchUrl}?${params.toString()}`;
+      }
+      const res = await apiService.get(url);
       let arr = [];
-      if (dataKey && res.data && res.data[dataKey]) {
+      // Parse paginated response for each resource
+      if (fetchUrl === "/products" && res.data && res.data.data && res.data.data.products) {
+        arr = res.data.data.products;
+        setTotalPages(res.data.data.totalPages || 1);
+      } else if (fetchUrl === "/orders" && res.data && res.data.data && res.data.data.orders) {
+        arr = res.data.data.orders;
+        setTotalPages(res.data.data.totalPages || 1);
+      } else if (fetchUrl === "/users" && res.data && res.data.data && res.data.data.users) {
+        arr = res.data.data.users;
+        setTotalPages(res.data.data.totalPages || 1);
+      } else if (fetchUrl === "/categories" && res.data && res.data.data && res.data.data.category) {
+        arr = res.data.data.category;
+        setTotalPages(res.data.data.totalPages || 1);
+      } else if (dataKey && res.data && res.data[dataKey]) {
         arr = res.data[dataKey];
       } else if (dataKey && res.data.data && res.data.data[dataKey]) {
         arr = res.data.data[dataKey];
@@ -101,6 +128,12 @@ function ManagementTable({
     fetchItems();
     // eslint-disable-next-line
   }, []);
+
+  // For paginated tables, refetch when page changes
+  useEffect(() => {
+    if (isPaginatedTable) fetchItems(page);
+    // eslint-disable-next-line
+  }, [page]);
 
   const handleDelete = async (item) => {
     if (!window.confirm("Delete this item?")) return;
@@ -200,6 +233,17 @@ function ManagementTable({
           </TableBody>
         </Table>
       </TableContainerStyled>
+      {/* Pagination for paginated resources */}
+      {isPaginatedTable && totalPages > 1 && (
+        <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={(_, value) => setPage(value)}
+            color="primary"
+          />
+        </Box>
+      )}
       {/* Add Dialog */}
       <Dialog open={openAdd} onClose={() => setOpenAdd(false)}>
         <DialogTitle>Add {title.replace(" Management", "")}</DialogTitle>
