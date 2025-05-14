@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React from "react";
 
 const Wrapper = styled.section`
   position: relative;
@@ -55,9 +55,7 @@ const Desc = styled.p`
   margin-top: 0px;
 `;
 
-const HeroSection = ({ searchQuery = "", onSearch }) => {
-  const [input, setInput] = useState(searchQuery);
-
+const HeroSection = () => {
   return (
     <Wrapper>
       <Video autoPlay loop muted playsInline>

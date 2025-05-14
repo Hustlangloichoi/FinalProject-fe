@@ -72,19 +72,6 @@ function HomePage() {
     // eslint-disable-next-line
   }, [page, filters.searchQuery, searchTrigger, filters.category, filters.priceRange, filters.sortBy]);
 
-  // Handler for HeroSection search
-  const handleHeroSearch = (query) => {
-    setValue("searchQuery", query, { shouldValidate: true, shouldDirty: true });
-    setPage(1); // Optionally reset to first page on new search
-    // Scroll to product list
-    setTimeout(() => {
-      const productSection = document.getElementById("product-list-section");
-      if (productSection) {
-        productSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 100);
-  };
-
   return (
     <>
       <HeroSection />

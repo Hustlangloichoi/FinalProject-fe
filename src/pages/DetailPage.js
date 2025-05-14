@@ -14,7 +14,6 @@ function DetailPage() {
   const { isAuthenticated, user } = useAuth();
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [quoteLoading, setQuoteLoading] = useState(false);
-  const [quoteContent, setQuoteContent] = useState("");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -38,7 +37,6 @@ function DetailPage() {
       await apiService.post(`/orders/products/${product._id}/orders`, { content: message });
       alert("Order sent successfully!");
       setQuoteOpen(false);
-      setQuoteContent("");
     } catch (err) {
       alert("Failed to send order: " + (err.response?.data?.message || err.message));
     }
