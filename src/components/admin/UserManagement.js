@@ -25,13 +25,13 @@ function UserManagement() {
           type: "password",
           required: true,
         },
-        { label: "Role", key: "role", required: true },
+        { label: "Admin", key: "isAdmin", type: "checkbox", required: false },
       ]}
       getInitialItem={() => ({
         name: "",
         email: "",
         password: "",
-        role: "user",
+        isAdmin: false,
       })}
       dataKey="users"
     />

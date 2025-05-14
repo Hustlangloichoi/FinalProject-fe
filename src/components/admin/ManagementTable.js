@@ -15,6 +15,8 @@ import {
   TextField,
   DialogActions,
   DialogContent,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -202,20 +204,39 @@ function ManagementTable({
       <Dialog open={openAdd} onClose={() => setOpenAdd(false)}>
         <DialogTitle>Add {title.replace(" Management", "")}</DialogTitle>
         <DialogContentStyled>
-          {formFields.map((field) => (
-            <TextField
-              key={field.key}
-              label={field.label}
-              type={field.type || "text"}
-              value={newItem[field.key] || ""}
-              onChange={(e) =>
-                setNewItem({ ...newItem, [field.key]: e.target.value })
-              }
-              fullWidth
-              sx={{ mb: 2 }}
-              required={field.required}
-            />
-          ))}
+          {formFields.map((field) =>
+            field.type === "checkbox" ? (
+              <FormControlLabel
+                key={field.key}
+                control={
+                  <Checkbox
+                    checked={!!newItem[field.key]}
+                    onChange={(e) =>
+                      setNewItem({
+                        ...newItem,
+                        [field.key]: e.target.checked,
+                      })
+                    }
+                  />
+                }
+                label={field.label}
+                sx={{ mb: 2 }}
+              />
+            ) : (
+              <TextField
+                key={field.key}
+                label={field.label}
+                type={field.type || "text"}
+                value={newItem[field.key] || ""}
+                onChange={(e) =>
+                  setNewItem({ ...newItem, [field.key]: e.target.value })
+                }
+                fullWidth
+                sx={{ mb: 2 }}
+                required={field.required}
+              />
+            )
+          )}
         </DialogContentStyled>
         <DialogActions>
           <Button onClick={() => setOpenAdd(false)}>Cancel</Button>
@@ -228,20 +249,39 @@ function ManagementTable({
       <Dialog open={openEdit} onClose={() => setOpenEdit(false)}>
         <DialogTitle>Edit {title.replace(" Management", "")}</DialogTitle>
         <DialogContentStyled>
-          {formFields.map((field) => (
-            <TextField
-              key={field.key}
-              label={field.label}
-              type={field.type || "text"}
-              value={editItem?.[field.key] || ""}
-              onChange={(e) =>
-                setEditItem({ ...editItem, [field.key]: e.target.value })
-              }
-              fullWidth
-              sx={{ mb: 2 }}
-              required={field.required}
-            />
-          ))}
+          {formFields.map((field) =>
+            field.type === "checkbox" ? (
+              <FormControlLabel
+                key={field.key}
+                control={
+                  <Checkbox
+                    checked={!!editItem?.[field.key]}
+                    onChange={(e) =>
+                      setEditItem({
+                        ...editItem,
+                        [field.key]: e.target.checked,
+                      })
+                    }
+                  />
+                }
+                label={field.label}
+                sx={{ mb: 2 }}
+              />
+            ) : (
+              <TextField
+                key={field.key}
+                label={field.label}
+                type={field.type || "text"}
+                value={editItem?.[field.key] || ""}
+                onChange={(e) =>
+                  setEditItem({ ...editItem, [field.key]: e.target.value })
+                }
+                fullWidth
+                sx={{ mb: 2 }}
+                required={field.required}
+              />
+            )
+          )}
         </DialogContentStyled>
         <DialogActions>
           <Button onClick={() => setOpenEdit(false)}>Cancel</Button>
