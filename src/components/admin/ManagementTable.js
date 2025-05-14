@@ -110,9 +110,20 @@ function ManagementTable({
     }
   };
 
+  // Helper: convert numeric fields to numbers
+  const convertNumericFields = (item) => {
+    const result = { ...item };
+    formFields.forEach((field) => {
+      if (field.type === "number" && result[field.key] !== undefined && result[field.key] !== "") {
+        result[field.key] = Number(result[field.key]);
+      }
+    });
+    return result;
+  };
+
   const handleAdd = async () => {
     try {
-      await apiService.post(addUrl, newItem);
+      await apiService.post(addUrl, convertNumericFields(newItem));
       setOpenAdd(false);
       setNewItem(getInitialItem());
       fetchItems();
@@ -128,12 +139,18 @@ function ManagementTable({
 
   const handleEditSave = async () => {
     try {
-      await apiService.put(editUrl(editItem), editItem);
+      await apiService.put(editUrl(editItem), convertNumericFields(editItem));
       setOpenEdit(false);
       setEditItem(null);
       fetchItems();
     } catch (err) {
-      alert("Failed to update");
+      let msg = "Failed to update";
+      if (err.response && err.response.data) {
+        msg += ": " + (err.response.data.message || err.response.data.error || JSON.stringify(err.response.data));
+      } else if (err.message) {
+        msg += ": " + err.message;
+      }
+      alert(msg);
     }
   };
 
