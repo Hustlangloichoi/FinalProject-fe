@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Typography, Paper, Stack, Divider, Button } from "@mui/material";
+import { Box, Typography, Paper, Stack, Divider, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import apiService from "../app/apiService";
 import LoadingScreen from "../components/LoadingScreen";
 import { fCurrency } from "../utils";
+import useAuth from "../hooks/useAuth";
 
 function DetailPage() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { isAuthenticated } = useAuth();
+  const [quoteOpen, setQuoteOpen] = useState(false);
+  const [quoteLoading, setQuoteLoading] = useState(false);
+  const [quoteContent, setQuoteContent] = useState("");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -25,6 +30,20 @@ function DetailPage() {
     };
     fetchProduct();
   }, [id]);
+
+  const handleRequestOrder = async () => {
+    setQuoteLoading(true);
+    try {
+      const message = `I'd like to buy ${product.name}`;
+      await apiService.post(`/orders/products/${product._id}/orders`, { content: message });
+      alert("Order sent successfully!");
+      setQuoteOpen(false);
+      setQuoteContent("");
+    } catch (err) {
+      alert("Failed to send order: " + (err.response?.data?.message || err.message));
+    }
+    setQuoteLoading(false);
+  };
 
   if (loading) return <LoadingScreen />;
   if (error || !product)
@@ -89,11 +108,39 @@ function DetailPage() {
             )}
           </Stack>
           {/* Add more product details here if available */}
-          <Button variant="contained" size="large" sx={{ mt: 2 }}>
-            Request Quote
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ mt: 2 }}
+            onClick={() => setQuoteOpen(true)}
+            disabled={!isAuthenticated}
+          >
+            Order
           </Button>
+          {!isAuthenticated && (
+            <Typography color="text.secondary" sx={{ mt: 1 }}>
+              Please log in to order.
+            </Typography>
+          )}
         </Box>
       </Paper>
+      <Dialog open={quoteOpen} onClose={() => setQuoteOpen(false)}>
+        <DialogTitle>Order</DialogTitle>
+        <DialogContent>
+          <Typography>
+            The following message will be sent automatically:
+          </Typography>
+          <Typography sx={{ my: 2, fontWeight: 500 }}>
+            {`I'd like to buy ${product.name}`}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setQuoteOpen(false)} disabled={quoteLoading}>Cancel</Button>
+          <Button onClick={handleRequestOrder} variant="contained" disabled={quoteLoading}>
+            {quoteLoading ? "Sending..." : "Send Order"}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
