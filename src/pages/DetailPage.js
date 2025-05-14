@@ -11,7 +11,7 @@ function DetailPage() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [quoteLoading, setQuoteLoading] = useState(false);
   const [quoteContent, setQuoteContent] = useState("");
@@ -108,19 +108,23 @@ function DetailPage() {
             )}
           </Stack>
           {/* Add more product details here if available */}
-          <Button
-            variant="contained"
-            size="large"
-            sx={{ mt: 2 }}
-            onClick={() => setQuoteOpen(true)}
-            disabled={!isAuthenticated}
-          >
-            Order
-          </Button>
-          {!isAuthenticated && (
-            <Typography color="text.secondary" sx={{ mt: 1 }}>
-              Please log in to order.
-            </Typography>
+          {(!user?.role || user.role !== "admin") && (
+            <>
+              <Button
+                variant="contained"
+                size="large"
+                sx={{ mt: 2 }}
+                onClick={() => setQuoteOpen(true)}
+                disabled={!isAuthenticated}
+              >
+                Order
+              </Button>
+              {!isAuthenticated && (
+                <Typography color="text.secondary" sx={{ mt: 1 }}>
+                  Please log in to order.
+                </Typography>
+              )}
+            </>
           )}
         </Box>
       </Paper>
