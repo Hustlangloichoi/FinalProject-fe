@@ -11,11 +11,13 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Logo from "../components/Logo";
 import useAuth from "../hooks/useAuth";
 import LoginModal from "../pages/LoginModal";
+import SingupModal from "../pages/SignupModal";
 
 function MainHeader() {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const [openLogin, setOpenLogin] = React.useState(false);
+  const [openSignup, setOpenSignup] = React.useState(false);
 
   const handleLogout = () => {
     logout(() => navigate("/"));
@@ -81,13 +83,19 @@ function MainHeader() {
               </Button>
             </>
           ) : (
-            <Button color="inherit" onClick={() => setOpenLogin(true)}>
-              Login
-            </Button>
+            <>
+              <Button color="inherit" onClick={() => setOpenLogin(true)}>
+                Login
+              </Button>
+              <Button color="inherit" onClick={() => setOpenSignup(true)}>
+                Sign Up
+              </Button>
+            </>
           )}
         </Toolbar>
       </AppBar>
       <LoginModal open={openLogin} onClose={() => setOpenLogin(false)} />
+      <SingupModal open={openSignup} onClose={() => setOpenSignup(false)} />
     </Box>
   );
 }
