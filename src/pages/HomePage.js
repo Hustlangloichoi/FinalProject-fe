@@ -88,7 +88,16 @@ function HomePage() {
   return (
     <>
       <HeroSection />
-      <CategorySection />
+      <CategorySection onCategoryClick={(catName) => {
+        methods.setValue("category", [catName]);
+        setPage(1);
+        setTimeout(() => {
+          const productSection = document.getElementById("product-list-section");
+          if (productSection) {
+            productSection.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
+      }} />
       <PromoBannerSection />
       <Container
         sx={{ display: "flex", minHeight: "100vh", mt: 3 }}

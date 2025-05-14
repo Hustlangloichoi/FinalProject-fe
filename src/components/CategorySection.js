@@ -1,5 +1,6 @@
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import React from "react";
+import apiService from "../app/apiService";
 
 const Section = styled.section`
   padding: 30px 0;
@@ -25,25 +26,41 @@ const CategoryIcon = styled.div`
   font-size: 2.5rem;
 `;
 
-const categories = [
-  { name: "Vitamins", icon: "💊" },
-  { name: "Supplements", icon: "🧴" },
-  { name: "Personal Care", icon: "🧼" },
-  { name: "Medical Devices", icon: "🩺" },
-];
+const ICONS = ["💊", "🧴", "🧼", "🩺", "🧪", "🩹", "🦽", "🧯", "🩸", "🧬"];
 
-const CategorySection = () => (
-  <Section className="category-section">
-    <Title>Shop by Category</Title>
-    <CategoriesWrapper>
-      {categories.map((cat) => (
-        <CategoryItem key={cat.name}>
-          <CategoryIcon>{cat.icon}</CategoryIcon>
-          <div>{cat.name}</div>
-        </CategoryItem>
-      ))}
-    </CategoriesWrapper>
-  </Section>
-);
+const CategorySection = ({ onCategoryClick }) => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const res = await apiService.get("/categories");
+        const cats = res.data.category || res.data.categories || res.data.data?.category || [];
+        setCategories(cats);
+      } catch (err) {
+        setCategories([]);
+      }
+    }
+    fetchCategories();
+  }, []);
+
+  return (
+    <Section className="category-section">
+      <Title>Shop by Category</Title>
+      <CategoriesWrapper>
+        {categories.map((cat, idx) => (
+          <CategoryItem
+            key={cat._id || cat.name}
+            style={{ cursor: "pointer" }}
+            onClick={() => onCategoryClick && onCategoryClick(cat.name)}
+          >
+            <CategoryIcon>{ICONS[idx % ICONS.length]}</CategoryIcon>
+            <div>{cat.name}</div>
+          </CategoryItem>
+        ))}
+      </CategoriesWrapper>
+    </Section>
+  );
+};
 
 export default CategorySection;

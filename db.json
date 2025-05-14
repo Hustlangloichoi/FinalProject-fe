@@ -2,16 +2,16 @@
   "products": [
     {
       "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1",
-      "cover": "https://storage.googleapis.com/cs-demo-data/coderstore/product_1.jpg",
+      "cover": "https://storage.googleapis.com/cs-demo-data/knstore/product_1.jpg",
       "images": [
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_1.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_2.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_3.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_4.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_5.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_6.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_7.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_8.jpg"
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_1.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_2.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_3.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_4.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_5.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_6.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_7.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_8.jpg"
       ],
       "name": "Nike Air Force 1 NDESTRUKT",
       "code": "38BEE270",
@@ -57,7 +57,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1",
           "name": "Jayvion Simon",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_1.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_1.jpg",
           "comment": "Assumenda nam repudiandae rerum fugiat vel maxime.",
           "rating": 2.5,
           "isPurchased": true,
@@ -67,7 +67,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2",
           "name": "Lucian Obrien",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_2.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_2.jpg",
           "comment": "Quis veniam aut saepe aliquid nulla.",
           "rating": 2,
           "isPurchased": true,
@@ -77,7 +77,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b3",
           "name": "Deja Brady",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_3.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_3.jpg",
           "comment": "Reprehenderit ut voluptas sapiente ratione nostrum est.",
           "rating": 4.9,
           "isPurchased": true,
@@ -87,7 +87,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
           "name": "Harrison Stein",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_4.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_4.jpg",
           "comment": "Error ut sit vel molestias velit.",
           "rating": 2,
           "isPurchased": false,
@@ -97,7 +97,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5",
           "name": "Reece Chung",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_5.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_5.jpg",
           "comment": "Quo quia sit nihil nemo doloremque et.",
           "rating": 4,
           "isPurchased": false,
@@ -107,7 +107,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b6",
           "name": "Lainey Davidson",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_6.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_6.jpg",
           "comment": "Autem doloribus harum vero laborum.",
           "rating": 5,
           "isPurchased": true,
@@ -117,7 +117,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b7",
           "name": "Cristopher Cardenas",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_7.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_7.jpg",
           "comment": "Tempora officiis consequuntur architecto nostrum autem nam adipisci.",
           "rating": 4.9,
           "isPurchased": false,
@@ -127,7 +127,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b8",
           "name": "Melanie Noble",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_8.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_8.jpg",
           "comment": "Voluptas sunt magni adipisci praesentium saepe.",
           "rating": 5,
           "isPurchased": false,
@@ -161,16 +161,16 @@
     },
     {
       "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2",
-      "cover": "https://storage.googleapis.com/cs-demo-data/coderstore/product_2.jpg",
+      "cover": "https://storage.googleapis.com/cs-demo-data/knstore/product_2.jpg",
       "images": [
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_1.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_2.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_3.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_4.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_5.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_6.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_7.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_8.jpg"
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_1.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_2.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_3.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_4.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_5.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_6.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_7.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_8.jpg"
       ],
       "name": "Foundations Matte Flip Flop",
       "code": "38BEE271",
@@ -216,7 +216,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1",
           "name": "Jayvion Simon",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_1.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_1.jpg",
           "comment": "Assumenda nam repudiandae rerum fugiat vel maxime.",
           "rating": 2.5,
           "isPurchased": true,
@@ -226,7 +226,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2",
           "name": "Lucian Obrien",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_2.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_2.jpg",
           "comment": "Quis veniam aut saepe aliquid nulla.",
           "rating": 2,
           "isPurchased": true,
@@ -236,7 +236,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b3",
           "name": "Deja Brady",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_3.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_3.jpg",
           "comment": "Reprehenderit ut voluptas sapiente ratione nostrum est.",
           "rating": 4.9,
           "isPurchased": true,
@@ -246,7 +246,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
           "name": "Harrison Stein",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_4.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_4.jpg",
           "comment": "Error ut sit vel molestias velit.",
           "rating": 2,
           "isPurchased": false,
@@ -256,7 +256,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5",
           "name": "Reece Chung",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_5.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_5.jpg",
           "comment": "Quo quia sit nihil nemo doloremque et.",
           "rating": 4,
           "isPurchased": false,
@@ -266,7 +266,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b6",
           "name": "Lainey Davidson",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_6.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_6.jpg",
           "comment": "Autem doloribus harum vero laborum.",
           "rating": 5,
           "isPurchased": true,
@@ -276,7 +276,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b7",
           "name": "Cristopher Cardenas",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_7.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_7.jpg",
           "comment": "Tempora officiis consequuntur architecto nostrum autem nam adipisci.",
           "rating": 4.9,
           "isPurchased": false,
@@ -286,7 +286,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b8",
           "name": "Melanie Noble",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_8.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_8.jpg",
           "comment": "Voluptas sunt magni adipisci praesentium saepe.",
           "rating": 5,
           "isPurchased": false,
@@ -320,16 +320,16 @@
     },
     {
       "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b3",
-      "cover": "https://storage.googleapis.com/cs-demo-data/coderstore/product_3.jpg",
+      "cover": "https://storage.googleapis.com/cs-demo-data/knstore/product_3.jpg",
       "images": [
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_1.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_2.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_3.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_4.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_5.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_6.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_7.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_8.jpg"
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_1.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_2.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_3.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_4.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_5.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_6.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_7.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_8.jpg"
       ],
       "name": "Nike Air Zoom Pegasus 37 A.I.R. Chaz Bear",
       "code": "38BEE272",
@@ -375,7 +375,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1",
           "name": "Jayvion Simon",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_1.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_1.jpg",
           "comment": "Assumenda nam repudiandae rerum fugiat vel maxime.",
           "rating": 2.5,
           "isPurchased": true,
@@ -385,7 +385,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2",
           "name": "Lucian Obrien",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_2.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_2.jpg",
           "comment": "Quis veniam aut saepe aliquid nulla.",
           "rating": 2,
           "isPurchased": true,
@@ -395,7 +395,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b3",
           "name": "Deja Brady",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_3.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_3.jpg",
           "comment": "Reprehenderit ut voluptas sapiente ratione nostrum est.",
           "rating": 4.9,
           "isPurchased": true,
@@ -405,7 +405,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
           "name": "Harrison Stein",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_4.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_4.jpg",
           "comment": "Error ut sit vel molestias velit.",
           "rating": 2,
           "isPurchased": false,
@@ -415,7 +415,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5",
           "name": "Reece Chung",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_5.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_5.jpg",
           "comment": "Quo quia sit nihil nemo doloremque et.",
           "rating": 4,
           "isPurchased": false,
@@ -425,7 +425,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b6",
           "name": "Lainey Davidson",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_6.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_6.jpg",
           "comment": "Autem doloribus harum vero laborum.",
           "rating": 5,
           "isPurchased": true,
@@ -435,7 +435,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b7",
           "name": "Cristopher Cardenas",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_7.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_7.jpg",
           "comment": "Tempora officiis consequuntur architecto nostrum autem nam adipisci.",
           "rating": 4.9,
           "isPurchased": false,
@@ -445,7 +445,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b8",
           "name": "Melanie Noble",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_8.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_8.jpg",
           "comment": "Voluptas sunt magni adipisci praesentium saepe.",
           "rating": 5,
           "isPurchased": false,
@@ -479,16 +479,16 @@
     },
     {
       "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
-      "cover": "https://storage.googleapis.com/cs-demo-data/coderstore/product_4.jpg",
+      "cover": "https://storage.googleapis.com/cs-demo-data/knstore/product_4.jpg",
       "images": [
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_1.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_2.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_3.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_4.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_5.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_6.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_7.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_8.jpg"
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_1.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_2.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_3.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_4.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_5.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_6.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_7.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_8.jpg"
       ],
       "name": "Arizona Soft Footbed Sandal",
       "code": "38BEE273",
@@ -534,7 +534,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1",
           "name": "Jayvion Simon",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_1.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_1.jpg",
           "comment": "Assumenda nam repudiandae rerum fugiat vel maxime.",
           "rating": 2.5,
           "isPurchased": true,
@@ -544,7 +544,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2",
           "name": "Lucian Obrien",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_2.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_2.jpg",
           "comment": "Quis veniam aut saepe aliquid nulla.",
           "rating": 2,
           "isPurchased": true,
@@ -554,7 +554,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b3",
           "name": "Deja Brady",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_3.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_3.jpg",
           "comment": "Reprehenderit ut voluptas sapiente ratione nostrum est.",
           "rating": 4.9,
           "isPurchased": true,
@@ -564,7 +564,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
           "name": "Harrison Stein",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_4.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_4.jpg",
           "comment": "Error ut sit vel molestias velit.",
           "rating": 2,
           "isPurchased": false,
@@ -574,7 +574,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5",
           "name": "Reece Chung",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_5.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_5.jpg",
           "comment": "Quo quia sit nihil nemo doloremque et.",
           "rating": 4,
           "isPurchased": false,
@@ -584,7 +584,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b6",
           "name": "Lainey Davidson",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_6.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_6.jpg",
           "comment": "Autem doloribus harum vero laborum.",
           "rating": 5,
           "isPurchased": true,
@@ -594,7 +594,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b7",
           "name": "Cristopher Cardenas",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_7.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_7.jpg",
           "comment": "Tempora officiis consequuntur architecto nostrum autem nam adipisci.",
           "rating": 4.9,
           "isPurchased": false,
@@ -604,7 +604,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b8",
           "name": "Melanie Noble",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_8.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_8.jpg",
           "comment": "Voluptas sunt magni adipisci praesentium saepe.",
           "rating": 5,
           "isPurchased": false,
@@ -638,16 +638,16 @@
     },
     {
       "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5",
-      "cover": "https://storage.googleapis.com/cs-demo-data/coderstore/product_5.jpg",
+      "cover": "https://storage.googleapis.com/cs-demo-data/knstore/product_5.jpg",
       "images": [
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_1.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_2.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_3.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_4.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_5.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_6.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_7.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_8.jpg"
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_1.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_2.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_3.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_4.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_5.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_6.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_7.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_8.jpg"
       ],
       "name": "Boston Soft Footbed Sandal",
       "code": "38BEE274",
@@ -693,7 +693,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1",
           "name": "Jayvion Simon",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_1.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_1.jpg",
           "comment": "Assumenda nam repudiandae rerum fugiat vel maxime.",
           "rating": 2.5,
           "isPurchased": true,
@@ -703,7 +703,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2",
           "name": "Lucian Obrien",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_2.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_2.jpg",
           "comment": "Quis veniam aut saepe aliquid nulla.",
           "rating": 2,
           "isPurchased": true,
@@ -713,7 +713,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b3",
           "name": "Deja Brady",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_3.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_3.jpg",
           "comment": "Reprehenderit ut voluptas sapiente ratione nostrum est.",
           "rating": 4.9,
           "isPurchased": true,
@@ -723,7 +723,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
           "name": "Harrison Stein",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_4.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_4.jpg",
           "comment": "Error ut sit vel molestias velit.",
           "rating": 2,
           "isPurchased": false,
@@ -733,7 +733,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5",
           "name": "Reece Chung",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_5.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_5.jpg",
           "comment": "Quo quia sit nihil nemo doloremque et.",
           "rating": 4,
           "isPurchased": false,
@@ -743,7 +743,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b6",
           "name": "Lainey Davidson",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_6.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_6.jpg",
           "comment": "Autem doloribus harum vero laborum.",
           "rating": 5,
           "isPurchased": true,
@@ -753,7 +753,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b7",
           "name": "Cristopher Cardenas",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_7.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_7.jpg",
           "comment": "Tempora officiis consequuntur architecto nostrum autem nam adipisci.",
           "rating": 4.9,
           "isPurchased": false,
@@ -763,7 +763,7 @@
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b8",
           "name": "Melanie Noble",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_8.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_8.jpg",
           "comment": "Voluptas sunt magni adipisci praesentium saepe.",
           "rating": 5,
           "isPurchased": false,
@@ -796,296 +796,137 @@
       "colors": ["#FF4842", "#1890FF"]
     },
     {
-      "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b6",
-      "cover": "https://storage.googleapis.com/cs-demo-data/coderstore/product_6.jpg",
+      "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
+      "cover": "https://storage.googleapis.com/cs-demo-data/knstore/product_4.jpg",
       "images": [
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_1.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_2.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_3.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_4.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_5.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_6.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_7.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_8.jpg"
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_1.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_2.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_3.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_4.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_5.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_6.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_7.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_8.jpg"
       ],
-      "name": "Zoom Freak 2",
-      "code": "38BEE275",
-      "sku": "WW75K5215YW/SV",
+      "name": "Arizona Soft Footbed Sandal",
+      "code": "38BEE273",
+      "sku": "WW75K5213YW/SV",
       "tags": [
         "Dangal",
         "The Sting",
         "2001: A Space Odyssey",
         "Singin' in the Rain"
       ],
-      "price": 89.09,
-      "priceSale": null,
-      "totalRating": 5,
-      "totalReview": 7871,
+      "price": 93.1,
+      "priceSale": 93.1,
+      "totalRating": 2,
+      "totalReview": 2360,
       "ratings": [
         {
           "name": "1 Star",
-          "starCount": 8084,
-          "reviewCount": 6713
+          "starCount": 698,
+          "reviewCount": 4693
         },
         {
           "name": "2 Star",
-          "starCount": 5383,
-          "reviewCount": 4496
+          "starCount": 9971,
+          "reviewCount": 7489
         },
         {
           "name": "3 Star",
-          "starCount": 9839,
-          "reviewCount": 3439
+          "starCount": 4907,
+          "reviewCount": 2521
         },
         {
           "name": "4 Star",
-          "starCount": 251,
-          "reviewCount": 1012
+          "starCount": 2091,
+          "reviewCount": 7587
         },
         {
           "name": "5 Star",
-          "starCount": 6208,
-          "reviewCount": 6898
+          "starCount": 6713,
+          "reviewCount": 2569
         }
       ],
       "reviews": [
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1",
           "name": "Jayvion Simon",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_1.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_1.jpg",
           "comment": "Assumenda nam repudiandae rerum fugiat vel maxime.",
           "rating": 2.5,
           "isPurchased": true,
-          "helpful": 5929,
+          "helpful": 5404,
           "postedAt": "2022-03-13T05:49:40.476Z"
         },
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2",
           "name": "Lucian Obrien",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_2.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_2.jpg",
           "comment": "Quis veniam aut saepe aliquid nulla.",
           "rating": 2,
           "isPurchased": true,
-          "helpful": 2714,
+          "helpful": 868,
           "postedAt": "2022-03-12T04:49:40.476Z"
         },
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b3",
           "name": "Deja Brady",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_3.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_3.jpg",
           "comment": "Reprehenderit ut voluptas sapiente ratione nostrum est.",
           "rating": 4.9,
           "isPurchased": true,
-          "helpful": 8675,
+          "helpful": 7281,
           "postedAt": "2022-03-11T03:49:40.476Z"
         },
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
           "name": "Harrison Stein",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_4.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_4.jpg",
           "comment": "Error ut sit vel molestias velit.",
           "rating": 2,
           "isPurchased": false,
-          "helpful": 4248,
+          "helpful": 5284,
           "postedAt": "2022-03-10T02:49:40.476Z"
         },
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5",
           "name": "Reece Chung",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_5.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_5.jpg",
           "comment": "Quo quia sit nihil nemo doloremque et.",
           "rating": 4,
           "isPurchased": false,
-          "helpful": 5163,
+          "helpful": 1242,
           "postedAt": "2022-03-09T01:49:40.476Z"
         },
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b6",
           "name": "Lainey Davidson",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_6.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_6.jpg",
           "comment": "Autem doloribus harum vero laborum.",
           "rating": 5,
           "isPurchased": true,
-          "helpful": 2653,
+          "helpful": 1060,
           "postedAt": "2022-03-08T00:49:40.476Z"
         },
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b7",
           "name": "Cristopher Cardenas",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_7.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_7.jpg",
           "comment": "Tempora officiis consequuntur architecto nostrum autem nam adipisci.",
           "rating": 4.9,
           "isPurchased": false,
-          "helpful": 7268,
+          "helpful": 9810,
           "postedAt": "2022-03-06T23:49:40.476Z"
         },
         {
           "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b8",
           "name": "Melanie Noble",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_8.jpg",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_8.jpg",
           "comment": "Voluptas sunt magni adipisci praesentium saepe.",
           "rating": 5,
           "isPurchased": false,
-          "helpful": 2883,
-          "postedAt": "2022-03-05T22:49:40.476Z"
-        }
-      ],
-      "status": "new",
-      "inventoryType": "out_of_stock",
-      "sizes": [
-        "6",
-        "7",
-        "8",
-        "8.5",
-        "9",
-        "9.5",
-        "10",
-        "10.5",
-        "11",
-        "11.5",
-        "12",
-        "13"
-      ],
-      "available": 2,
-      "description": "\n<p><strong><small> SPECIFICATION</small></strong></p>\n<p>Leather panels. Laces. Rounded toe. Rubber sole.\n<br /><br />\n<p><strong><small> MATERIAL AND WASHING INSTRUCTIONS</small></strong></p>\n<p>Shoeupper: 54% bovine leather,46% polyurethane. Lining: 65% polyester,35% cotton. Insole: 100% polyurethane. Sole: 100% thermoplastic. Fixing sole: 100% glued.</p>\n",
-      "sold": 16,
-      "createdAt": "2022-03-08T00:49:40.476Z",
-      "category": "Shose",
-      "gender": "Kids",
-      "colors": ["#1890FF"]
-    },
-    {
-      "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b7",
-      "cover": "https://storage.googleapis.com/cs-demo-data/coderstore/product_7.jpg",
-      "images": [
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_1.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_2.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_3.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_4.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_5.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_6.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_7.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_8.jpg"
-      ],
-      "name": "Gazelle Vintage low-top sneakers",
-      "code": "38BEE276",
-      "sku": "WW75K5216YW/SV",
-      "tags": [
-        "Dangal",
-        "The Sting",
-        "2001: A Space Odyssey",
-        "Singin' in the Rain"
-      ],
-      "price": 44.39,
-      "priceSale": 44.39,
-      "totalRating": 4.9,
-      "totalReview": 9680,
-      "ratings": [
-        {
-          "name": "1 Star",
-          "starCount": 2910,
-          "reviewCount": 6184
-        },
-        {
-          "name": "2 Star",
-          "starCount": 4067,
-          "reviewCount": 7734
-        },
-        {
-          "name": "3 Star",
-          "starCount": 9358,
-          "reviewCount": 6297
-        },
-        {
-          "name": "4 Star",
-          "starCount": 6549,
-          "reviewCount": 7566
-        },
-        {
-          "name": "5 Star",
-          "starCount": 8463,
-          "reviewCount": 405
-        }
-      ],
-      "reviews": [
-        {
-          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1",
-          "name": "Jayvion Simon",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_1.jpg",
-          "comment": "Assumenda nam repudiandae rerum fugiat vel maxime.",
-          "rating": 2.5,
-          "isPurchased": true,
-          "helpful": 6539,
-          "postedAt": "2022-03-13T05:49:40.476Z"
-        },
-        {
-          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2",
-          "name": "Lucian Obrien",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_2.jpg",
-          "comment": "Quis veniam aut saepe aliquid nulla.",
-          "rating": 2,
-          "isPurchased": true,
-          "helpful": 8539,
-          "postedAt": "2022-03-12T04:49:40.476Z"
-        },
-        {
-          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b3",
-          "name": "Deja Brady",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_3.jpg",
-          "comment": "Reprehenderit ut voluptas sapiente ratione nostrum est.",
-          "rating": 4.9,
-          "isPurchased": true,
-          "helpful": 2044,
-          "postedAt": "2022-03-11T03:49:40.476Z"
-        },
-        {
-          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
-          "name": "Harrison Stein",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_4.jpg",
-          "comment": "Error ut sit vel molestias velit.",
-          "rating": 2,
-          "isPurchased": false,
-          "helpful": 6872,
-          "postedAt": "2022-03-10T02:49:40.476Z"
-        },
-        {
-          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5",
-          "name": "Reece Chung",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_5.jpg",
-          "comment": "Quo quia sit nihil nemo doloremque et.",
-          "rating": 4,
-          "isPurchased": false,
-          "helpful": 7412,
-          "postedAt": "2022-03-09T01:49:40.476Z"
-        },
-        {
-          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b6",
-          "name": "Lainey Davidson",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_6.jpg",
-          "comment": "Autem doloribus harum vero laborum.",
-          "rating": 5,
-          "isPurchased": true,
-          "helpful": 6806,
-          "postedAt": "2022-03-08T00:49:40.476Z"
-        },
-        {
-          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b7",
-          "name": "Cristopher Cardenas",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_7.jpg",
-          "comment": "Tempora officiis consequuntur architecto nostrum autem nam adipisci.",
-          "rating": 4.9,
-          "isPurchased": false,
-          "helpful": 3853,
-          "postedAt": "2022-03-06T23:49:40.476Z"
-        },
-        {
-          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b8",
-          "name": "Melanie Noble",
-          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/coderstore/avatar_8.jpg",
-          "comment": "Voluptas sunt magni adipisci praesentium saepe.",
-          "rating": 5,
-          "isPurchased": false,
-          "helpful": 7776,
+          "helpful": 8640,
           "postedAt": "2022-03-05T22:49:40.476Z"
         }
       ],
@@ -1105,22 +946,181 @@
         "12",
         "13"
       ],
-      "available": 80,
+      "available": 73,
       "description": "\n<p><strong><small> SPECIFICATION</small></strong></p>\n<p>Leather panels. Laces. Rounded toe. Rubber sole.\n<br /><br />\n<p><strong><small> MATERIAL AND WASHING INSTRUCTIONS</small></strong></p>\n<p>Shoeupper: 54% bovine leather,46% polyurethane. Lining: 65% polyester,35% cotton. Insole: 100% polyurethane. Sole: 100% thermoplastic. Fixing sole: 100% glued.</p>\n",
-      "sold": 252,
-      "createdAt": "2022-03-06T23:49:40.476Z",
-      "category": "Accessories",
-      "gender": "Women",
-      "colors": ["#00AB55", "#000000"]
+      "sold": 631,
+      "createdAt": "2022-03-10T02:49:40.476Z",
+      "category": "Shose",
+      "gender": "Kids",
+      "colors": ["#FFC0CB", "#FF4842", "#1890FF"]
     },
     {
-      "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b8",
-      "cover": "https://storage.googleapis.com/cs-demo-data/coderstore/product_8.jpg",
+      "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5",
+      "cover": "https://storage.googleapis.com/cs-demo-data/knstore/product_5.jpg",
       "images": [
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_1.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_2.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_3.jpg",
-        "https://storage.googleapis.com/cs-demo-data/coderstore/product_4.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_1.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_2.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_3.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_4.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_5.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_6.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_7.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_8.jpg"
+      ],
+      "name": "Boston Soft Footbed Sandal",
+      "code": "38BEE274",
+      "sku": "WW75K5214YW/SV",
+      "tags": [
+        "Dangal",
+        "The Sting",
+        "2001: A Space Odyssey",
+        "Singin' in the Rain"
+      ],
+      "price": 55.47,
+      "priceSale": null,
+      "totalRating": 4,
+      "totalReview": 6625,
+      "ratings": [
+        {
+          "name": "1 Star",
+          "starCount": 1371,
+          "reviewCount": 7984
+        },
+        {
+          "name": "2 Star",
+          "starCount": 8244,
+          "reviewCount": 5710
+        },
+        {
+          "name": "3 Star",
+          "starCount": 1457,
+          "reviewCount": 4737
+        },
+        {
+          "name": "4 Star",
+          "starCount": 2146,
+          "reviewCount": 8824
+        },
+        {
+          "name": "5 Star",
+          "starCount": 8426,
+          "reviewCount": 7923
+        }
+      ],
+      "reviews": [
+        {
+          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1",
+          "name": "Jayvion Simon",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_1.jpg",
+          "comment": "Assumenda nam repudiandae rerum fugiat vel maxime.",
+          "rating": 2.5,
+          "isPurchased": true,
+          "helpful": 9035,
+          "postedAt": "2022-03-13T05:49:40.476Z"
+        },
+        {
+          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2",
+          "name": "Lucian Obrien",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_2.jpg",
+          "comment": "Quis veniam aut saepe aliquid nulla.",
+          "rating": 2,
+          "isPurchased": true,
+          "helpful": 6370,
+          "postedAt": "2022-03-12T04:49:40.476Z"
+        },
+        {
+          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b3",
+          "name": "Deja Brady",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_3.jpg",
+          "comment": "Reprehenderit ut voluptas sapiente ratione nostrum est.",
+          "rating": 4.9,
+          "isPurchased": true,
+          "helpful": 7368,
+          "postedAt": "2022-03-11T03:49:40.476Z"
+        },
+        {
+          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
+          "name": "Harrison Stein",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_4.jpg",
+          "comment": "Error ut sit vel molestias velit.",
+          "rating": 2,
+          "isPurchased": false,
+          "helpful": 3112,
+          "postedAt": "2022-03-10T02:49:40.476Z"
+        },
+        {
+          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5",
+          "name": "Reece Chung",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_5.jpg",
+          "comment": "Quo quia sit nihil nemo doloremque et.",
+          "rating": 4,
+          "isPurchased": false,
+          "helpful": 2299,
+          "postedAt": "2022-03-09T01:49:40.476Z"
+        },
+        {
+          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b6",
+          "name": "Lainey Davidson",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_6.jpg",
+          "comment": "Autem doloribus harum vero laborum.",
+          "rating": 5,
+          "isPurchased": true,
+          "helpful": 1060,
+          "postedAt": "2022-03-08T00:49:40.476Z"
+        },
+        {
+          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b7",
+          "name": "Cristopher Cardenas",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_7.jpg",
+          "comment": "Tempora officiis consequuntur architecto nostrum autem nam adipisci.",
+          "rating": 4.9,
+          "isPurchased": false,
+          "helpful": 7475,
+          "postedAt": "2022-03-06T23:49:40.476Z"
+        },
+        {
+          "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b8",
+          "name": "Melanie Noble",
+          "avatarUrl": "https://storage.googleapis.com/cs-demo-data/knstore/avatar_8.jpg",
+          "comment": "Voluptas sunt magni adipisci praesentium saepe.",
+          "rating": 5,
+          "isPurchased": false,
+          "helpful": 8640,
+          "postedAt": "2022-03-05T22:49:40.476Z"
+        }
+      ],
+      "status": "sale",
+      "inventoryType": "in_stock",
+      "sizes": [
+        "6",
+        "7",
+        "8",
+        "8.5",
+        "9",
+        "9.5",
+        "10",
+        "10.5",
+        "11",
+        "11.5",
+        "12",
+        "13"
+      ],
+      "available": 73,
+      "description": "\n<p><strong><small> SPECIFICATION</small></strong></p>\n<p>Leather panels. Laces. Rounded toe. Rubber sole.\n<br /><br />\n<p><strong><small> MATERIAL AND WASHING INSTRUCTIONS</small></strong></p>\n<p>Shoeupper: 54% bovine leather,46% polyurethane. Lining: 65% polyester,35% cotton. Insole: 100% polyurethane. Sole: 100% thermoplastic. Fixing sole: 100% glued.</p>\n",
+      "sold": 631,
+      "createdAt": "2022-03-10T02:49:40.476Z",
+      "category": "Shose",
+      "gender": "Kids",
+      "colors": ["#FFC0CB", "#FF4842", "#1890FF"]
+    },
+    {
+      "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5",
+      "cover": "https://storage.googleapis.com/cs-demo-data/knstore/product_5.jpg",
+      "images": [
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_1.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_2.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_3.jpg",
+        "https://storage.googleapis.com/cs-demo-data/knstore/product_4.jpg",
         "https://storage.googleapis.com/cs-demo-data/coderstore/product_5.jpg",
         "https://storage.googleapis.com/cs-demo-data/coderstore/product_6.jpg",
         "https://storage.googleapis.com/cs-demo-data/coderstore/product_7.jpg",

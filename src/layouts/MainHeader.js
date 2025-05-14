@@ -41,7 +41,7 @@ function MainHeader() {
             component="div"
             sx={{ mr: 2 }}
           >
-            CoderStore
+            KN store
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Button
