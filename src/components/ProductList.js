@@ -23,7 +23,7 @@ const GridItem = styled.div`
   }
 `;
 
-function ProductList({ products }) {
+function ProductList({ products, onResetFilters }) {
   return (
     <Grid>
       {products.map((product) => (

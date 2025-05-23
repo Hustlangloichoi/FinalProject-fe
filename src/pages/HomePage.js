@@ -4,6 +4,7 @@ import ProductFilter, { SORT_BY_OPTIONS } from "../components/ProductFilter";
 import ProductSearch from "../components/ProductSearch";
 import ProductSort from "../components/ProductSort";
 import ProductList from "../components/ProductList";
+import ProductNotFound from "../components/ProductNotFound";
 import { FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
 import apiService from "../app/apiService";
@@ -130,31 +131,29 @@ function HomePage() {
           <Box sx={{ position: "relative", height: 1 }}>
             {loading ? (
               <LoadingScreen />
+            ) : error ? (
+              <Alert severity="error">{error}</Alert>
+            ) : products.length === 0 ? (
+              <ProductNotFound onReset={reset} />
             ) : (
               <>
-                {error ? (
-                  <Alert severity="error">{error}</Alert>
-                ) : (
-                  <>
-                    <ProductList products={products} />
-                    {totalPages > 1 && (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          mt: 3,
-                          mb: 6,
-                        }}
-                      >
-                        <Pagination
-                          count={totalPages}
-                          page={page}
-                          onChange={(_, value) => setPage(value)}
-                          color="primary"
-                        />
-                      </Box>
-                    )}
-                  </>
+                <ProductList products={products} onResetFilters={reset} />
+                {totalPages > 1 && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      mt: 3,
+                      mb: 6,
+                    }}
+                  >
+                    <Pagination
+                      count={totalPages}
+                      page={page}
+                      onChange={(_, value) => setPage(value)}
+                      color="primary"
+                    />
+                  </Box>
                 )}
               </>
             )}

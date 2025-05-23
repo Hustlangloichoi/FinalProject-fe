@@ -44,10 +44,7 @@ function DetailPage() {
   };
 
   if (loading) return <LoadingScreen />;
-  if (error || !product)
-    return (
-      <Typography color="error">{error || "Product not found"}</Typography>
-    );
+  if (error || !product) return null;
 
   return (
     <Box sx={{ width: '90vw', maxWidth: 1600, mx: 'auto', mt: 6, p: 2 }}>
