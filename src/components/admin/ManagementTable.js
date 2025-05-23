@@ -193,13 +193,15 @@ function ManagementTable({
     <Box>
       <FlexHeader>
         <Typography variant="h6">{title}</Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => setOpenAdd(true)}
-        >
-          Add
-        </Button>
+        {addUrl && (
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => setOpenAdd(true)}
+          >
+            Add
+          </Button>
+        )}
       </FlexHeader>
       <TableContainerStyled component={Paper}>
         <Table size="small">
@@ -218,12 +220,14 @@ function ManagementTable({
                   <TableCell key={col.label}>{col.render(item)}</TableCell>
                 ))}
                 <ActionsCell>
-                  <IconButton
-                    color="primary"
-                    onClick={() => handleEditOpen(item)}
-                  >
-                    <EditIcon />
-                  </IconButton>
+                  {editUrl && (
+                    <IconButton
+                      color="primary"
+                      onClick={() => handleEditOpen(item)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  )}
                   <IconButton color="error" onClick={() => handleDelete(item)}>
                     <DeleteIcon />
                   </IconButton>
@@ -233,6 +237,100 @@ function ManagementTable({
           </TableBody>
         </Table>
       </TableContainerStyled>
+      {/* Add Dialog */}
+      {addUrl && (
+        <Dialog open={openAdd} onClose={() => setOpenAdd(false)}>
+          <DialogTitle>Add {title.replace(" Management", "")}</DialogTitle>
+          <DialogContentStyled>
+            {formFields.map((field) =>
+              field.type === "checkbox" ? (
+                <FormControlLabel
+                  key={field.key}
+                  control={
+                    <Checkbox
+                      checked={!!newItem[field.key]}
+                      onChange={(e) =>
+                        setNewItem({
+                          ...newItem,
+                          [field.key]: e.target.checked,
+                        })
+                      }
+                    />
+                  }
+                  label={field.label}
+                  sx={{ mb: 2 }}
+                />
+              ) : (
+                <TextField
+                  key={field.key}
+                  label={field.label}
+                  type={field.type || "text"}
+                  value={newItem[field.key] || ""}
+                  onChange={(e) =>
+                    setNewItem({ ...newItem, [field.key]: e.target.value })
+                  }
+                  fullWidth
+                  sx={{ mb: 2 }}
+                  required={field.required}
+                />
+              )
+            )}
+          </DialogContentStyled>
+          <DialogActions>
+            <Button onClick={() => setOpenAdd(false)}>Cancel</Button>
+            <Button onClick={handleAdd} variant="contained">
+              Add
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
+      {/* Edit Dialog */}
+      {editUrl && (
+        <Dialog open={openEdit} onClose={() => setOpenEdit(false)}>
+          <DialogTitle>Edit {title.replace(" Management", "")}</DialogTitle>
+          <DialogContentStyled>
+            {formFields.map((field) =>
+              field.type === "checkbox" ? (
+                <FormControlLabel
+                  key={field.key}
+                  control={
+                    <Checkbox
+                      checked={!!editItem?.[field.key]}
+                      onChange={(e) =>
+                        setEditItem({
+                          ...editItem,
+                          [field.key]: e.target.checked,
+                        })
+                      }
+                    />
+                  }
+                  label={field.label}
+                  sx={{ mb: 2 }}
+                />
+              ) : (
+                <TextField
+                  key={field.key}
+                  label={field.label}
+                  type={field.type || "text"}
+                  value={editItem?.[field.key] || ""}
+                  onChange={(e) =>
+                    setEditItem({ ...editItem, [field.key]: e.target.value })
+                  }
+                  fullWidth
+                  sx={{ mb: 2 }}
+                  required={field.required}
+                />
+              )
+            )}
+          </DialogContentStyled>
+          <DialogActions>
+            <Button onClick={() => setOpenEdit(false)}>Cancel</Button>
+            <Button onClick={handleEditSave} variant="contained">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
       {/* Pagination for paginated resources */}
       {isPaginatedTable && totalPages > 1 && (
         <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
@@ -244,96 +342,6 @@ function ManagementTable({
           />
         </Box>
       )}
-      {/* Add Dialog */}
-      <Dialog open={openAdd} onClose={() => setOpenAdd(false)}>
-        <DialogTitle>Add {title.replace(" Management", "")}</DialogTitle>
-        <DialogContentStyled>
-          {formFields.map((field) =>
-            field.type === "checkbox" ? (
-              <FormControlLabel
-                key={field.key}
-                control={
-                  <Checkbox
-                    checked={!!newItem[field.key]}
-                    onChange={(e) =>
-                      setNewItem({
-                        ...newItem,
-                        [field.key]: e.target.checked,
-                      })
-                    }
-                  />
-                }
-                label={field.label}
-                sx={{ mb: 2 }}
-              />
-            ) : (
-              <TextField
-                key={field.key}
-                label={field.label}
-                type={field.type || "text"}
-                value={newItem[field.key] || ""}
-                onChange={(e) =>
-                  setNewItem({ ...newItem, [field.key]: e.target.value })
-                }
-                fullWidth
-                sx={{ mb: 2 }}
-                required={field.required}
-              />
-            )
-          )}
-        </DialogContentStyled>
-        <DialogActions>
-          <Button onClick={() => setOpenAdd(false)}>Cancel</Button>
-          <Button onClick={handleAdd} variant="contained">
-            Add
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/* Edit Dialog */}
-      <Dialog open={openEdit} onClose={() => setOpenEdit(false)}>
-        <DialogTitle>Edit {title.replace(" Management", "")}</DialogTitle>
-        <DialogContentStyled>
-          {formFields.map((field) =>
-            field.type === "checkbox" ? (
-              <FormControlLabel
-                key={field.key}
-                control={
-                  <Checkbox
-                    checked={!!editItem?.[field.key]}
-                    onChange={(e) =>
-                      setEditItem({
-                        ...editItem,
-                        [field.key]: e.target.checked,
-                      })
-                    }
-                  />
-                }
-                label={field.label}
-                sx={{ mb: 2 }}
-              />
-            ) : (
-              <TextField
-                key={field.key}
-                label={field.label}
-                type={field.type || "text"}
-                value={editItem?.[field.key] || ""}
-                onChange={(e) =>
-                  setEditItem({ ...editItem, [field.key]: e.target.value })
-                }
-                fullWidth
-                sx={{ mb: 2 }}
-                required={field.required}
-              />
-            )
-          )}
-        </DialogContentStyled>
-        <DialogActions>
-          <Button onClick={() => setOpenEdit(false)}>Cancel</Button>
-          <Button onClick={handleEditSave} variant="contained">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Box>
   );
 }
