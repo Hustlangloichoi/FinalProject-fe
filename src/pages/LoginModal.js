@@ -11,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { FormProvider, FTextField } from "../components/form";
 import useAuth from "../hooks/useAuth";
+import apiService from "../app/apiService";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -31,9 +32,7 @@ function LoginModal({ open, onClose }) {
 
   const onSubmit = async (data) => {
     try {
-      const response = await import("../app/apiService").then((m) =>
-        m.default.post("/auth/login", data)
-      );
+      const response = await apiService.post("/auth/login", data);
       const { token } = response.data.data;
       const payload = JSON.parse(atob(token.split(".")[1]));
       const role = payload.isAdmin ? "admin" : "user";
