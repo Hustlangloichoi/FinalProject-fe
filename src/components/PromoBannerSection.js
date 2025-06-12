@@ -5,6 +5,9 @@ const Section = styled.section`
   padding: 30px 0;
   background: #33acff;
   text-align: center;
+  @media (max-width: 600px) {
+    padding: 16px 0;
+  }
 `;
 
 const PromoBannerSection = () => (

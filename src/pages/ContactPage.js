@@ -8,7 +8,7 @@ import {
 
 function ContactPage() {
   return (
-    <Box sx={{ maxWidth: 600, mx: "auto", mt: 4 }}>
+    <Box sx={{ maxWidth: 600, mx: "auto", mt: 4, px: { xs: 2, sm: 0 } }}>
       <Typography variant="h4" align="center" sx={{ mb: 3 }}>
         Contact Us
       </Typography>

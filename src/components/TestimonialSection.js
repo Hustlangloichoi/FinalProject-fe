@@ -4,6 +4,10 @@ import React from "react";
 const Section = styled.section`
   padding: 30px 0;
   background: #33acff;
+  @media (max-width: 600px) {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 `;
 
 const Title = styled.h2`
@@ -15,6 +19,11 @@ const TestimonialsWrapper = styled.div`
   justify-content: center;
   gap: 30px;
   margin-top: 20px;
+  flex-wrap: wrap;
+  @media (max-width: 600px) {
+    gap: 12px;
+    justify-content: flex-start;
+  }
 `;
 
 const TestimonialCard = styled.div`

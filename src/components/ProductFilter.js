@@ -20,8 +20,11 @@ export const FILTER_PRICE_OPTIONS = [
 ];
 
 const FilterWrapper = styled.div`
-  padding: 24px;
+  padding: 8px;
   width: 250px;
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 const SectionTitle = styled.h6`
   font-weight: 600;

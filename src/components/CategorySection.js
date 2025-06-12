@@ -16,10 +16,29 @@ const CategoriesWrapper = styled.div`
   justify-content: center;
   gap: 30px;
   margin-top: 20px;
+  flex-wrap: wrap;
+
+  @media (max-width: 600px) {
+    gap: 12px;
+    justify-content: center;
+  }
 `;
 
 const CategoryItem = styled.div`
   text-align: center;
+  min-width: 140px;
+  flex: 1 1 180px;
+  max-width: 200px;
+
+  @media (max-width: 900px) {
+    flex: 1 1 45%;
+    max-width: 48%;
+  }
+
+  @media (max-width: 600px) {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
 `;
 
 const CategoryIcon = styled.div`

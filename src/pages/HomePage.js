@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Box, Container, Stack } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Container,
+  Stack,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  useMediaQuery,
+} from "@mui/material";
 import ProductFilter, { SORT_BY_OPTIONS } from "../components/ProductFilter";
 import ProductSearch from "../components/ProductSearch";
 import ProductSort from "../components/ProductSort";
@@ -23,6 +33,9 @@ function HomePage() {
   const productsPerPage = 12;
   const [totalProducts, setTotalProducts] = useState(0);
   const [searchTrigger, setSearchTrigger] = useState(0); // NEW
+  const [openFilter, setOpenFilter] = useState(false);
+
+  const isMobile = useMediaQuery("(max-width:900px)");
 
   const defaultValues = {
     gender: [],
@@ -71,32 +84,80 @@ function HomePage() {
     };
     getProducts();
     // eslint-disable-next-line
-  }, [page, filters.searchQuery, searchTrigger, filters.category, filters.priceRange, filters.sortBy]);
+  }, [
+    page,
+    filters.searchQuery,
+    searchTrigger,
+    filters.category,
+    filters.priceRange,
+    filters.sortBy,
+  ]);
 
   return (
     <>
       <HeroSection />
-      <CategorySection onCategoryClick={(catName) => {
-        methods.setValue("category", [catName]);
-        setPage(1);
-        setTimeout(() => {
-          const productSection = document.getElementById("product-list-section");
-          if (productSection) {
-            productSection.scrollIntoView({ behavior: "smooth" });
-          }
-        }, 100);
-      }} />
+      <CategorySection
+        onCategoryClick={(catName) => {
+          methods.setValue("category", [catName]);
+          setPage(1);
+          setTimeout(() => {
+            const productSection = document.getElementById(
+              "product-list-section"
+            );
+            if (productSection) {
+              productSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 100);
+        }}
+      />
       <PromoBannerSection />
       <Container
-        sx={{ display: "flex", minHeight: "100vh", mt: 3 }}
+        sx={{
+          display: "flex",
+          minHeight: "100vh",
+          mt: 3,
+          flexDirection: { xs: "column", md: "row" },
+          gap: { xs: 2, md: 0 },
+        }}
         id="product-list-section"
       >
-        <Stack>
-          <FormProvider methods={methods}>
-            <ProductFilter resetFilter={reset} />
-          </FormProvider>
-        </Stack>
-        <Stack sx={{ flexGrow: 1 }}>
+        {/* MOBILE: Hiện nút filter, ẩn filter cố định */}
+        {isMobile ? (
+          <>
+            <Button
+              variant="contained"
+              sx={{ mb: 2, width: 160 }}
+              onClick={() => setOpenFilter(true)}
+            >
+              Filter
+            </Button>
+            <Dialog
+              open={openFilter}
+              onClose={() => setOpenFilter(false)}
+              fullWidth
+              maxWidth="xs"
+            >
+              <DialogTitle>Filter</DialogTitle>
+              <DialogContent>
+                <FormProvider methods={methods}>
+                  <ProductFilter resetFilter={reset} />
+                </FormProvider>
+              </DialogContent>
+            </Dialog>
+          </>
+        ) : (
+          <Stack
+            sx={{
+              minWidth: { xs: "100%", md: 250 },
+              maxWidth: { xs: "100%", md: 250 },
+            }}
+          >
+            <FormProvider methods={methods}>
+              <ProductFilter resetFilter={reset} />
+            </FormProvider>
+          </Stack>
+        )}
+        <Stack sx={{ flexGrow: 1, width: "100%" }}>
           <FormProvider methods={methods}>
             <Stack
               spacing={2}
@@ -108,22 +169,29 @@ function HomePage() {
               <ProductSearch
                 value={filters.searchQuery}
                 onChange={(e) => {
-                  setValue(
-                    "searchQuery",
-                    e.target.value,
-                    { shouldValidate: true, shouldDirty: true }
-                  );
+                  setValue("searchQuery", e.target.value, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  });
                   setPage(1);
                 }}
                 onSearch={(query) => {
-                  setValue("searchQuery", query, { shouldValidate: true, shouldDirty: true });
+                  setValue("searchQuery", query, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  });
                   setPage(1);
                   setSearchTrigger((t) => t + 1); // TRIGGER SEARCH
                 }}
               />
               <ProductSort
                 value={filters.sortBy}
-                onChange={(e) => setValue("sortBy", e.target.value, { shouldValidate: true, shouldDirty: true })}
+                onChange={(e) =>
+                  setValue("sortBy", e.target.value, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  })
+                }
                 options={SORT_BY_OPTIONS}
               />
             </Stack>

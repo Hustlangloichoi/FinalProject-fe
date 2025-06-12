@@ -19,6 +19,12 @@ const Card = styled.div`
   &:hover {
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.16);
   }
+  @media (max-width: 600px) {
+    min-width: 90vw;
+    width: 98vw;
+    height: auto;
+    padding: 16px;
+  }
 `;
 const Title = styled.h6`
   margin-bottom: 8px;

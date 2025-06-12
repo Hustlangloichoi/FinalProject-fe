@@ -3,7 +3,16 @@ import { Box, Grid, Typography, Link } from "@mui/material";
 
 function MainFooter() {
   return (
-    <Box component="footer" sx={{ background: "#f5f5f5", mt: 6, pt: 6, pb: 2 }}>
+    <Box
+      component="footer"
+      sx={{
+        background: "#f5f5f5",
+        mt: 6,
+        pt: 6,
+        pb: 2,
+        px: { xs: 2, sm: 0 },
+      }}
+    >
       <Grid
         container
         spacing={4}

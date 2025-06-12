@@ -26,12 +26,12 @@ function MainHeader() {
   return (
     <Box>
       <AppBar position="static">
-        <Toolbar variant="dense">
+        <Toolbar variant="dense" sx={{ px: { xs: 1, sm: 2 }, minHeight: 60, py: 1.5 }}>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 1, p: 0.5, ml: { xs: 1, sm: 2 } }}
           >
             <Logo />
           </IconButton>
@@ -39,21 +39,41 @@ function MainHeader() {
             variant="h6"
             color="inherit"
             component="div"
-            sx={{ mr: 2 }}
+            sx={{
+              mr: 2,
+              fontWeight: 700,
+              fontSize: 22,
+              lineHeight: 1,
+              minWidth: 60,
+            }}
           >
-            KN store
+            KN
+            <br />
+            <span style={{ fontWeight: 400, fontSize: 16 }}>store</span>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Button
             color="inherit"
-            sx={{ mr: 1 }}
+            sx={{
+              mr: 1,
+              px: 1,
+              minWidth: 60,
+              fontSize: 15,
+              lineHeight: 1.2,
+            }}
             onClick={() => navigate("/about")}
           >
             About Us
           </Button>
           <Button
             color="inherit"
-            sx={{ mr: 2 }}
+            sx={{
+              mr: 1,
+              px: 1,
+              minWidth: 60,
+              fontSize: 15,
+              lineHeight: 1.2,
+            }}
             onClick={() => navigate("/contact")}
           >
             Contact Us
@@ -63,7 +83,13 @@ function MainHeader() {
               {user?.role === "admin" && (
                 <Button
                   color="inherit"
-                  sx={{ mr: 2 }}
+                  sx={{
+                    mr: 1,
+                    px: 1,
+                    minWidth: 60,
+                    fontSize: 15,
+                    lineHeight: 1.2,
+                  }}
                   onClick={() => navigate("/admin")}
                 >
                   Admin Panel
@@ -72,22 +98,51 @@ function MainHeader() {
               {user?.role === "user" && (
                 <IconButton
                   color="inherit"
-                  sx={{ mr: 2 }}
+                  sx={{ mr: 1, p: 0.5 }}
                   onClick={() => navigate("/user")}
                 >
-                  <AccountCircleIcon />
+                  {" "}
+                  <AccountCircleIcon />{" "}
                 </IconButton>
               )}
-              <Button color="inherit" onClick={handleLogout}>
+              <Button
+                color="inherit"
+                sx={{
+                  px: 1,
+                  minWidth: 60,
+                  fontSize: 15,
+                  lineHeight: 1.2,
+                }}
+                onClick={handleLogout}
+              >
                 Logout
               </Button>
             </>
           ) : (
             <>
-              <Button color="inherit" onClick={() => setOpenLogin(true)}>
+              <Button
+                color="inherit"
+                sx={{
+                  mr: 1,
+                  px: 1,
+                  minWidth: 60,
+                  fontSize: 15,
+                  lineHeight: 1.2,
+                }}
+                onClick={() => setOpenLogin(true)}
+              >
                 Login
               </Button>
-              <Button color="inherit" onClick={() => setOpenSignup(true)}>
+              <Button
+                color="inherit"
+                sx={{
+                  px: 1,
+                  minWidth: 60,
+                  fontSize: 15,
+                  lineHeight: 1.2,
+                }}
+                onClick={() => setOpenSignup(true)}
+              >
                 Sign Up
               </Button>
             </>
