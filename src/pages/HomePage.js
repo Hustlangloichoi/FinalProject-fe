@@ -32,14 +32,15 @@ function HomePage() {
   const [page, setPage] = useState(1);
   const productsPerPage = 12;
   const [totalProducts, setTotalProducts] = useState(0);
-  const [searchTrigger, setSearchTrigger] = useState(0); // NEW
+  const [searchTrigger, setSearchTrigger] = useState(0); // Trigger for search updates
   const [openFilter, setOpenFilter] = useState(false);
+  const [resetSearch, setResetSearch] = useState(false);
 
   const isMobile = useMediaQuery("(max-width:900px)");
 
   const defaultValues = {
     gender: [],
-    category: [], // FIX: should be an array, not 'All'
+    category: [], // Should be an array, not 'All'
     priceRange: "",
     sortBy: "featured",
     searchQuery: "",
@@ -55,7 +56,7 @@ function HomePage() {
     const getProducts = async () => {
       setLoading(true);
       try {
-        // Build query params from filters and page
+        // Build query parameters from filters and page
         const params = new URLSearchParams();
         if (filters.searchQuery) params.append("keyword", filters.searchQuery);
         if (filters.category && filters.category !== "All") {
@@ -92,6 +93,20 @@ function HomePage() {
     filters.priceRange,
     filters.sortBy,
   ]);
+
+  const clearSearch = () => {
+    setValue("searchQuery", "", {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+    setResetSearch(true); // Trigger reset
+  };
+
+  useEffect(() => {
+    if (resetSearch) {
+      setResetSearch(false); // Reset the flag after clearing
+    }
+  }, [resetSearch]);
 
   return (
     <>
@@ -140,7 +155,10 @@ function HomePage() {
               <DialogTitle>Filter</DialogTitle>
               <DialogContent>
                 <FormProvider methods={methods}>
-                  <ProductFilter resetFilter={reset} />
+                  <ProductFilter
+                    resetFilter={reset}
+                    clearSearch={clearSearch}
+                  />
                 </FormProvider>
               </DialogContent>
             </Dialog>
@@ -153,7 +171,7 @@ function HomePage() {
             }}
           >
             <FormProvider methods={methods}>
-              <ProductFilter resetFilter={reset} />
+              <ProductFilter resetFilter={reset} clearSearch={clearSearch} />
             </FormProvider>
           </Stack>
         )}
@@ -169,7 +187,8 @@ function HomePage() {
               <ProductSearch
                 value={filters.searchQuery}
                 onChange={(e) => {
-                  setValue("searchQuery", e.target.value, {
+                  const value = e?.target?.value || ""; // Safely access value
+                  setValue("searchQuery", value, {
                     shouldValidate: true,
                     shouldDirty: true,
                   });
@@ -181,8 +200,9 @@ function HomePage() {
                     shouldDirty: true,
                   });
                   setPage(1);
-                  setSearchTrigger((t) => t + 1); // TRIGGER SEARCH
+                  setSearchTrigger((t) => t + 1); // Trigger search
                 }}
+                reset={resetSearch}
               />
               <ProductSort
                 value={filters.sortBy}

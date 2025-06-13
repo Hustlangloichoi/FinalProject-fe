@@ -37,14 +37,25 @@ function LoginModal({ open, onClose }) {
       const payload = JSON.parse(atob(token.split(".")[1]));
       const role = payload.isAdmin ? "admin" : "user";
       window.localStorage.setItem("token", token);
-      auth.login(data.email, role, onClose); // Only close modal, do not navigate
+      auth.login(data.email, role, onClose); // Close modal only, do not navigate
     } catch (err) {
       alert("Login failed: " + (err.response?.data?.message || err.message));
     }
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth="xs"
+      fullWidth
+      sx={{
+        ".MuiDialog-paper": {
+          width: { xs: "90%", sm: "400px" },
+          padding: { xs: 2, sm: 4 },
+        },
+      }}
+    >
       <DialogTitle>Login</DialogTitle>
       <DialogContent>
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>

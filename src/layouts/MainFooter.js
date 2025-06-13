@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography, Link } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
 function MainFooter() {
   return (
@@ -33,18 +33,18 @@ function MainFooter() {
             Customer Service
           </Typography>
           <Box>
-            <Link href="#" color="inherit" underline="hover" display="block">
+            <Typography color="text.secondary" display="block">
               Help Center
-            </Link>
-            <Link href="#" color="inherit" underline="hover" display="block">
+            </Typography>
+            <Typography color="text.secondary" display="block">
               Returns
-            </Link>
-            <Link href="#" color="inherit" underline="hover" display="block">
+            </Typography>
+            <Typography color="text.secondary" display="block">
               Shipping
-            </Link>
-            <Link href="#" color="inherit" underline="hover" display="block">
+            </Typography>
+            <Typography color="text.secondary" display="block">
               FAQs
-            </Link>
+            </Typography>
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
@@ -52,18 +52,18 @@ function MainFooter() {
             Categories
           </Typography>
           <Box>
-            <Link href="#" color="inherit" underline="hover" display="block">
+            <Typography color="text.secondary" display="block">
               Vitamins
-            </Link>
-            <Link href="#" color="inherit" underline="hover" display="block">
+            </Typography>
+            <Typography color="text.secondary" display="block">
               Supplements
-            </Link>
-            <Link href="#" color="inherit" underline="hover" display="block">
+            </Typography>
+            <Typography color="text.secondary" display="block">
               Personal Care
-            </Link>
-            <Link href="#" color="inherit" underline="hover" display="block">
+            </Typography>
+            <Typography color="text.secondary" display="block">
               Medical Devices
-            </Link>
+            </Typography>
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>

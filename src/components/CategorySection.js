@@ -7,10 +7,6 @@ const Section = styled.section`
   background: #fff;
 `;
 
-const Title = styled.h2`
-  text-align: center;
-`;
-
 const CategoriesWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -19,8 +15,7 @@ const CategoriesWrapper = styled.div`
   flex-wrap: wrap;
 
   @media (max-width: 600px) {
-    gap: 12px;
-    justify-content: center;
+    display: none; /* Hide categories on mobile */
   }
 `;
 
@@ -29,6 +24,7 @@ const CategoryItem = styled.div`
   min-width: 140px;
   flex: 1 1 180px;
   max-width: 200px;
+  font-size: 1.5rem; /* Slightly reduced font size */
 
   @media (max-width: 900px) {
     flex: 1 1 45%;
@@ -54,7 +50,11 @@ const CategorySection = ({ onCategoryClick }) => {
     async function fetchCategories() {
       try {
         const res = await apiService.get("/categories");
-        const cats = res.data.category || res.data.categories || res.data.data?.category || [];
+        const cats =
+          res.data.category ||
+          res.data.categories ||
+          res.data.data?.category ||
+          [];
         setCategories(cats);
       } catch (err) {
         setCategories([]);
@@ -65,7 +65,6 @@ const CategorySection = ({ onCategoryClick }) => {
 
   return (
     <Section className="category-section">
-      <Title>Shop by Category</Title>
       <CategoriesWrapper>
         {categories.map((cat, idx) => (
           <CategoryItem

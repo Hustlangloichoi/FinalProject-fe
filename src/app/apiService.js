@@ -3,7 +3,7 @@ import { BASE_URL } from "./config";
 
 const apiService = axios.create({
   baseURL: BASE_URL,
-  withCredentials: true, // Send cookies with requests
+  withCredentials: true, // Include cookies with requests
 });
 
 apiService.interceptors.request.use(
@@ -13,7 +13,12 @@ apiService.interceptors.request.use(
     if (token) {
       request.headers["Authorization"] = `Bearer ${token}`;
     }
-    console.log("[API REQUEST]", request.method?.toUpperCase(), request.url, request.params || "");
+    console.log(
+      "[API REQUEST]",
+      request.method?.toUpperCase(),
+      request.url,
+      request.params || ""
+    );
     return request;
   },
   function (error) {

@@ -26,7 +26,8 @@ const FilterWrapper = styled.div`
     width: 100%;
   }
 `;
-const SectionTitle = styled.h6`
+const SectionTitle = styled.h3`
+  font-size: 1.5rem; /* Slightly reduced font size */
   font-weight: 600;
   margin: 0 0 8px 0;
 `;
@@ -49,7 +50,7 @@ const ClearButton = styled.button`
   }
 `;
 
-function ProductFilter({ resetFilter }) {
+function ProductFilter({ resetFilter, clearSearch }) {
   const [categories, setCategories] = useState(["All"]);
   const { setValue, watch } = useFormContext();
   const selectedCategories = watch("category") || [];
@@ -58,7 +59,11 @@ function ProductFilter({ resetFilter }) {
     async function fetchCategories() {
       try {
         const res = await apiService.get("/categories");
-        const cats = res.data.category || res.data.categories || res.data.data?.category || [];
+        const cats =
+          res.data.category ||
+          res.data.categories ||
+          res.data.data?.category ||
+          [];
         setCategories(["All", ...cats.map((c) => c.name)]);
       } catch (err) {
         setCategories(["All"]);
@@ -105,7 +110,15 @@ function ProductFilter({ resetFilter }) {
           getOptionLabel={FILTER_PRICE_OPTIONS.map((item) => item.label)}
         />
       </div>
-      <ClearButton type="button" onClick={resetFilter}>
+      <ClearButton
+        type="button"
+        onClick={() => {
+          resetFilter();
+          if (clearSearch) {
+            clearSearch(); // Clear the search input
+          }
+        }}
+      >
         <ClearAllIcon style={{ fontSize: 20 }} />
         Clear All
       </ClearButton>

@@ -6,13 +6,13 @@ import {
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#1976d2", // clinical blue
+      main: "#1976d2", // Clinical blue
     },
     secondary: {
-      main: "#90caf9", // light blue
+      main: "#90caf9", // Light blue
     },
     background: {
-      default: "#f5f7fa", // soft white/grey
+      default: "#f5f7fa", // Soft white/grey
       paper: "#ffffff",
     },
     text: {

@@ -11,6 +11,8 @@ function UserManagement() {
       columns={[
         { label: "Name", render: (item) => item.name },
         { label: "Email", render: (item) => item.email },
+        { label: "Phone", render: (item) => item.phone }, // Added phone column
+        { label: "Address", render: (item) => item.address }, // Added address column
         {
           label: "Role",
           render: (item) => item.role || (item.isAdmin ? "admin" : "user"),
@@ -19,6 +21,8 @@ function UserManagement() {
       formFields={[
         { label: "Name", key: "name", required: true },
         { label: "Email", key: "email", required: true },
+        { label: "Phone", key: "phone", required: false }, // Added phone field
+        { label: "Address", key: "address", required: false }, // Added address field
         {
           label: "Password",
           key: "password",
@@ -30,6 +34,8 @@ function UserManagement() {
       getInitialItem={() => ({
         name: "",
         email: "",
+        phone: "", // Added phone field
+        address: "", // Added address field
         password: "",
         isAdmin: false,
       })}

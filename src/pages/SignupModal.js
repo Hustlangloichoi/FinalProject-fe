@@ -14,7 +14,9 @@ import { FormProvider, FTextField } from "../components/form";
 const SignupSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
 });
 const defaultValues = {
   name: "",
@@ -43,7 +45,18 @@ function SignupModal({ open, onClose }) {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth="xs"
+      fullWidth
+      sx={{
+        ".MuiDialog-paper": {
+          width: { xs: "90%", sm: "400px" },
+          padding: { xs: 2, sm: 4 },
+        },
+      }}
+    >
       <DialogTitle>Sign Up</DialogTitle>
       <DialogContent>
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>

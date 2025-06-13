@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Wrapper = styled.div`
@@ -28,13 +28,33 @@ const IconWrapper = styled.button`
   cursor: pointer;
 `;
 
-function ProductSearch({ value, onChange, onSearch }) {
+function ProductSearch({ value, onChange, onSearch, reset }) {
   const inputRef = useRef();
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    if (reset) {
+      setDebouncedValue("");
+    }
+  }, [reset]);
+
+  const handleInputChange = (e) => {
+    setDebouncedValue(e.target.value);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent the page from scrolling to the top
+      if (onSearch) {
+        onSearch(debouncedValue); // Trigger search only on Enter
+      }
+    }
+  };
 
   const handleClick = (e) => {
-    e.preventDefault(); // Just in case
+    e.preventDefault(); // Prevent default form submission behavior
     if (onSearch) {
-      onSearch(inputRef.current ? inputRef.current.value : value);
+      onSearch(debouncedValue);
     }
   };
 
@@ -44,8 +64,9 @@ function ProductSearch({ value, onChange, onSearch }) {
         ref={inputRef}
         type="text"
         placeholder="Search for products..."
-        value={value}
-        onChange={onChange}
+        value={debouncedValue}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown} // Add keydown handler
       />
       <IconWrapper as="button" type="button" onClick={handleClick}>
         <SearchIcon />

@@ -52,6 +52,12 @@ const DashboardContainer = styled(Box)`
   border-radius: 24px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.05);
   padding: 16px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
 `;
 
 const SidebarPaper = styled(Paper)`
@@ -77,6 +83,13 @@ const SectionBox = styled(Box)`
   }
 `;
 
+const SectionList = styled(Stack)`
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 16px;
+  }
+`;
+
 function AdminPage() {
   const [selectedSection, setSelectedSection] = useState(null);
   const SectionComponent = sectionComponents[selectedSection];
@@ -87,7 +100,7 @@ function AdminPage() {
         <Typography variant="h4" align="left" sx={{ mb: 4, fontWeight: 700 }}>
           Admin Dashboard
         </Typography>
-        <Stack direction="column" spacing={2} alignItems="flex-start">
+        <SectionList direction="column" spacing={2} alignItems="flex-start">
           {sectionList.map((section) => (
             <SectionBox
               key={section.key}
@@ -105,7 +118,7 @@ function AdminPage() {
               </Box>
             </SectionBox>
           ))}
-        </Stack>
+        </SectionList>
       </SidebarPaper>
       <Divider orientation="vertical" flexItem sx={{ mx: 3, height: "auto" }} />
       <Box sx={{ flexGrow: 1, minWidth: 350 }}>

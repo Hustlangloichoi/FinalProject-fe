@@ -26,7 +26,10 @@ function MainHeader() {
   return (
     <Box>
       <AppBar position="static">
-        <Toolbar variant="dense" sx={{ px: { xs: 1, sm: 2 }, minHeight: 60, py: 1.5 }}>
+        <Toolbar
+          variant="dense"
+          sx={{ px: { xs: 1, sm: 2 }, minHeight: 60, py: 1.5 }}
+        >
           <IconButton
             edge="start"
             color="inherit"

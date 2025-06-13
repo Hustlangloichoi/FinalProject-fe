@@ -16,13 +16,13 @@ const Title = styled.h2`
 
 const TestimonialsWrapper = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 30px;
+  flex-direction: column; /* Align cards vertically */
+  align-items: center; /* Center cards with the title */
+  gap: 20px;
   margin-top: 20px;
-  flex-wrap: wrap;
+
   @media (max-width: 600px) {
-    gap: 12px;
-    justify-content: flex-start;
+    gap: 16px; /* Adjust gap for mobile */
   }
 `;
 

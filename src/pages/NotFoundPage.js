@@ -3,9 +3,22 @@ import { Box, Button, Typography, Container } from "@mui/material";
 
 function NotFoundPage() {
   return (
-    <Container sx={{ display: "flex", height: "100%", alignItems: "center" }}>
-      <Box sx={{ maxWidth: 480, margin: "auto", textAlign: "center" }}>
-        <Typography variant="h4" paragraph>
+    <Container
+      sx={{
+        display: "flex",
+        height: "100%",
+        alignItems: "center",
+        px: { xs: 2, sm: 0 },
+      }}
+    >
+      <Box
+        sx={{
+          maxWidth: { xs: "100%", sm: 480 },
+          margin: "auto",
+          textAlign: "center",
+        }}
+      >
+        <Typography variant={{ xs: "h5", sm: "h4" }} paragraph>
           Page not found!
         </Typography>
         <Typography sx={{ color: "text.secondary", mb: "1rem" }}>
