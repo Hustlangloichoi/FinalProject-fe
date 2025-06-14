@@ -59,7 +59,6 @@ function AuthProvider({ children }) {
           });
         }
       } catch (err) {
-        console.error(err);
         dispatch({
           type: INITIALIZE,
           payload: {

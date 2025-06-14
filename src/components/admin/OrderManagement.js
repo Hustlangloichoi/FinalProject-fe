@@ -1,39 +1,85 @@
 import { useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box } from "@mui/material";
 import ManagementTable from "./ManagementTable";
 
 function OrderManagement() {
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: "1200px", // Default width for larger screens
+          mx: "auto",
+          p: 2,
+          "@media screen and (max-width: 768px)": {
+            display: "none", // Hide the dashboard on smaller screens
+          },
+        }}
+      >
+        <Button
+          variant="contained"
+          sx={{ display: { xs: "block", md: "none" } }} // Show menu button on small screens
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          Menu
+        </Button>
+        {menuOpen && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              zIndex: 10,
+            }}
+          >
+            {/* Render the dashboard content here */}
+          </Box>
+        )}
+      </Box>
+
       <ManagementTable
         title="Order Management"
-        fetchUrl="/orders"
+        fetchUrl="/orders" // Fetch order data from the backend
         addUrl={null} // Orders are not added from admin
         editUrl={null} // Orders are not edited from admin
         deleteUrl={(item) => `/orders/${item._id}`}
-        columns={[
+        columns={[ // Define columns to display fetched data
           {
             label: "User",
             render: (item) => item.sender?.name || item.sender?.email || "-",
           },
-          { label: "Product", render: (item) => item.product?.name || "-" },
+          {
+            label: "Product",
+            render: (item) => item.product?.name || "-",
+          },
           {
             label: "Quantity",
             render: (item) => item.quantity || "-",
           },
           {
             label: "Total Price",
-            render: (item) => item.totalPrice || "-",
+            render: (item) => {
+              const calculatedTotalPrice = (item.quantity || 0) * (item.product?.price || 0);
+              return calculatedTotalPrice ? calculatedTotalPrice.toFixed(2) : "-";
+            },
           },
           {
-            label: "Payment Method",
-            render: (item) => item.paymentMethod || "-",
+            label: "Note",
+            render: (item) => item.note || "-",
           },
           {
-            label: "Payment Details",
-            render: (item) => item.paymentDetails || "-",
+            label: "Phone Number",
+            render: (item) => item.phoneNumber || "-",
+          },
+          {
+            label: "Address",
+            render: (item) => item.address || "-",
           },
           {
             label: "",
@@ -61,8 +107,6 @@ function OrderManagement() {
             <p><strong>Address:</strong> {selectedOrder.address || "-"}</p>
             <p><strong>Quantity:</strong> {selectedOrder.quantity || "-"}</p>
             <p><strong>Total Price:</strong> {selectedOrder.totalPrice || "-"}</p>
-            <p><strong>Payment Method:</strong> {selectedOrder.paymentMethod || "-"}</p>
-            <p><strong>Payment Details:</strong> {selectedOrder.paymentDetails || "-"}</p>
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setSelectedOrder(null)} color="primary">

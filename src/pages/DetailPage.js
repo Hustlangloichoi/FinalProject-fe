@@ -30,8 +30,8 @@ function DetailPage() {
   const [address, setAddress] = useState(""); // New state for address
   const [phoneNumber, setPhoneNumber] = useState(""); // New state for phone number
   const [paymentMethod, setPaymentMethod] = useState("Momo e-wallet"); // New state for payment method
-  const [totalPrice, setTotalPrice] = useState(0); // New state for total price
   const [note, setNote] = useState(""); // New state for note
+  const [totalPrice, setTotalPrice] = useState(0); // New state for total price
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -51,13 +51,13 @@ function DetailPage() {
   }, [id]);
 
   useEffect(() => {
-    if (product) {
+    if (product && quantity) {
       setTotalPrice(product.price * quantity);
     }
-  }, [product, quantity]); // Recalculate total price when product or quantity changes
+  }, [product, quantity]); // Ensure total price is recalculated based on quantity from backend
 
   const createOrder = async (orderData) => {
-    return await apiService.post(`/orders`, orderData);
+    return await apiService.post(`/orders/${id}`, orderData);
   };
 
   const handleRequestOrder = async () => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -25,6 +25,11 @@ const defaultValues = {
 };
 
 function SignupModal({ open, onClose }) {
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const methods = useForm({
     resolver: yupResolver(SignupSchema),
     defaultValues,
@@ -36,41 +41,85 @@ function SignupModal({ open, onClose }) {
       await import("../app/apiService").then((m) =>
         m.default.post("/auth/register", data)
       );
-      alert("Signup successful! You can now log in.");
+      setSuccessDialogOpen(true); // Open success dialog
+      setSuccessMessage("Signup successful! You can now log in.");
       reset();
       onClose();
     } catch (err) {
-      alert("Signup failed: " + (err.response?.data?.message || err.message));
+      setErrorDialogOpen(true); // Open error dialog
+      setErrorMessage("Signup failed: " + (err.response?.data?.message || err.message));
     }
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      maxWidth="xs"
-      fullWidth
-      sx={{
-        ".MuiDialog-paper": {
-          width: { xs: "90%", sm: "400px" },
-          padding: { xs: 2, sm: 4 },
-        },
-      }}
-    >
-      <DialogTitle>Sign Up</DialogTitle>
-      <DialogContent>
-        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing={3} sx={{ minWidth: "300px", mt: 1 }}>
-            <FTextField name="name" label="Name" />
-            <FTextField name="email" label="Email" />
-            <FTextField name="password" label="Password" type="password" />
-            <Button type="submit" variant="contained">
-              Sign Up
-            </Button>
-          </Stack>
-        </FormProvider>
-      </DialogContent>
-    </Dialog>
+    <>
+      <Dialog
+        open={open}
+        onClose={onClose}
+        maxWidth="xs"
+        fullWidth
+        sx={{
+          ".MuiDialog-paper": {
+            width: { xs: "90%", sm: "400px" },
+            padding: { xs: 2, sm: 4 },
+          },
+        }}
+      >
+        <DialogTitle>Sign Up</DialogTitle>
+        <DialogContent>
+          <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+            <Stack spacing={3} sx={{ minWidth: "300px", mt: 1 }}>
+              <FTextField name="name" label="Name" />
+              <FTextField name="email" label="Email" />
+              <FTextField name="password" label="Password" type="password" />
+              <Button type="submit" variant="contained">
+                Sign Up
+              </Button>
+            </Stack>
+          </FormProvider>
+        </DialogContent>
+      </Dialog>
+
+      {/* Success Dialog */}
+      <Dialog
+        open={successDialogOpen}
+        onClose={() => setSuccessDialogOpen(false)}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>Success</DialogTitle>
+        <DialogContent>
+          <div>{successMessage}</div>
+          <Button
+            onClick={() => setSuccessDialogOpen(false)}
+            variant="contained"
+            sx={{ mt: 2 }}
+          >
+            Close
+          </Button>
+        </DialogContent>
+      </Dialog>
+
+      {/* Error Dialog */}
+      <Dialog
+        open={errorDialogOpen}
+        onClose={() => setErrorDialogOpen(false)}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>Error</DialogTitle>
+        <DialogContent>
+          <div>{errorMessage}</div>
+          <Button
+            onClick={() => setErrorDialogOpen(false)}
+            variant="contained"
+            sx={{ mt: 2 }}
+          >
+            Close
+          </Button>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 

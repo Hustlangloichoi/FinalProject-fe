@@ -35,6 +35,8 @@ const UserPage = () => {
     password: "",
   });
   const [orders, setOrders] = useState([]);
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     // Fetch user info (from backend) and orders
@@ -82,7 +84,8 @@ const UserPage = () => {
       setProfile(updatedProfile.data.data); // Update profile with the latest data
       setOpenEdit(false);
     } catch (err) {
-      alert("Failed to update profile");
+      setErrorDialogOpen(true);
+      setErrorMessage("Failed to update profile.");
     }
   };
 
@@ -91,7 +94,8 @@ const UserPage = () => {
       await apiService.delete(`/orders/${orderId}`); // Corrected endpoint
       setOrders(orders.filter((order) => order._id !== orderId));
     } catch (err) {
-      alert("Failed to cancel order");
+      setErrorDialogOpen(true); // Open error dialog
+      setErrorMessage("Failed to cancel order.");
     }
   };
 
@@ -219,6 +223,18 @@ const UserPage = () => {
           <Button onClick={handleEditSave} variant="contained">
             Save
           </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={errorDialogOpen}
+        onClose={() => setErrorDialogOpen(false)}
+      >
+        <DialogTitle>Error</DialogTitle>
+        <DialogContent>
+          <Typography>{errorMessage}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setErrorDialogOpen(false)}>Close</Button>
         </DialogActions>
       </Dialog>
     </Box>

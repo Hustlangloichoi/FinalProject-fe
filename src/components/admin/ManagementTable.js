@@ -72,6 +72,8 @@ function ManagementTable({
   const [newItem, setNewItem] = useState(getInitialItem());
   const [openEdit, setOpenEdit] = useState(false);
   const [editItem, setEditItem] = useState(null);
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   // Pagination state for all resources
   const isPaginatedTable = ["/products", "/orders", "/users", "/categories"].includes(fetchUrl);
   const [page, setPage] = useState(1);
@@ -120,7 +122,8 @@ function ManagementTable({
       }
       setItems(arr);
     } catch (err) {
-      alert("Failed to fetch data");
+      setErrorDialogOpen(true);
+      setErrorMessage("Failed to fetch data");
     }
   };
 
@@ -141,7 +144,8 @@ function ManagementTable({
       await apiService.delete(deleteUrl(item));
       setItems(items.filter((i) => i._id !== item._id));
     } catch (err) {
-      alert("Failed to delete");
+      setErrorDialogOpen(true); // Open error dialog
+      setErrorMessage("Failed to delete.");
     }
   };
 
@@ -163,7 +167,8 @@ function ManagementTable({
       setNewItem(getInitialItem());
       fetchItems();
     } catch (err) {
-      alert("Failed to add");
+      setErrorDialogOpen(true);
+      setErrorMessage("Failed to add.");
     }
   };
 
@@ -185,7 +190,8 @@ function ManagementTable({
       } else if (err.message) {
         msg += ": " + err.message;
       }
-      alert(msg);
+      setErrorDialogOpen(true);
+      setErrorMessage(msg);
     }
   };
 
@@ -331,6 +337,18 @@ function ManagementTable({
           </DialogActions>
         </Dialog>
       )}
+      {/* Error Dialog */}
+      <Dialog open={errorDialogOpen} onClose={() => setErrorDialogOpen(false)}>
+        <DialogTitle>Error</DialogTitle>
+        <DialogContent>
+          <Typography>{errorMessage}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setErrorDialogOpen(false)} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       {/* Pagination for paginated resources */}
       {isPaginatedTable && totalPages > 1 && (
         <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>

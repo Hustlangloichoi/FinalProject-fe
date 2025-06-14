@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -29,6 +29,8 @@ function LoginModal({ open, onClose }) {
     defaultValues,
   });
   const { handleSubmit } = methods;
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = async (data) => {
     try {
@@ -39,36 +41,53 @@ function LoginModal({ open, onClose }) {
       window.localStorage.setItem("token", token);
       auth.login(data.email, role, onClose); // Close modal only, do not navigate
     } catch (err) {
-      alert("Login failed: " + (err.response?.data?.message || err.message));
+      setErrorDialogOpen(true); // Open error dialog
+      setErrorMessage("Login failed: " + (err.response?.data?.message || err.message));
     }
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      maxWidth="xs"
-      fullWidth
-      sx={{
-        ".MuiDialog-paper": {
-          width: { xs: "90%", sm: "400px" },
-          padding: { xs: 2, sm: 4 },
-        },
-      }}
-    >
-      <DialogTitle>Login</DialogTitle>
-      <DialogContent>
-        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing={3} sx={{ minWidth: "300px", mt: 1 }}>
-            <FTextField name="email" label="Email" />
-            <FTextField name="password" label="Password" type="password" />
-            <Button type="submit" variant="contained">
-              Login
-            </Button>
-          </Stack>
-        </FormProvider>
-      </DialogContent>
-    </Dialog>
+    <>
+      <Dialog
+        open={open}
+        onClose={onClose}
+        maxWidth="xs"
+        fullWidth
+        sx={{
+          ".MuiDialog-paper": {
+            width: { xs: "90%", sm: "400px" },
+            padding: { xs: 2, sm: 4 },
+          },
+        }}
+      >
+        <DialogTitle>Login</DialogTitle>
+        <DialogContent>
+          <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+            <Stack spacing={3} sx={{ minWidth: "300px", mt: 1 }}>
+              <FTextField name="email" label="Email" />
+              <FTextField name="password" label="Password" type="password" />
+              <Button type="submit" variant="contained">
+                Login
+              </Button>
+            </Stack>
+          </FormProvider>
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={errorDialogOpen}
+        onClose={() => setErrorDialogOpen(false)}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>Error</DialogTitle>
+        <DialogContent>
+          <p>{errorMessage}</p>
+          <Button onClick={() => setErrorDialogOpen(false)} color="primary">
+            Close
+          </Button>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 

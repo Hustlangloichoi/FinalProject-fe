@@ -56,7 +56,8 @@ apiService.interceptors.response.use(
         // Redirect to homepage and show error
         window.location.href = "/";
         setTimeout(() => {
-          alert("Your session has expired. Please log in again.");
+          setErrorDialogOpen(true); // Open error dialog
+          setErrorMessage("Your session has expired. Please log in again.");
         }, 100);
         return Promise.reject(refreshError);
       }
@@ -80,5 +81,13 @@ export async function refreshAccessToken() {
     throw err;
   }
 }
+
+let setErrorDialogOpen = (state) => {
+  console.error("Error dialog state changed:", state);
+};
+
+let setErrorMessage = (message) => {
+  console.error("Error message set:", message);
+};
 
 export default apiService;
