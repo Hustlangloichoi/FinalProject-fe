@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  TextField,
 } from "@mui/material";
 import apiService from "../app/apiService";
 import LoadingScreen from "../components/LoadingScreen";
@@ -25,6 +26,12 @@ function DetailPage() {
   const { isAuthenticated, user } = useAuth();
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [quoteLoading, setQuoteLoading] = useState(false);
+  const [quantity, setQuantity] = useState(1); // New state for quantity
+  const [address, setAddress] = useState(""); // New state for address
+  const [phoneNumber, setPhoneNumber] = useState(""); // New state for phone number
+  const [paymentMethod, setPaymentMethod] = useState("Momo e-wallet"); // New state for payment method
+  const [totalPrice, setTotalPrice] = useState(0); // New state for total price
+  const [note, setNote] = useState(""); // New state for note
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -43,19 +50,36 @@ function DetailPage() {
     fetchProduct();
   }, [id]);
 
+  useEffect(() => {
+    if (product) {
+      setTotalPrice(product.price * quantity);
+    }
+  }, [product, quantity]); // Recalculate total price when product or quantity changes
+
+  const createOrder = async (orderData) => {
+    return await apiService.post(`/orders`, orderData);
+  };
+
   const handleRequestOrder = async () => {
+    if (!address || !phoneNumber) {
+      alert("Please provide both address and phone number.");
+      return;
+    }
+
     setQuoteLoading(true);
     try {
-      const message = `I'd like to buy ${product.name}`;
-      await apiService.post(`/orders/products/${product._id}/orders`, {
-        content: message,
+      await createOrder({
+        productId: id,
+        quantity,
+        address,
+        phoneNumber,
+        note: note, // Updated to send `note` instead of `content`
+        paymentMethod: paymentMethod, // Only send the payment method as a string
       });
-      alert("Order sent successfully!");
+      alert("Order placed successfully!");
       setQuoteOpen(false);
     } catch (err) {
-      alert(
-        "Failed to send order: " + (err.response?.data?.message || err.message)
-      );
+      alert("Failed to order.");
     }
     setQuoteLoading(false);
   };
@@ -165,55 +189,76 @@ function DetailPage() {
         )}
       </Paper>
       <Dialog open={quoteOpen} onClose={() => setQuoteOpen(false)}>
-        <DialogTitle>Order</DialogTitle>
+        <DialogTitle>Order Product</DialogTitle>
         <DialogContent>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row", // Align image and text side by side
-              gap: 2,
-              alignItems: "center", // Center align both image and text box
-              height: "100%", // Ensure both elements take full height
-            }}
-          >
-            <Box
+          <Stack spacing={2}>
+            <TextField
+              label="Quantity"
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+              InputProps={{ inputProps: { min: 1 } }}
+              fullWidth
+            />
+            <TextField
+              label="Address"
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              fullWidth
+            />
+            <TextField
+              label="Phone Number"
+              type="text"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              fullWidth
+            />
+            <TextField
+              select
+              label="Payment Method"
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              fullWidth
+              SelectProps={{ native: true }}
+            >
+              <option value="Momo e-wallet">Momo e-wallet</option>
+              <option value="Mb bank">Mb bank</option>
+              <option value="COD">Cash on Delivery (COD)</option>
+            </TextField>
+            <TextField
+              label="Note (Optional)"
+              type="text"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              fullWidth
+            />
+            <Typography
+              variant="body1"
               sx={{
-                flex: 1,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%", // Match height with parent container
+                backgroundColor: "#f5f5f5",
+                padding: "8px",
+                borderRadius: "4px",
+                whiteSpace: "pre-line", // Ensures line breaks are respected
               }}
             >
-              {product.image && (
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  style={{
-                    maxWidth: "100%",
-                    height: "100%", // Match height with text box
-                    objectFit: "contain", // Ensure proper scaling without cropping
-                  }}
-                />
-              )}
-            </Box>
-            <Box
+              {paymentMethod === "Momo e-wallet"
+                ? "Momo e-wallet\n0382050156\nHoang Cong Minh"
+                : paymentMethod === "Mb bank"
+                ? "Mb bank\n0382050156\nHoang Cong Minh"
+                : "Cash on Delivery (COD)"}
+            </Typography>
+            <Typography
+              variant="body1"
               sx={{
-                flex: 2,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                height: "100%", // Match height with parent container
+                backgroundColor: "#f5f5f5",
+                padding: "8px",
+                borderRadius: "4px",
               }}
             >
-              <Typography>
-                The following message will be sent automatically:
-              </Typography>
-              <Typography sx={{ my: 2, fontWeight: 500 }}>
-                {`I'd like to buy ${product.name}`}
-              </Typography>
-            </Box>
-          </Box>
+              Total Price: {fCurrency ? fCurrency(totalPrice) : totalPrice}
+            </Typography>
+          </Stack>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setQuoteOpen(false)} disabled={quoteLoading}>
@@ -224,7 +269,7 @@ function DetailPage() {
             variant="contained"
             disabled={quoteLoading}
           >
-            {quoteLoading ? "Sending..." : "Send Order"}
+            {quoteLoading ? "Ordering..." : "Order"}
           </Button>
         </DialogActions>
       </Dialog>
