@@ -1,22 +1,24 @@
 import React, { useState } from "react";
-import { Box, Typography, Stack } from "@mui/material";
+import { Box, Typography, Stack, styled } from "@mui/material";
 import OrderManagement from "../components/admin/OrderManagement";
 import CategoryManagement from "../components/admin/CategoryManagement";
 import UserManagement from "../components/admin/UserManagement";
 import ProductManagement from "../components/admin/ProductManagement";
+import MessageManagement from "../components/admin/MessageManagement";
 import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CategoryIcon from "@mui/icons-material/Category";
 import PeopleIcon from "@mui/icons-material/People";
-import styled from "styled-components";
+import MessageIcon from "@mui/icons-material/Message";
 
 const sectionComponents = {
   "Order Management": OrderManagement,
   "Product Management": ProductManagement,
   "Category Management": CategoryManagement,
   "User Management": UserManagement,
+  "Message Management": MessageManagement,
 };
 
 const sectionList = [
@@ -40,55 +42,83 @@ const sectionList = [
     icon: <PeopleIcon color="primary" sx={{ fontSize: 32 }} />,
     description: "Manage users",
   },
+  {
+    key: "Message Management",
+    icon: <MessageIcon color="primary" sx={{ fontSize: 32 }} />,
+    description: "Manage contact messages",
+  },
 ];
 
-const DashboardContainer = styled(Box)`
-  width: 100%;
-  margin-top: 32px;
-  display: flex;
-  align-items: flex-start;
-  background: linear-gradient(90deg, #f5f7fa 60%, #e3f2fd 100%);
-  min-height: 80vh;
-  border-radius: 24px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.05);
-  padding: 16px;
+const DashboardContainer = styled(Box)(({ theme }) => ({
+  width: '100%',
+  marginTop: 32,
+  display: 'flex',
+  alignItems: 'flex-start',
+  background: theme.palette.mode === 'light' 
+    ? 'linear-gradient(90deg, #f5f7fa 60%, #e3f2fd 100%)'
+    : 'linear-gradient(90deg, #1e1e1e 60%, #2c2c2c 100%)',
+  minHeight: '80vh',
+  borderRadius: 24,
+  boxShadow: theme.palette.mode === 'light'
+    ? '2px 2px 8px rgba(0, 0, 0, 0.05)'
+    : '2px 2px 8px rgba(0, 0, 0, 0.3)',
+  padding: 16,
 
-  @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: center;
-    padding: 16px;
-  }
-`;
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: 16,
+  },
+  
+  [theme.breakpoints.down('sm')]: {
+    marginTop: 16,
+    borderRadius: 16,
+    padding: 12,
+  },
+}));
 
-const SidebarPaper = styled(Paper)`
-  max-width: 350px;
-  padding: 24px;
-  min-height: 500px;
-  margin-right: 32px;
-`;
+const SidebarPaper = styled(Paper)(({ theme }) => ({
+  maxWidth: 350,
+  padding: 24,
+  minHeight: 500,
+  marginRight: 32,
+  
+  [theme.breakpoints.down('md')]: {
+    maxWidth: '100%',
+    marginRight: 0,
+    marginBottom: 16,
+    minHeight: 'auto',
+  },
+  
+  [theme.breakpoints.down('sm')]: {
+    padding: 16,
+  },
+}));
 
-const SectionBox = styled(Box)`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  cursor: pointer;
-  background: ${({ selected }) => (selected ? "#e3f2fd" : "#fff")};
-  border-radius: 16px;
-  box-shadow: ${({ selected }) => (selected ? 3 : 0)};
-  padding: 16px;
-  transition: all 0.2s;
-  &:hover {
-    background: #f1f8ff;
-  }
-`;
+const SectionBox = styled(Box)(({ selected, theme }) => ({
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  gap: 16,
+  cursor: 'pointer',
+  background: selected 
+    ? (theme.palette.mode === 'light' ? '#e3f2fd' : '#333')
+    : (theme.palette.mode === 'light' ? '#fff' : '#2c2c2c'),
+  borderRadius: 16,
+  boxShadow: selected ? theme.shadows[3] : 'none',
+  padding: 16,
+  transition: 'all 0.2s',
+  '&:hover': {
+    background: theme.palette.mode === 'light' ? '#f1f8ff' : '#404040',
+  },
+}));
 
-const SectionList = styled(Stack)`
-  @media (max-width: 600px) {
-    flex-direction: column;
-    gap: 16px;
-  }
-`;
+const SectionList = styled(Stack)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+    gap: 16,
+  },
+}));
 
 function AdminPage() {
   const [selectedSection, setSelectedSection] = useState(null);

@@ -15,12 +15,18 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Card,
+  Grid,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import apiService from "../app/apiService";
 import useAuth from "../hooks/useAuth";
 
 const UserPage = () => {
   const { user } = useAuth();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [profile, setProfile] = useState({
     name: user?.username || "",
     email: "",
@@ -124,59 +130,156 @@ const UserPage = () => {
           Edit Profile
         </Button>
       </Paper>
-      <Paper sx={{ p: 3, mb: 3 }}>
+      <Paper sx={{ p: { xs: 2, sm: 3 }, mb: 3 }}>
         <Typography variant="h6" sx={{ mb: 2 }}>
           Order History
         </Typography>
         {orders.length === 0 ? (
           <Typography>No orders found.</Typography>
         ) : (
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Image</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
+          <>
+            {/* Desktop Table */}
+            {!isMobile ? (
+              <TableContainer component={Paper}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Image</TableCell>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Price</TableCell>
+                      <TableCell>Actions</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {orders.map((order) => (
+                      <TableRow key={order._id}>
+                        <TableCell>
+                          <img
+                            src={order.product?.image || "/default-image.png"}
+                            alt={order.product?.name || "Product Image"}
+                            style={{ width: 50, height: 50, objectFit: "cover", borderRadius: 4 }}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          {order.product?.name || "Unknown Product"}
+                        </TableCell>
+                        <TableCell>
+                          {order.product?.price ? `$${order.product.price}` : "N/A"}
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="contained"
+                            color="error"
+                            size="small"
+                            onClick={() => handleCancelOrder(order._id)}
+                          >
+                            Delete Order
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              /* Mobile Card Layout */
+              <Grid container spacing={2}>
                 {orders.map((order) => (
-                  <TableRow key={order._id}>
-                    <TableCell>
-                      <img
-                        src={order.product?.image || "/default-image.png"}
-                        alt={order.product?.name || "Product Image"}
-                        style={{ width: 50, height: 50, objectFit: "cover" }}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      {order.product?.name || "Unknown Product"}
-                    </TableCell>
-                    <TableCell>
-                      {order.product?.price ? `$${order.product.price}` : "N/A"}
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        size="small"
-                        onClick={() => handleCancelOrder(order._id)}
+                  <Grid item xs={12} key={order._id}>
+                    <Card 
+                      sx={{ 
+                        display: 'flex',
+                        alignItems: 'center',
+                        p: 1,
+                        border: '1px solid',
+                        borderColor: 'divider',
+                        '&:hover': {
+                          boxShadow: 2,
+                        }
+                      }}
+                    >
+                      <Box 
+                        sx={{ 
+                          width: 80, 
+                          height: 80, 
+                          mr: 2,
+                          borderRadius: 1,
+                          overflow: 'hidden',
+                          flexShrink: 0
+                        }}
                       >
-                        Delete Order
-                      </Button>
-                    </TableCell>
-                  </TableRow>
+                        <img
+                          src={order.product?.image || "/default-image.png"}
+                          alt={order.product?.name || "Product Image"}
+                          style={{ 
+                            width: '100%', 
+                            height: '100%', 
+                            objectFit: 'cover' 
+                          }}
+                        />
+                      </Box>
+                      <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+                        <Typography 
+                          variant="h6" 
+                          sx={{ 
+                            fontSize: '1rem',
+                            fontWeight: 600,
+                            mb: 0.5,
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap'
+                          }}
+                        >
+                          {order.product?.name || "Unknown Product"}
+                        </Typography>
+                        <Typography 
+                          variant="body1" 
+                          color="primary" 
+                          sx={{ 
+                            fontWeight: 600,
+                            fontSize: '1.1rem'
+                          }}
+                        >
+                          {order.product?.price ? `$${order.product.price}` : "N/A"}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ ml: 1 }}>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          size="small"
+                          onClick={() => handleCancelOrder(order._id)}
+                          sx={{
+                            minWidth: 80,
+                            fontSize: '0.75rem',
+                            py: 1
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </Box>
+                    </Card>
+                  </Grid>
                 ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+              </Grid>
+            )}
+          </>
         )}
       </Paper>
-      <Dialog open={openEdit} onClose={() => setOpenEdit(false)}>
-        <DialogTitle>Edit Profile</DialogTitle>
-        <DialogContent>
+      <Dialog 
+        open={openEdit} 
+        onClose={() => setOpenEdit(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            mx: { xs: 2, sm: 3 },
+            width: { xs: 'calc(100% - 32px)', sm: 'auto' }
+          }
+        }}
+      >
+        <DialogTitle sx={{ pb: 1 }}>Edit Profile</DialogTitle>
+        <DialogContent sx={{ pt: 1 }}>
           <TextField
             label="Name"
             value={editProfile.name}
@@ -185,6 +288,7 @@ const UserPage = () => {
             }
             fullWidth
             sx={{ mb: 2 }}
+            size={isMobile ? "small" : "medium"}
           />
           <TextField
             label="Email"
@@ -194,6 +298,7 @@ const UserPage = () => {
             }
             fullWidth
             sx={{ mb: 2 }}
+            size={isMobile ? "small" : "medium"}
           />
           <TextField
             label="Phone"
@@ -203,6 +308,7 @@ const UserPage = () => {
             }
             fullWidth
             sx={{ mb: 2 }}
+            size={isMobile ? "small" : "medium"}
           />
           <TextField
             label="Address"
@@ -212,11 +318,23 @@ const UserPage = () => {
             }
             fullWidth
             sx={{ mb: 2 }}
+            size={isMobile ? "small" : "medium"}
+            multiline
+            rows={isMobile ? 2 : 3}
           />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenEdit(false)}>Cancel</Button>
-          <Button onClick={handleEditSave} variant="contained">
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button 
+            onClick={() => setOpenEdit(false)}
+            size={isMobile ? "small" : "medium"}
+          >
+            Cancel
+          </Button>
+          <Button 
+            onClick={handleEditSave} 
+            variant="contained"
+            size={isMobile ? "small" : "medium"}
+          >
             Save
           </Button>
         </DialogActions>

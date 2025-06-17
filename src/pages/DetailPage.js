@@ -12,6 +12,8 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import apiService from "../app/apiService";
 import LoadingScreen from "../components/LoadingScreen";
@@ -20,6 +22,8 @@ import useAuth from "../hooks/useAuth";
 
 function DetailPage() {
   const { id } = useParams();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -57,7 +61,7 @@ function DetailPage() {
   }, [product, quantity]); // Recalculate total price when product or quantity changes
 
   const createOrder = async (orderData) => {
-    return await apiService.post(`/orders`, orderData);
+    return await apiService.post(`/orders/${id}`, orderData);
   };
 
   const handleRequestOrder = async () => {
@@ -69,17 +73,22 @@ function DetailPage() {
     setQuoteLoading(true);
     try {
       await createOrder({
-        productId: id,
         quantity,
         address,
         phoneNumber,
-        note: note, // Updated to send `note` instead of `content`
-        paymentMethod: paymentMethod, // Only send the payment method as a string
+        note: note,
+        paymentMethod: paymentMethod,
+        paymentDetails:
+          paymentMethod === "Momo e-wallet"
+            ? "0382050156 Hoang Cong Minh (Momo e-wallet)"
+            : paymentMethod === "Mb bank"
+            ? "0382050156 Hoang Cong Minh (Mb bank)"
+            : "Cash on Delivery (COD)",
       });
       alert("Order placed successfully!");
       setQuoteOpen(false);
     } catch (err) {
-      alert("Failed to order.");
+      alert("Failed to order: " + (err.response?.data?.message || err.message));
     }
     setQuoteLoading(false);
   };
@@ -90,107 +99,146 @@ function DetailPage() {
   return (
     <Box
       sx={{
-        width: "90vw",
-        maxWidth: "100%", // Default for mobile
-        mx: "auto",
-        mt: 4,
-        p: 2, // Padding for mobile
-        display: "flex",
-        flexDirection: "column",
-        gap: 1.5,
-        "@media screen and (min-width: 1024px)": {
-          maxWidth: "80vw", // Adjusted width for desktop
-          display: "grid", // Use grid layout for desktop
-          gridTemplateColumns: "1fr 2fr", // Two-column layout with image on the left
-          gap: 3, // Increased gap for desktop
-          p: 4, // Padding for desktop
-        },
+        width: { xs: '100%', sm: '90%', md: '80%' },
+        maxWidth: 1200,
+        mx: 'auto',
+        mt: { xs: 2, sm: 4 },
+        px: { xs: 1, sm: 2 },
+        display: 'flex',
+        flexDirection: { xs: 'column', lg: 'row' },
+        gap: { xs: 2, lg: 4 },
       }}
     >
+      {/* Product Image */}
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          "@media (minWidth: 1024px)": {
-            justifyContent: "flex-start", // Align image to the left for desktop
-          },
+          flex: { xs: 'none', lg: '0 0 40%' },
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
         }}
       >
         {product.image && (
-          <img
+          <Box
+            component="img"
             src={product.image}
             alt={product.name}
-            style={{
-              maxWidth: "100%", // Full width for mobile
-              height: "auto",
-              marginBottom: "12px",
-              "@media (minWidth: 1024px)": {
-                maxWidth: "80%", // Adjusted width for desktop
-              },
+            sx={{
+              width: '100%',
+              maxWidth: { xs: 400, sm: 500, lg: '100%' },
+              height: 'auto',
+              borderRadius: 2,
+              boxShadow: 2,
             }}
           />
         )}
       </Box>
+
+      {/* Product Details */}
       <Paper
         sx={{
-          p: 2,
-          display: "flex",
-          flexDirection: "column",
-          gap: 1.5,
-          "@media (minWidth: 1024px)": {
-            p: 3, // Desktop-specific padding
-          },
+          flex: 1,
+          p: { xs: 2, sm: 3 },
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
         }}
         elevation={3}
       >
-        <Typography variant="h5" fontWeight={700} gutterBottom>
+        <Typography 
+          variant="h4" 
+          component="h1"
+          fontWeight={700} 
+          sx={{
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
+          }}
+        >
           {product.name}
         </Typography>
+        
         <Typography
-          variant="subtitle1"
+          variant="body1"
           color="text.secondary"
-          gutterBottom
           sx={{
-            maxHeight: "15em", // Reduced maximum height
-            overflowY: "auto",
-            display: "-webkit-box",
-            WebkitLineClamp: 10, // Adjusted line clamp
-            WebkitBoxOrient: "vertical",
-            whiteSpace: "pre-line",
+            maxHeight: { xs: '12em', md: '15em' },
+            overflowY: 'auto',
+            whiteSpace: 'pre-line',
+            lineHeight: 1.6,
+            fontSize: { xs: '0.875rem', sm: '1rem' }
           }}
         >
           {product.description}
         </Typography>
-        <Divider sx={{ my: 1.5 }} />
-        <Stack direction="row" spacing={1.5} alignItems="center" mb={1.5}>
-          <Typography variant="h5" color="primary.main" fontWeight={600}>
+        
+        <Divider sx={{ my: 1 }} />
+        
+        <Stack direction="row" spacing={2} alignItems="center" mb={2}>
+          <Typography 
+            variant="h4" 
+            color="primary.main" 
+            fontWeight={600}
+            sx={{
+              fontSize: { xs: '1.75rem', sm: '2rem', md: '2.125rem' }
+            }}
+          >
             {fCurrency ? fCurrency(product.price) : product.price}
           </Typography>
         </Stack>
-        {/* Add more product details here if available */}
+        
         {(!user?.role || user.role !== "admin") && (
-          <>
+          <Box sx={{ mt: 'auto' }}>
             <Button
               variant="contained"
               size="large"
-              sx={{ mt: 2 }}
+              fullWidth={isMobile}
+              sx={{ 
+                mt: 2,
+                py: { xs: 1.5, sm: 1 },
+                fontSize: { xs: '1rem', sm: '1.125rem' }
+              }}
               onClick={() => setQuoteOpen(true)}
               disabled={!isAuthenticated}
             >
-              Order
+              Order Now
             </Button>
             {!isAuthenticated && (
-              <Typography color="text.secondary" sx={{ mt: 1 }}>
-                Please log in to order.
+              <Typography 
+                color="text.secondary" 
+                sx={{ 
+                  mt: 1,
+                  textAlign: { xs: 'center', sm: 'left' },
+                  fontSize: { xs: '0.875rem', sm: '1rem' }
+                }}
+              >
+                Please log in to place an order.
               </Typography>
             )}
-          </>
+          </Box>
         )}
       </Paper>
-      <Dialog open={quoteOpen} onClose={() => setQuoteOpen(false)}>
-        <DialogTitle>Order Product</DialogTitle>
-        <DialogContent>
+      <Dialog 
+        open={quoteOpen} 
+        onClose={() => setQuoteOpen(false)}
+        maxWidth="sm"
+        fullWidth
+        fullScreen={isMobile}
+        PaperProps={{
+          sx: {
+            mx: { xs: 0, sm: 2 },
+            my: { xs: 0, sm: 2 },
+            width: { xs: '100%', sm: 'auto' },
+            height: { xs: '100%', sm: 'auto' },
+            maxHeight: { xs: '100%', sm: '90vh' }
+          }
+        }}
+      >
+        <DialogTitle sx={{ 
+          pb: 1,
+          fontSize: { xs: '1.25rem', sm: '1.5rem' }
+        }}>
+          Order Product
+        </DialogTitle>
+        <DialogContent sx={{ pt: 1 }}>
           <Stack spacing={2}>
             <TextField
               label="Quantity"
@@ -199,6 +247,7 @@ function DetailPage() {
               onChange={(e) => setQuantity(Number(e.target.value))}
               InputProps={{ inputProps: { min: 1 } }}
               fullWidth
+              size={isMobile ? "small" : "medium"}
             />
             <TextField
               label="Address"
@@ -206,6 +255,9 @@ function DetailPage() {
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               fullWidth
+              size={isMobile ? "small" : "medium"}
+              multiline
+              rows={isMobile ? 2 : 3}
             />
             <TextField
               label="Phone Number"
@@ -213,6 +265,7 @@ function DetailPage() {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               fullWidth
+              size={isMobile ? "small" : "medium"}
             />
             <TextField
               select
@@ -221,6 +274,7 @@ function DetailPage() {
               onChange={(e) => setPaymentMethod(e.target.value)}
               fullWidth
               SelectProps={{ native: true }}
+              size={isMobile ? "small" : "medium"}
             >
               <option value="Momo e-wallet">Momo e-wallet</option>
               <option value="Mb bank">Mb bank</option>
@@ -232,44 +286,78 @@ function DetailPage() {
               value={note}
               onChange={(e) => setNote(e.target.value)}
               fullWidth
+              size={isMobile ? "small" : "medium"}
+              multiline
+              rows={2}
             />
-            <Typography
-              variant="body1"
+            <Paper
+              elevation={1}
               sx={{
-                backgroundColor: "#f5f5f5",
-                padding: "8px",
-                borderRadius: "4px",
-                whiteSpace: "pre-line", // Ensures line breaks are respected
+                p: 2,
+                backgroundColor: 'grey.50',
+                border: '1px solid',
+                borderColor: 'grey.200'
               }}
             >
-              {paymentMethod === "Momo e-wallet"
-                ? "Momo e-wallet\n0382050156\nHoang Cong Minh"
-                : paymentMethod === "Mb bank"
-                ? "Mb bank\n0382050156\nHoang Cong Minh"
-                : "Cash on Delivery (COD)"}
-            </Typography>
-            <Typography
-              variant="body1"
+              <Typography
+                variant="body2"
+                sx={{
+                  whiteSpace: 'pre-line',
+                  fontFamily: 'monospace',
+                  fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                }}
+              >
+                {paymentMethod === "Momo e-wallet"
+                  ? "Momo e-wallet\n0382050156\nHoang Cong Minh"
+                  : paymentMethod === "Mb bank"
+                  ? "Mb bank\n0382050156\nHoang Cong Minh"
+                  : "Cash on Delivery (COD)"}
+              </Typography>
+            </Paper>
+            <Paper
+              elevation={1}
               sx={{
-                backgroundColor: "#f5f5f5",
-                padding: "8px",
-                borderRadius: "4px",
+                p: 2,
+                backgroundColor: 'primary.50',
+                border: '1px solid',
+                borderColor: 'primary.200'
               }}
             >
-              Total Price: {fCurrency ? fCurrency(totalPrice) : totalPrice}
-            </Typography>
+              <Typography
+                variant="h6"
+                color="primary"
+                sx={{
+                  fontSize: { xs: '1rem', sm: '1.25rem' },
+                  fontWeight: 600
+                }}
+              >
+                Total Price: {fCurrency ? fCurrency(totalPrice) : totalPrice}
+              </Typography>
+            </Paper>
           </Stack>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setQuoteOpen(false)} disabled={quoteLoading}>
+        <DialogActions sx={{ 
+          px: 3, 
+          pb: { xs: 3, sm: 2 },
+          gap: 1,
+          flexDirection: { xs: 'column', sm: 'row' }
+        }}>
+          <Button 
+            onClick={() => setQuoteOpen(false)} 
+            disabled={quoteLoading}
+            fullWidth={isMobile}
+            size={isMobile ? "large" : "medium"}
+          >
             Cancel
           </Button>
           <Button
             onClick={handleRequestOrder}
             variant="contained"
             disabled={quoteLoading}
+            fullWidth={isMobile}
+            size={isMobile ? "large" : "medium"}
           >
-            {quoteLoading ? "Ordering..." : "Order"}
+            {quoteLoading ? "Ordering..." : "Place Order"}
           </Button>
         </DialogActions>
       </Dialog>

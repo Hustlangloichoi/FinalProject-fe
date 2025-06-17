@@ -1,58 +1,106 @@
-import styled from "styled-components";
+import { styled } from "@mui/material/styles";
 import React from "react";
 
-const Wrapper = styled.section`
-  position: relative;
-  min-height: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-`;
+const Wrapper = styled('section')({
+  position: 'relative',
+  minHeight: '500px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  overflow: 'hidden',
+  
+  '@media (max-width: 768px)': {
+    minHeight: '400px',
+  },
+  
+  '@media (max-width: 480px)': {
+    minHeight: '350px',
+  },
+});
 
-const Video = styled.video`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-`;
+const Video = styled('video')({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+  zIndex: 0,
+});
 
-const Content = styled.div`
-  position: relative;
-  z-index: 1;
-  background: rgba(255, 255, 255, 0.85);
-  padding: 0px;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  max-width: 700px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  @media (max-width: 600px) {
-    padding: 16px 18px;
-  }
-`;
+const Content = styled('div')(({ theme }) => ({
+  position: 'relative',
+  zIndex: 1,
+  background: theme.palette.mode === 'light' 
+    ? 'rgba(255, 255, 255, 0.85)'
+    : 'rgba(30, 30, 30, 0.85)',
+  padding: '24px',
+  borderRadius: '16px',
+  boxShadow: theme.palette.mode === 'light'
+    ? '0 4px 24px rgba(0, 0, 0, 0.08)'
+    : '0 4px 24px rgba(0, 0, 0, 0.3)',
+  textAlign: 'center',
+  maxWidth: '700px',
+  width: '90%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  
+  '@media (max-width: 768px)': {
+    padding: '20px',
+    maxWidth: '90%',
+    borderRadius: '12px',
+  },
+  
+  '@media (max-width: 600px)': {
+    padding: '16px 18px',
+    maxWidth: '95%',
+    borderRadius: '8px',
+  },
+}));
 
-const Title = styled.h1`
-  word-break: break-word;
-  width: 100%;
-  overflow-wrap: break-word;
-  white-space: normal;
-`;
+const Title = styled('h1')(({ theme }) => ({
+  wordBreak: 'break-word',
+  width: '100%',
+  overflowWrap: 'break-word',
+  whiteSpace: 'normal',
+  margin: '0 0 16px 0',
+  fontSize: '2.5rem',
+  fontWeight: 700,
+  color: theme.palette.primary.main,
+  
+  '@media (max-width: 768px)': {
+    fontSize: '2rem',
+  },
+  
+  '@media (max-width: 600px)': {
+    fontSize: '1.75rem',
+  },
+  
+  '@media (max-width: 480px)': {
+    fontSize: '1.5rem',
+  },
+}));
 
-const Desc = styled.p`
-  word-break: break-word;
-  width: 100%;
-  overflow-wrap: break-word;
-  white-space: normal;
-  margin-top: 0px;
-`;
+const Desc = styled('p')(({ theme }) => ({
+  wordBreak: 'break-word',
+  width: '100%',
+  overflowWrap: 'break-word',
+  whiteSpace: 'normal',
+  marginTop: '0px',
+  fontSize: '1.1rem',
+  color: theme.palette.text.secondary,
+  lineHeight: 1.6,
+  
+  '@media (max-width: 768px)': {
+    fontSize: '1rem',
+  },
+  
+  '@media (max-width: 600px)': {
+    fontSize: '0.95rem',
+  },
+}));
 
 const HeroSection = () => {
   return (

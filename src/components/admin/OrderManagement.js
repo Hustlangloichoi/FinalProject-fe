@@ -12,7 +12,7 @@ function OrderManagement() {
         fetchUrl="/orders"
         addUrl={null} // Orders are not added from admin
         editUrl={null} // Orders are not edited from admin
-        deleteUrl={(item) => `/orders/${item._id}`}
+        deleteUrl={(item) => `/orders/${item._id}/admin`}
         columns={[
           {
             label: "User",

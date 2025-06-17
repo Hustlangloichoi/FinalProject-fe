@@ -1,12 +1,15 @@
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, useTheme } from "@mui/material";
 
 function MainFooter() {
+  const theme = useTheme();
+  
   return (
     <Box
       component="footer"
       sx={{
-        background: "#f5f5f5",
+        background: theme.palette.background.default,
+        borderTop: `1px solid ${theme.palette.divider}`,
         mt: 6,
         pt: 6,
         pb: 2,

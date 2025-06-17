@@ -231,8 +231,9 @@ function HomePage() {
                     sx={{
                       display: "flex",
                       justifyContent: "center",
-                      mt: 3,
-                      mb: 6,
+                      mt: { xs: 2, sm: 3 },
+                      mb: { xs: 4, sm: 6 },
+                      px: { xs: 1, sm: 0 },
                     }}
                   >
                     <Pagination
@@ -240,6 +241,9 @@ function HomePage() {
                       page={page}
                       onChange={(_, value) => setPage(value)}
                       color="primary"
+                      size={isMobile ? "small" : "medium"}
+                      siblingCount={isMobile ? 0 : 1}
+                      boundaryCount={isMobile ? 1 : 2}
                     />
                   </Box>
                 )}

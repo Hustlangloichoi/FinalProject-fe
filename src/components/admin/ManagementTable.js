@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import {
   Box,
   Typography,
@@ -17,6 +17,8 @@ import {
   DialogContent,
   Checkbox,
   FormControlLabel,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -27,6 +29,43 @@ import Pagination from "@mui/material/Pagination";
 
 const TableContainerStyled = styled(Box)`
   margin-bottom: 24px;
+  overflow-x: auto;
+  
+  @media (max-width: 768px) {
+    .MuiTable-root {
+      min-width: 650px;
+    }
+  }
+`;
+
+const MobileTableContainer = styled(Box)`
+  @media (max-width: 768px) {
+    display: block;
+    
+    .desktop-table {
+      display: none;
+    }
+    
+    .mobile-cards {
+      display: block;
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .desktop-table {
+      display: block;
+    }
+    
+    .mobile-cards {
+      display: none;
+    }
+  }
+`;
+
+const MobileCard = styled(Paper)`
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
 `;
 
 const FlexHeader = styled(Box)`
@@ -55,8 +94,9 @@ const ActionsCell = styled(TableCell)`
  * - columns: [{ label, render: (item) => node }]
  * - formFields: [{ label, key, type, required }]
  * - getInitialItem: () => object
+ * - customActions: [{ label, onClick: (item) => void, color }]
  */
-function ManagementTable({
+const ManagementTable = forwardRef(({
   title,
   fetchUrl,
   addUrl,
@@ -66,14 +106,17 @@ function ManagementTable({
   formFields,
   getInitialItem,
   dataKey,
-}) {
+  customActions = [],
+}, ref) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [items, setItems] = useState([]);
   const [openAdd, setOpenAdd] = useState(false);
   const [newItem, setNewItem] = useState(getInitialItem());
   const [openEdit, setOpenEdit] = useState(false);
   const [editItem, setEditItem] = useState(null);
   // Pagination state for all resources
-  const isPaginatedTable = ["/products", "/orders", "/users", "/categories"].includes(fetchUrl);
+  const isPaginatedTable = ["/products", "/orders", "/users", "/categories", "/messages"].includes(fetchUrl);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 12;
@@ -103,6 +146,9 @@ function ManagementTable({
       } else if (fetchUrl === "/categories" && res.data && res.data.data && res.data.data.category) {
         arr = res.data.data.category;
         setTotalPages(res.data.data.totalPages || 1);
+      } else if (fetchUrl === "/messages" && res.data && res.data.data && res.data.data.messages) {
+        arr = res.data.data.messages;
+        setTotalPages(res.data.data.totalPages || 1);
       } else if (dataKey && res.data && res.data[dataKey]) {
         arr = res.data[dataKey];
       } else if (dataKey && res.data.data && res.data.data[dataKey]) {
@@ -123,6 +169,11 @@ function ManagementTable({
       alert("Failed to fetch data");
     }
   };
+
+  // Expose fetchItems method through ref
+  useImperativeHandle(ref, () => ({
+    fetchItems
+  }));
 
   useEffect(() => {
     fetchItems();
@@ -203,45 +254,131 @@ function ManagementTable({
           </Button>
         )}
       </FlexHeader>
-      <TableContainerStyled component={Paper}>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              {columns.map((col) => (
-                <TableCell key={col.label}>{col.label}</TableCell>
-              ))}
-              <ActionsCell>Actions</ActionsCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {items.map((item) => (
-              <TableRow key={item._id}>
+      
+      <MobileTableContainer>
+        {/* Desktop Table */}
+        <TableContainerStyled component={Paper} className="desktop-table">
+          <Table size="small">
+            <TableHead>
+              <TableRow>
                 {columns.map((col) => (
-                  <TableCell key={col.label}>{col.render(item)}</TableCell>
+                  <TableCell key={col.label}>{col.label}</TableCell>
                 ))}
-                <ActionsCell>
-                  {editUrl && (
-                    <IconButton
-                      color="primary"
-                      onClick={() => handleEditOpen(item)}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                  )}
-                  <IconButton color="error" onClick={() => handleDelete(item)}>
+                <ActionsCell></ActionsCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {items.map((item) => (
+                <TableRow key={item._id}>
+                  {columns.map((col) => (
+                    <TableCell key={col.label}>{col.render(item)}</TableCell>
+                  ))}
+                  <ActionsCell>
+                    {customActions.map((action, index) => (
+                      <Button
+                        key={index}
+                        variant="outlined"
+                        color={action.color || "primary"}
+                        size="small"
+                        onClick={() => action.onClick(item)}
+                        sx={{ mr: 1, mb: 1 }}
+                      >
+                        {action.label}
+                      </Button>
+                    ))}
+                    {editUrl && (
+                      <IconButton
+                        color="primary"
+                        onClick={() => handleEditOpen(item)}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    )}
+                    {deleteUrl && (
+                      <IconButton color="error" onClick={() => handleDelete(item)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    )}
+                  </ActionsCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainerStyled>
+        
+        {/* Mobile Cards */}
+        <Box className="mobile-cards">
+          {items.map((item) => (
+            <MobileCard key={item._id} elevation={2}>
+              {columns.map((col) => (
+                <Box key={col.label} sx={{ mb: 1, display: 'flex', justifyContent: 'space-between' }}>
+                  <Typography variant="body2" color="text.secondary">
+                    {col.label}:
+                  </Typography>
+                  <Typography variant="body2">
+                    {col.render(item)}
+                  </Typography>
+                </Box>
+              ))}
+              <Box sx={{ mt: 2, display: 'flex', gap: 1, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
+                {customActions.map((action, index) => (
+                  <Button
+                    key={index}
+                    variant="outlined"
+                    color={action.color || "primary"}
+                    size="small"
+                    onClick={() => action.onClick(item)}
+                  >
+                    {action.label}
+                  </Button>
+                ))}
+                {editUrl && (
+                  <IconButton
+                    color="primary"
+                    onClick={() => handleEditOpen(item)}
+                    size="small"
+                  >
+                    <EditIcon />
+                  </IconButton>
+                )}
+                {deleteUrl && (
+                  <IconButton 
+                    color="error" 
+                    onClick={() => handleDelete(item)}
+                    size="small"
+                  >
                     <DeleteIcon />
                   </IconButton>
-                </ActionsCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainerStyled>
+                )}
+              </Box>
+            </MobileCard>
+          ))}
+        </Box>
+      </MobileTableContainer>
       {/* Add Dialog */}
       {addUrl && (
-        <Dialog open={openAdd} onClose={() => setOpenAdd(false)}>
-          <DialogTitle>Add {title.replace(" Management", "")}</DialogTitle>
-          <DialogContentStyled>
+        <Dialog 
+          open={openAdd} 
+          onClose={() => setOpenAdd(false)}
+          maxWidth="sm"
+          fullWidth
+          fullScreen={isMobile}
+          PaperProps={{
+            sx: {
+              mx: { xs: 0, sm: 2 },
+              my: { xs: 0, sm: 2 },
+              width: { xs: '100%', sm: 'auto' },
+              height: { xs: '100%', sm: 'auto' },
+              maxHeight: { xs: '100%', sm: '90vh' }
+            }
+          }}
+        >
+          <DialogTitle sx={{ 
+            fontSize: { xs: '1.25rem', sm: '1.5rem' }
+          }}>
+            Add {title.replace(" Management", "")}
+          </DialogTitle>
+          <DialogContentStyled sx={{ pt: 1 }}>
             {formFields.map((field) =>
               field.type === "checkbox" ? (
                 <FormControlLabel
@@ -272,13 +409,32 @@ function ManagementTable({
                   fullWidth
                   sx={{ mb: 2 }}
                   required={field.required}
+                  size={isMobile ? "small" : "medium"}
+                  multiline={field.type === "textarea"}
+                  rows={field.type === "textarea" ? (isMobile ? 2 : 3) : 1}
                 />
               )
             )}
           </DialogContentStyled>
-          <DialogActions>
-            <Button onClick={() => setOpenAdd(false)}>Cancel</Button>
-            <Button onClick={handleAdd} variant="contained">
+          <DialogActions sx={{ 
+            px: 3, 
+            pb: { xs: 3, sm: 2 },
+            gap: 1,
+            flexDirection: { xs: 'column', sm: 'row' }
+          }}>
+            <Button 
+              onClick={() => setOpenAdd(false)}
+              fullWidth={isMobile}
+              size={isMobile ? "large" : "medium"}
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleAdd} 
+              variant="contained"
+              fullWidth={isMobile}
+              size={isMobile ? "large" : "medium"}
+            >
               Add
             </Button>
           </DialogActions>
@@ -286,9 +442,28 @@ function ManagementTable({
       )}
       {/* Edit Dialog */}
       {editUrl && (
-        <Dialog open={openEdit} onClose={() => setOpenEdit(false)}>
-          <DialogTitle>Edit {title.replace(" Management", "")}</DialogTitle>
-          <DialogContentStyled>
+        <Dialog 
+          open={openEdit} 
+          onClose={() => setOpenEdit(false)}
+          maxWidth="sm"
+          fullWidth
+          fullScreen={isMobile}
+          PaperProps={{
+            sx: {
+              mx: { xs: 0, sm: 2 },
+              my: { xs: 0, sm: 2 },
+              width: { xs: '100%', sm: 'auto' },
+              height: { xs: '100%', sm: 'auto' },
+              maxHeight: { xs: '100%', sm: '90vh' }
+            }
+          }}
+        >
+          <DialogTitle sx={{ 
+            fontSize: { xs: '1.25rem', sm: '1.5rem' }
+          }}>
+            Edit {title.replace(" Management", "")}
+          </DialogTitle>
+          <DialogContentStyled sx={{ pt: 1 }}>
             {formFields.map((field) =>
               field.type === "checkbox" ? (
                 <FormControlLabel
@@ -319,13 +494,32 @@ function ManagementTable({
                   fullWidth
                   sx={{ mb: 2 }}
                   required={field.required}
+                  size={isMobile ? "small" : "medium"}
+                  multiline={field.type === "textarea"}
+                  rows={field.type === "textarea" ? (isMobile ? 2 : 3) : 1}
                 />
               )
             )}
           </DialogContentStyled>
-          <DialogActions>
-            <Button onClick={() => setOpenEdit(false)}>Cancel</Button>
-            <Button onClick={handleEditSave} variant="contained">
+          <DialogActions sx={{ 
+            px: 3, 
+            pb: { xs: 3, sm: 2 },
+            gap: 1,
+            flexDirection: { xs: 'column', sm: 'row' }
+          }}>
+            <Button 
+              onClick={() => setOpenEdit(false)}
+              fullWidth={isMobile}
+              size={isMobile ? "large" : "medium"}
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleEditSave} 
+              variant="contained"
+              fullWidth={isMobile}
+              size={isMobile ? "large" : "medium"}
+            >
               Save
             </Button>
           </DialogActions>
@@ -344,6 +538,6 @@ function ManagementTable({
       )}
     </Box>
   );
-}
+});
 
 export default ManagementTable;

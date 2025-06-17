@@ -17,12 +17,23 @@ const ProductCardContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 16px;
-  height: auto; /* Adjust height dynamically based on content */
-  min-height: 200px; /* Set a minimum height */
-  max-height: 400px; /* Set a maximum height to prevent overflow */
+  height: auto;
+  min-height: 200px;
+  max-height: 400px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background-color: #fff;
+  
+  @media (max-width: 600px) {
+    padding: 12px;
+    min-height: 180px;
+    max-height: 350px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 8px;
+    min-height: 160px;
+  }
 `;
 
 function ProductCard({ product }) {
@@ -36,9 +47,22 @@ function ProductCard({ product }) {
             height="200"
             image={product.image || "/logo.png"}
             alt={product.name}
+            sx={{
+              height: { xs: 150, sm: 180, md: 200 },
+              objectFit: "cover"
+            }}
           />
-          <CardContent>
-            <Typography gutterBottom variant="body1" component="div" noWrap>
+          <CardContent sx={{ p: { xs: 1, sm: 2 } }}>
+            <Typography 
+              gutterBottom 
+              variant="body1" 
+              component="div" 
+              noWrap
+              sx={{ 
+                fontSize: { xs: "0.9rem", sm: "1rem" },
+                fontWeight: 500
+              }}
+            >
               {product.name}
             </Typography>
             <Stack

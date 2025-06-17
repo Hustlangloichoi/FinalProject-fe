@@ -1,45 +1,104 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import { styled } from "@mui/material/styles";
 import apiService from "../app/apiService";
 
-const Section = styled.section`
-  padding: 30px 0;
-  background: #fff;
-`;
+const Section = styled('section')(({ theme }) => ({
+  padding: '30px 0',
+  background: theme.palette.background.paper,
+  
+  '@media (max-width: 768px)': {
+    padding: '20px 0',
+  },
+}));
 
-const CategoriesWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 20px;
-  flex-wrap: wrap;
+const CategoriesWrapper = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  gap: '30px',
+  marginTop: '20px',
+  flexWrap: 'wrap',
+  padding: '0 20px',
 
-  @media (max-width: 600px) {
-    display: none; /* Hide categories on mobile */
-  }
-`;
+  '@media (max-width: 900px)': {
+    gap: '20px',
+  },
+  
+  '@media (max-width: 768px)': {
+    gap: '15px',
+    padding: '0 15px',
+  },
 
-const CategoryItem = styled.div`
-  text-align: center;
-  min-width: 140px;
-  flex: 1 1 180px;
-  max-width: 200px;
-  font-size: 1.5rem; /* Slightly reduced font size */
+  '@media (max-width: 600px)': {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+    gap: '12px',
+    padding: '0 10px',
+  },
+});
 
-  @media (max-width: 900px) {
-    flex: 1 1 45%;
-    max-width: 48%;
-  }
+const CategoryItem = styled('div')({
+  textAlign: 'center',
+  minWidth: '140px',
+  flex: '1 1 180px',
+  maxWidth: '200px',
+  fontSize: '1.5rem',
+  cursor: 'pointer',
+  transition: 'transform 0.2s ease',
+  
+  '&:hover': {
+    transform: 'translateY(-5px)',
+  },
 
-  @media (max-width: 600px) {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-`;
+  '@media (max-width: 900px)': {
+    flex: '1 1 45%',
+    maxWidth: '48%',
+    minWidth: '120px',
+  },
 
-const CategoryIcon = styled.div`
-  font-size: 2.5rem;
-`;
+  '@media (max-width: 600px)': {
+    flex: '1 1 100%',
+    maxWidth: '100%',
+    minWidth: '100px',
+    fontSize: '1.2rem',
+  },
+  
+  '@media (max-width: 480px)': {
+    fontSize: '1rem',
+    minWidth: '80px',
+  },
+});
+
+const CategoryIcon = styled('div')({
+  fontSize: '2.5rem',
+  marginBottom: '8px',
+  
+  '@media (max-width: 768px)': {
+    fontSize: '2rem',
+  },
+  
+  '@media (max-width: 600px)': {
+    fontSize: '1.8rem',
+    marginBottom: '6px',
+  },
+  
+  '@media (max-width: 480px)': {
+    fontSize: '1.5rem',
+  },
+});
+
+const CategoryName = styled('div')(({ theme }) => ({
+  fontSize: '0.9rem',
+  fontWeight: 500,
+  color: theme.palette.text.primary,
+  
+  '@media (max-width: 600px)': {
+    fontSize: '0.8rem',
+  },
+  
+  '@media (max-width: 480px)': {
+    fontSize: '0.75rem',
+  },
+}));
 
 const ICONS = ["💊", "🧴", "🧼", "🩺", "🧪", "🩹", "🦽", "🧯", "🩸", "🧬"];
 
@@ -69,11 +128,10 @@ const CategorySection = ({ onCategoryClick }) => {
         {categories.map((cat, idx) => (
           <CategoryItem
             key={cat._id || cat.name}
-            style={{ cursor: "pointer" }}
             onClick={() => onCategoryClick && onCategoryClick(cat.name)}
           >
             <CategoryIcon>{ICONS[idx % ICONS.length]}</CategoryIcon>
-            <div>{cat.name}</div>
+            <CategoryName>{cat.name}</CategoryName>
           </CategoryItem>
         ))}
       </CategoriesWrapper>
