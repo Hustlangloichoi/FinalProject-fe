@@ -1,30 +1,56 @@
-import React, { useState, useRef } from 'react';
-import ManagementTable from './ManagementTable';
-import { 
-  Dialog, 
-  DialogTitle, 
-  DialogContent, 
-  DialogActions, 
-  Button, 
-  Typography, 
-  Box, 
+import React, { useState, useRef } from "react";
+import ManagementTable from "./ManagementTable";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Typography,
+  Box,
   Chip,
   Grid,
   TextField,
   Card,
   CardContent,
   Snackbar,
-  Alert
-} from '@mui/material';
-import { formatDistanceToNow } from 'date-fns';
-import apiService from '../../app/apiService';
+  Alert,
+  Avatar,
+} from "@mui/material";
+import { formatDistanceToNow } from "date-fns";
+import apiService from "../../app/apiService";
+import styled from "styled-components";
+
+// Styled components for enhanced visuals
+const StyledMessageCell = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const MessageAvatar = styled(Avatar)`
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(45deg, #673ab7 30%, #3f51b5 90%);
+  font-size: 0.7rem;
+`;
+
+const StatusChip = styled(Chip)`
+  border-radius: 6px;
+  font-size: 0.65rem;
+  height: 20px;
+`;
 
 function MessageManagement() {
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
-  const [adminNotes, setAdminNotes] = useState('');
+  const [adminNotes, setAdminNotes] = useState("");
   const [loading, setLoading] = useState(false);
-  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
   const managementTableRef = useRef();
 
   // Function to refresh the table data
@@ -36,14 +62,14 @@ function MessageManagement() {
 
   const handleViewMessage = (message) => {
     setSelectedMessage(message);
-    setAdminNotes(message.adminNotes || '');
+    setAdminNotes(message.adminNotes || "");
     setViewDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
     setViewDialogOpen(false);
     setSelectedMessage(null);
-    setAdminNotes('');
+    setAdminNotes("");
   };
 
   const handleMarkAsRead = async (messageId) => {
@@ -55,16 +81,16 @@ function MessageManagement() {
       }
       setSnackbar({
         open: true,
-        message: 'Message marked as read successfully',
-        severity: 'success'
+        message: "Message marked as read successfully",
+        severity: "success",
       });
       refreshTable(); // Refresh the table to show updated status
     } catch (error) {
-      console.error('Failed to mark message as read:', error);
+      console.error("Failed to mark message as read:", error);
       setSnackbar({
         open: true,
-        message: 'Failed to mark message as read',
-        severity: 'error'
+        message: "Failed to mark message as read",
+        severity: "error",
       });
     } finally {
       setLoading(false);
@@ -76,28 +102,28 @@ function MessageManagement() {
     try {
       await apiService.put(`/messages/${messageId}`, {
         repliedAt: new Date().toISOString(),
-        adminNotes
+        adminNotes,
       });
       if (selectedMessage && selectedMessage._id === messageId) {
-        setSelectedMessage({ 
-          ...selectedMessage, 
+        setSelectedMessage({
+          ...selectedMessage,
           repliedAt: new Date().toISOString(),
           adminNotes,
-          isRead: true
+          isRead: true,
         });
       }
       setSnackbar({
         open: true,
-        message: 'Message marked as replied successfully',
-        severity: 'success'
+        message: "Message marked as replied successfully",
+        severity: "success",
       });
       refreshTable(); // Refresh the table to show updated status
     } catch (error) {
-      console.error('Failed to mark message as replied:', error);
+      console.error("Failed to mark message as replied:", error);
       setSnackbar({
         open: true,
-        message: 'Failed to mark message as replied',
-        severity: 'error'
+        message: "Failed to mark message as replied",
+        severity: "error",
       });
     } finally {
       setLoading(false);
@@ -107,43 +133,61 @@ function MessageManagement() {
   const handleUpdateNotes = async (messageId) => {
     try {
       await apiService.put(`/messages/${messageId}`, {
-        adminNotes
+        adminNotes,
       });
       if (selectedMessage && selectedMessage._id === messageId) {
         setSelectedMessage({ ...selectedMessage, adminNotes });
       }
       setSnackbar({
         open: true,
-        message: 'Admin notes updated successfully',
-        severity: 'success'
+        message: "Admin notes updated successfully",
+        severity: "success",
       });
     } catch (error) {
-      console.error('Failed to update notes:', error);
+      console.error("Failed to update notes:", error);
       setSnackbar({
         open: true,
-        message: 'Failed to update admin notes',
-        severity: 'error'
+        message: "Failed to update admin notes",
+        severity: "error",
       });
     }
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return '-';
+    if (!dateString) return "-";
     return formatDistanceToNow(new Date(dateString), { addSuffix: true });
   };
-
   const getStatusChip = (message) => {
     if (message.repliedAt) {
-      return <Chip label="Replied" color="success" size="small" />;
+      return (
+        <StatusChip label="✅ Replied" color="success" variant="outlined" />
+      );
     } else if (message.isRead) {
-      return <Chip label="Read" color="primary" size="small" />;
+      return <StatusChip label="👁️ Read" color="primary" variant="outlined" />;
     } else {
-      return <Chip label="Unread" color="warning" size="small" />;
+      return (
+        <StatusChip label="📧 Unread" color="warning" variant="outlined" />
+      );
     }
+  };
+
+  const getUserInitials = (message) => {
+    if (message?.name) {
+      return message.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase();
+    }
+    if (message?.email) {
+      return message.email.substring(0, 2).toUpperCase();
+    }
+    return "?";
   };
 
   return (
     <>
+      {" "}
       <ManagementTable
         ref={managementTableRef}
         title="Message Management"
@@ -151,70 +195,111 @@ function MessageManagement() {
         addUrl={null} // Messages are not added from admin
         editUrl={null} // Messages are edited through custom dialog
         deleteUrl={(item) => `/messages/${item._id}`}
+        tableContainerStyle={{
+          minWidth: "1200px", // Increased for better spacing
+          "& .MuiTableCell-root": {
+            padding: "8px 12px",
+          },
+          "& .MuiTable-root": {
+            tableLayout: "fixed",
+            width: "100%",
+          },
+        }}
         customActions={[
           {
             label: "View",
             onClick: handleViewMessage,
-            color: "primary"
-          }
+            color: "primary",
+          },
         ]}
         columns={[
-          { 
-            label: "Name", 
+          {
+            label: "Contact",
+            width: "280px", // Increased for better spacing
             render: (item) => (
-              <Box>
-                <Typography variant="body2" fontWeight="bold">
-                  {item.name}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  {item.email}
-                </Typography>
-              </Box>
-            )
+              <StyledMessageCell>
+                <MessageAvatar>{getUserInitials(item)}</MessageAvatar>
+                <Box sx={{ minWidth: 0 }}>
+                  <Typography
+                    variant="body2"
+                    fontWeight={500}
+                    noWrap
+                    sx={{ fontSize: "0.8rem" }}
+                  >
+                    {item.name || "Unknown"}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    noWrap
+                    sx={{ fontSize: "0.7rem" }}
+                  >
+                    {item.email || "-"}
+                  </Typography>
+                </Box>
+              </StyledMessageCell>
+            ),
           },
-          { 
-            label: "Subject", 
+          {
+            label: "Subject",
+            width: "320px", // Increased for better spacing
             render: (item) => (
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  maxWidth: 200, 
-                  overflow: 'hidden', 
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: "0.8rem",
+                  maxWidth: "300px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
                 }}
+                title={item.subject}
               >
-                {item.subject}
+                {item.subject || "No subject"}
               </Typography>
-            )
+            ),
           },
-          { 
-            label: "Status", 
-            render: (item) => getStatusChip(item)
+          {
+            label: "Phone",
+            width: "160px", // Increased for better spacing
+            render: (item) => (
+              <Typography variant="body2" sx={{ fontSize: "0.8rem" }}>
+                {item.phoneNumber || "-"}
+              </Typography>
+            ),
           },
-          { 
-            label: "Phone", 
-            render: (item) => item.phoneNumber || '-'
+          {
+            label: "Status",
+            width: "120px", // Increased for better spacing
+            render: (item) => getStatusChip(item),
           },
-          { 
-            label: "Received", 
-            render: (item) => formatDate(item.createdAt)
-          }
+          {
+            label: "Received",
+            width: "140px", // Increased for better spacing
+            render: (item) => (
+              <Typography variant="body2" sx={{ fontSize: "0.8rem" }}>
+                {formatDate(item.createdAt)}
+              </Typography>
+            ),
+          },
         ]}
         formFields={[]}
         getInitialItem={() => ({})}
         dataKey="messages"
       />
-
       {/* Message View Dialog */}
-      <Dialog 
-        open={viewDialogOpen} 
+      <Dialog
+        open={viewDialogOpen}
         onClose={handleCloseDialog}
         maxWidth="md"
         fullWidth
       >
         <DialogTitle>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Typography variant="h6">Message Details</Typography>
             {selectedMessage && getStatusChip(selectedMessage)}
           </Box>
@@ -265,7 +350,7 @@ function MessageManagement() {
                   </CardContent>
                 </Card>
               </Grid>
-              
+
               <Grid item xs={12} md={6}>
                 <Card>
                   <CardContent>
@@ -284,7 +369,10 @@ function MessageManagement() {
                       <Typography variant="subtitle2" color="text.secondary">
                         Message
                       </Typography>
-                      <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
+                      <Typography
+                        variant="body1"
+                        sx={{ whiteSpace: "pre-wrap" }}
+                      >
                         {selectedMessage.message}
                       </Typography>
                     </Box>
@@ -301,7 +389,7 @@ function MessageManagement() {
                   </CardContent>
                 </Card>
               </Grid>
-              
+
               <Grid item xs={12}>
                 <Card>
                   <CardContent>
@@ -325,22 +413,22 @@ function MessageManagement() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>Close</Button>
-          <Button 
+          <Button
             variant="outlined"
             onClick={() => handleUpdateNotes(selectedMessage._id)}
             disabled={loading}
           >
             Save Notes
           </Button>
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             onClick={() => handleMarkAsRead(selectedMessage._id)}
             disabled={selectedMessage?.isRead || loading}
           >
             Mark as Read
           </Button>
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             color="success"
             onClick={() => handleMarkAsReplied(selectedMessage._id)}
             disabled={selectedMessage?.repliedAt || loading}
@@ -349,18 +437,17 @@ function MessageManagement() {
           </Button>
         </DialogActions>
       </Dialog>
-
       {/* Snackbar for notifications */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={4000}
         onClose={() => setSnackbar({ ...snackbar, open: false })}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
-        <Alert 
-          onClose={() => setSnackbar({ ...snackbar, open: false })} 
+        <Alert
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
           severity={snackbar.severity}
-          sx={{ width: '100%' }}
+          sx={{ width: "100%" }}
         >
           {snackbar.message}
         </Alert>

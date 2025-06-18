@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Box, Stack } from "@mui/material";
 import MainFooter from "./MainFooter";
 import MainHeader from "./MainHeader";
+import PersistentPhoneButton from "../components/PersistentPhoneButton";
 
 function MainLayout() {
   return (
@@ -13,6 +14,9 @@ function MainLayout() {
       <Box sx={{ flexGrow: 1 }} />
 
       <MainFooter />
+
+      {/* Persistent phone button for all pages except contact */}
+      <PersistentPhoneButton />
     </Stack>
   );
 }

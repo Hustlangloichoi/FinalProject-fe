@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Logo from "../components/Logo";
 import { Stack } from "@mui/material";
+import PersistentPhoneButton from "../components/PersistentPhoneButton";
 
 const HeaderStyle = styled("header")(({ theme }) => ({
   top: "10%",
@@ -17,6 +18,9 @@ function BlankLayout() {
         <Logo sx={{ width: 200, height: 200 }} />
       </HeaderStyle>
       <Outlet />
+
+      {/* Persistent phone button */}
+      <PersistentPhoneButton />
     </Stack>
   );
 }
