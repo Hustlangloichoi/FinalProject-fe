@@ -217,7 +217,8 @@ const ManagementTable = forwardRef(
           title={title}
           addUrl={addUrl}
           onAddClick={() => setOpenAdd(true)}
-        />        <TableContainerStyled>
+        />{" "}
+        <TableContainerStyled>
           {isSmallScreen ? (
             <MobileCardView
               items={items}
@@ -241,7 +242,6 @@ const ManagementTable = forwardRef(
             />
           )}
         </TableContainerStyled>
-
         <TablePagination
           isPaginatedTable={isPaginated}
           page={page}
