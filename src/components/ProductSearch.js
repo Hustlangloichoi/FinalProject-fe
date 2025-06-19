@@ -30,31 +30,78 @@ const IconWrapper = styled.button`
 
 function ProductSearch({ value, onChange, onSearch, reset }) {
   const inputRef = useRef();
-  const [debouncedValue, setDebouncedValue] = useState(value);
+  const [searchValue, setSearchValue] = useState(value || "");
+  const debounceTimerRef = useRef(null);
 
   useEffect(() => {
     if (reset) {
-      setDebouncedValue("");
+      setSearchValue("");
     }
   }, [reset]);
+  // Debounce effect for automatic search
+  useEffect(() => {
+    // Clear existing timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    // Only search if there's actual content
+    if (searchValue.trim() !== "") {
+      // Set new timer for debounced search
+      debounceTimerRef.current = setTimeout(() => {
+        if (onSearch) {
+          onSearch(searchValue);
+        }
+      }, 500); // 500ms debounce time
+    } else {
+      // If search is empty, call onSearch immediately to clear results
+      if (onSearch) {
+        onSearch("");
+      }
+    }
+
+    // Cleanup function
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, [searchValue, onSearch]); // Added onSearch back since it's now wrapped in useCallback
 
   const handleInputChange = (e) => {
-    setDebouncedValue(e.target.value);
-  };
+    const newValue = e.target.value;
+    setSearchValue(newValue);
 
+    // Also call onChange immediately for controlled input if needed
+    if (onChange) {
+      onChange(e);
+    }
+  };
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault(); // Prevent the page from scrolling to the top
+
+      // Clear debounce timer and search immediately
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+
       if (onSearch) {
-        onSearch(debouncedValue); // Trigger search only on Enter
+        onSearch(searchValue); // Trigger search immediately on Enter
       }
     }
   };
 
   const handleClick = (e) => {
     e.preventDefault(); // Prevent default form submission behavior
+
+    // Clear debounce timer and search immediately
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
     if (onSearch) {
-      onSearch(debouncedValue);
+      onSearch(searchValue);
     }
   };
 
@@ -64,7 +111,7 @@ function ProductSearch({ value, onChange, onSearch, reset }) {
         ref={inputRef}
         type="text"
         placeholder="Search for products..."
-        value={debouncedValue}
+        value={searchValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown} // Add keydown handler
       />

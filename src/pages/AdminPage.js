@@ -310,15 +310,19 @@ function AdminPage() {
                   </Fade>
                 ))}
               </SectionList>{" "}
-            </SidebarPaper>
-
+            </SidebarPaper>{" "}
             <Box
               sx={{
                 flexGrow: 1,
-                minWidth: 800,
+                minWidth: 0, // Allow shrinking
                 width: "100%",
                 position: "relative",
                 zIndex: 1,
+                // Responsive behavior
+                "@media (max-width: 768px)": {
+                  minWidth: 0,
+                  width: "100%",
+                },
               }}
             >
               {SectionComponent ? (

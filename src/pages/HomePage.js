@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Alert,
   Box,
@@ -87,7 +87,6 @@ function HomePage() {
     // eslint-disable-next-line
   }, [
     page,
-    filters.searchQuery,
     searchTrigger,
     filters.category,
     filters.priceRange,
@@ -101,6 +100,20 @@ function HomePage() {
     });
     setResetSearch(true); // Trigger reset
   };
+
+  // Use useCallback to prevent infinite re-renders
+  const handleSearch = useCallback(
+    (query) => {
+      // Update form state and trigger search
+      setValue("searchQuery", query, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+      setPage(1);
+      setSearchTrigger((t) => t + 1); // Trigger search
+    },
+    [setValue, setPage, setSearchTrigger]
+  );
 
   useEffect(() => {
     if (resetSearch) {
@@ -184,24 +197,18 @@ function HomePage() {
               justifyContent="space-between"
               mb={2}
             >
+              {" "}
               <ProductSearch
                 value={filters.searchQuery}
                 onChange={(e) => {
-                  const value = e?.target?.value || ""; // Safely access value
+                  // Only update form state, don't trigger search yet
+                  const value = e?.target?.value || "";
                   setValue("searchQuery", value, {
                     shouldValidate: true,
                     shouldDirty: true,
                   });
-                  setPage(1);
                 }}
-                onSearch={(query) => {
-                  setValue("searchQuery", query, {
-                    shouldValidate: true,
-                    shouldDirty: true,
-                  });
-                  setPage(1);
-                  setSearchTrigger((t) => t + 1); // Trigger search
-                }}
+                onSearch={handleSearch}
                 reset={resetSearch}
               />
               <ProductSort

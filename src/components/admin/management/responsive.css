@@ -1,0 +1,218 @@
+/* Enhanced Responsive Management Table Styles */
+
+/* Mobile-first responsive breakpoints */
+@media (max-width: 640px) {
+  .desktop-table-view {
+    display: none !important;
+  }
+
+  .mobile-card-view {
+    display: block !important;
+  }
+}
+
+@media (min-width: 641px) {
+  .desktop-table-view {
+    display: block !important;
+  }
+
+  .mobile-card-view {
+    display: none !important;
+  }
+}
+
+/* Enhanced Mobile Card Styles */
+.mobile-card-container {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.enhanced-mobile-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.enhanced-mobile-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.mobile-card-field-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  min-height: 40px;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.mobile-card-field-row:last-child {
+  border-bottom: none;
+}
+
+.mobile-field-label {
+  font-weight: 600;
+  color: #666;
+  font-size: 0.85rem;
+  flex: 0 0 auto;
+  margin-right: 12px;
+}
+
+.mobile-field-value {
+  flex: 1;
+  text-align: right;
+  font-size: 0.9rem;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mobile Dialog Improvements */
+@media (max-width: 768px) {
+  .MuiDialog-paper {
+    margin: 16px !important;
+    width: calc(100% - 32px) !important;
+    max-width: none !important;
+  }
+
+  .MuiDialogTitle-root {
+    padding: 16px !important;
+    font-size: 1.1rem !important;
+  }
+
+  .MuiDialogContent-root {
+    padding: 8px 16px !important;
+  }
+
+  .MuiDialogActions-root {
+    padding: 8px 16px 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-card-container {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .enhanced-mobile-card {
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .mobile-card-field-row {
+    padding: 6px 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .mobile-field-label {
+    font-size: 0.8rem;
+    margin-right: 0;
+    margin-bottom: 2px;
+  }
+
+  .mobile-field-value {
+    text-align: left;
+    font-size: 0.85rem;
+    width: 100%;
+  }
+
+  .MuiDialog-paper {
+    margin: 8px !important;
+    width: calc(100% - 16px) !important;
+  }
+
+  .MuiDialogTitle-root {
+    font-size: 1rem !important;
+    padding: 12px !important;
+  }
+
+  .MuiButton-root {
+    font-size: 0.8rem !important;
+    padding: 6px 12px !important;
+  }
+
+  .MuiIconButton-root {
+    padding: 4px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .mobile-card-container {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .enhanced-mobile-card {
+    padding: 10px;
+  }
+
+  .mobile-card-field-row {
+    padding: 4px 0;
+  }
+
+  .mobile-field-label {
+    font-size: 0.75rem;
+  }
+
+  .mobile-field-value {
+    font-size: 0.8rem;
+  }
+
+  .MuiDialog-paper {
+    margin: 4px !important;
+    width: calc(100% - 8px) !important;
+  }
+
+  .MuiButton-root {
+    font-size: 0.75rem !important;
+    padding: 4px 8px !important;
+  }
+}
+
+/* Action buttons styling */
+.mobile-actions-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.mobile-action-button {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.mobile-action-button:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Utility classes */
+.hide-on-mobile {
+  @media (max-width: 640px) {
+    display: none !important;
+  }
+}
+
+.show-on-mobile {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .show-on-mobile {
+    display: block !important;
+  }
+}

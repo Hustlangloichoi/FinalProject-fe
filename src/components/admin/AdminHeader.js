@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Paper, Stack, useTheme, alpha } from "@mui/material";
-import { AccessTime, CalendarToday } from "@mui/icons-material";
+import {
+  Box,
+  Typography,
+  Paper,
+  Stack,
+  useTheme,
+  alpha,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
+import { AccessTime, CalendarToday, Home } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 function AdminHeader({ adminName = "Admin" }) {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
@@ -13,6 +24,10 @@ function AdminHeader({ adminName = "Admin" }) {
     month: "long",
     day: "numeric",
   });
+
+  const handleHomeClick = () => {
+    navigate("/");
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -51,6 +66,7 @@ function AdminHeader({ adminName = "Admin" }) {
         },
       }}
     >
+      {" "}
       <Box
         sx={{
           display: "flex",
@@ -60,8 +76,26 @@ function AdminHeader({ adminName = "Admin" }) {
           zIndex: 1,
         }}
       >
-        {" "}
         <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+          <Tooltip title="Go to Homepage">
+            <IconButton
+              onClick={handleHomeClick}
+              sx={{
+                color: "white",
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.2)",
+                  transform: "translateY(-2px)",
+                },
+                transition: "all 0.3s ease",
+              }}
+            >
+              <Home />
+            </IconButton>
+          </Tooltip>
+
           <Box>
             <Typography
               variant="h3"
@@ -72,7 +106,7 @@ function AdminHeader({ adminName = "Admin" }) {
               }}
             >
               Welcome back, {adminName}!
-            </Typography>{" "}
+            </Typography>
             <Typography variant="h6" sx={{ opacity: 0.9, fontWeight: 400 }}>
               Manage your store efficiently with the admin dashboard
             </Typography>

@@ -1,4 +1,4 @@
-import ManagementTable from "./ManagementTable";
+import { ManagementTable } from "./management";
 import { Box, Typography, Avatar } from "@mui/material";
 import styled from "styled-components";
 

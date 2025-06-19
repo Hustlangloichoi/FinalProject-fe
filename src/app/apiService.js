@@ -81,4 +81,67 @@ export async function refreshAccessToken() {
   }
 }
 
+// Image Upload APIs
+const uploadImage = async (file) => {
+  const formData = new FormData();
+  formData.append("image", file);
+
+  return apiService.post("/images/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+const uploadMultipleImages = async (files) => {
+  const formData = new FormData();
+  files.forEach((file) => {
+    formData.append("images", file);
+  });
+
+  return apiService.post("/images/upload-multiple", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+const updateProductWithImage = async (
+  productId,
+  productData,
+  imageFile = null
+) => {
+  const formData = new FormData();
+
+  // Append product data
+  Object.keys(productData).forEach((key) => {
+    if (productData[key] !== null && productData[key] !== undefined) {
+      formData.append(key, productData[key]);
+    }
+  });
+
+  // Append image if provided
+  if (imageFile) {
+    formData.append("image", imageFile);
+  }
+
+  return apiService.put(`/products/${productId}/image`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+const deleteImage = async (publicId) => {
+  return apiService.delete(`/images/delete/${publicId}`);
+};
+
+// Export new functions
+export {
+  uploadImage,
+  uploadMultipleImages,
+  updateProductWithImage,
+  deleteImage,
+};
+
 export default apiService;

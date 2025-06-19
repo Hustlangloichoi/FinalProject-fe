@@ -1,4 +1,4 @@
-import ManagementTable from "./ManagementTable";
+import { ManagementTable } from "./management";
 import { Box, Typography, Chip, Avatar } from "@mui/material";
 import styled from "styled-components";
 
@@ -54,7 +54,7 @@ function UserManagement() {
       editUrl={(item) => `/users/${item._id}`}
       deleteUrl={(item) => `/users/${item._id}`}
       tableContainerStyle={{
-        minWidth: "1000px",
+        width: "100%", // Changed from fixed minWidth to flexible width
         "& .MuiTableCell-root": {
           padding: "8px 12px",
         },
