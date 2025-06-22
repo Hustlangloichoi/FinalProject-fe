@@ -128,14 +128,6 @@ const MobileCardView = ({
   editUrl,
   deleteUrl,
 }) => {
-  // Debug log to check data
-  console.log("=== MobileCardView Debug ===");
-  console.log("Items:", items);
-  console.log("Items length:", items?.length);
-  console.log("Columns:", columns);
-  console.log("Columns length:", columns?.length);
-  console.log("CustomActions:", customActions);
-  console.log("================================");
   // Helper function to render cell value safely
   const renderCellValue = (column, item) => {
     try {
@@ -232,11 +224,7 @@ const MobileCardView = ({
           padding: "2px",
         },
       }}
-    >
-      {items.map((item, idx) => {
-        console.log(`=== Rendering Card ${idx} ===`);
-        console.log("Item data:", item);
-
+    >      {items.map((item, idx) => {
         return (
           <MobileCard key={item._id || item.id || idx} elevation={2}>
             {" "}
@@ -252,16 +240,9 @@ const MobileCardView = ({
                   {item.name}
                 </CardValue>
               </CardField>
-            )}
-            {columns.map((col, colIdx) => {
+            )}            {columns.map((col, colIdx) => {
               const cellValue = renderCellValue(col, item);
 
-              console.log(`Column ${colIdx} (${col.label}):`, {
-                key: col.key,
-                rawValue: item[col.key],
-                renderedValue: cellValue,
-                hasRender: !!col.render,
-              });
               // Skip only if the cell value is truly empty or error
               if (
                 cellValue === "N/A" ||
@@ -270,10 +251,6 @@ const MobileCardView = ({
                 cellValue === undefined ||
                 (typeof cellValue === "string" && cellValue.trim() === "")
               ) {
-                console.log(
-                  `Skipping column ${col.label} - empty/invalid value:`,
-                  cellValue
-                );
                 return null;
               }
               return (

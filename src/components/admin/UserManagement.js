@@ -144,10 +144,8 @@ function UserManagement() {
           key: "password",
           type: "password",
           required: true,
-        },
-        { label: "Admin", key: "isAdmin", type: "checkbox", required: false },
-      ]}
-      getInitialItem={() => ({
+        },        { label: "Admin", key: "isAdmin", type: "checkbox", required: false },
+      ]}      getInitialItem={() => ({
         name: "",
         email: "",
         phone: "",
