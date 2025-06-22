@@ -10,7 +10,11 @@ import {
   IconButton,
 } from "@mui/material";
 import { Close, Save } from "@mui/icons-material";
-import { validatePhoneNumber, formatPhoneNumber, sanitizePhoneNumber } from "../../utils/phoneValidation";
+import {
+  validatePhoneNumber,
+  formatPhoneNumber,
+  sanitizePhoneNumber,
+} from "../../utils/phoneValidation";
 
 const UserProfileForm = ({
   open,
@@ -23,17 +27,17 @@ const UserProfileForm = ({
 
   const handleInputChange = (field) => (event) => {
     let value = event.target.value;
-    
+
     // Special handling for phone field
     if (field === "phone") {
       // Format phone as user types
       value = formatPhoneNumber(value);
-      
+
       // Validate phone
       const validation = validatePhoneNumber(value);
       setPhoneError(validation.isValid ? "" : validation.message);
     }
-    
+
     setEditProfile({
       ...editProfile,
       [field]: value,
@@ -48,17 +52,17 @@ const UserProfileForm = ({
         setPhoneError(validation.message);
         return;
       }
-      
+
       // Sanitize phone number for backend
       const sanitizedProfile = {
         ...editProfile,
-        phone: sanitizePhoneNumber(editProfile.phone)
+        phone: sanitizePhoneNumber(editProfile.phone),
       };
-      
+
       // Update the profile with sanitized data
       setEditProfile(sanitizedProfile);
     }
-    
+
     onSave();
   };
 
@@ -101,7 +105,8 @@ const UserProfileForm = ({
             variant="outlined"
             value={editProfile.email}
             onChange={handleInputChange("email")}
-          />          <TextField
+          />{" "}
+          <TextField
             label="Phone"
             fullWidth
             variant="outlined"
@@ -123,12 +128,14 @@ const UserProfileForm = ({
           />
         </Stack>
       </DialogContent>
-      <DialogActions sx={{ p: 2 }}>        <Button onClick={onClose} variant="outlined">
+      <DialogActions sx={{ p: 2 }}>
+        {" "}
+        <Button onClick={onClose} variant="outlined">
           Cancel
         </Button>
-        <Button 
-          onClick={handleSave} 
-          variant="contained" 
+        <Button
+          onClick={handleSave}
+          variant="contained"
           startIcon={<Save />}
           disabled={!!phoneError}
         >

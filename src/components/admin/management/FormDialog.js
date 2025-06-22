@@ -10,7 +10,10 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import styled from "styled-components";
-import { validatePhoneNumber, formatPhoneNumber } from "../../../utils/phoneValidation";
+import {
+  validatePhoneNumber,
+  formatPhoneNumber,
+} from "../../../utils/phoneValidation";
 
 const DialogContentStyled = styled(DialogContent)`
   min-width: 320px;
@@ -32,7 +35,7 @@ const FormDialog = ({
     if (key === "phone") {
       // Format phone as user types
       const formattedValue = formatPhoneNumber(value);
-      
+
       // Validate phone if not empty (since it's optional)
       if (formattedValue.trim()) {
         const validation = validatePhoneNumber(formattedValue);
@@ -40,7 +43,7 @@ const FormDialog = ({
       } else {
         setPhoneError(""); // Clear error if field is empty (optional field)
       }
-      
+
       onInputChange(key, formattedValue);
     } else {
       onInputChange(key, value);
@@ -95,7 +98,8 @@ const FormDialog = ({
                 sx={{ display: "block", mb: 2 }}
               />
             );
-          }          return (
+          }
+          return (
             <TextField
               key={field.key}
               fullWidth
@@ -109,7 +113,7 @@ const FormDialog = ({
               rows={field.rows || 1}
               error={field.key === "phone" && !!phoneError}
               helperText={
-                field.key === "phone" 
+                field.key === "phone"
                   ? phoneError || "Format: 0901234567 or +84901234567"
                   : undefined
               }
@@ -121,13 +125,10 @@ const FormDialog = ({
             />
           );
         })}
-      </DialogContentStyled>      <DialogActions>
+      </DialogContentStyled>{" "}
+      <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button 
-          onClick={onSave} 
-          variant="contained"
-          disabled={!!phoneError}
-        >
+        <Button onClick={onSave} variant="contained" disabled={!!phoneError}>
           Save
         </Button>
       </DialogActions>

@@ -224,7 +224,9 @@ const MobileCardView = ({
           padding: "2px",
         },
       }}
-    >      {items.map((item, idx) => {
+    >
+      {" "}
+      {items.map((item, idx) => {
         return (
           <MobileCard key={item._id || item.id || idx} elevation={2}>
             {" "}
@@ -240,7 +242,8 @@ const MobileCardView = ({
                   {item.name}
                 </CardValue>
               </CardField>
-            )}            {columns.map((col, colIdx) => {
+            )}{" "}
+            {columns.map((col, colIdx) => {
               const cellValue = renderCellValue(col, item);
 
               // Skip only if the cell value is truly empty or error

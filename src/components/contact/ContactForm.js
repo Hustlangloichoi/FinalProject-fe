@@ -13,10 +13,15 @@ import {
 } from "@mui/material";
 import { Send } from "@mui/icons-material";
 import apiService from "../../app/apiService";
-import { validatePhoneNumber, formatPhoneNumber, sanitizePhoneNumber } from "../../utils/phoneValidation";
+import {
+  validatePhoneNumber,
+  formatPhoneNumber,
+  sanitizePhoneNumber,
+} from "../../utils/phoneValidation";
 
 function ContactForm() {
-  const theme = useTheme();  const [formData, setFormData] = useState({
+  const theme = useTheme();
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     phoneNumber: "",
@@ -39,12 +44,12 @@ function ContactForm() {
   }, [success]);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    
+
     // Special handling for phone field
     if (name === "phoneNumber") {
       // Format phone as user types
       const formattedValue = formatPhoneNumber(value);
-      
+
       // Validate phone if not empty (since it's optional)
       if (formattedValue.trim()) {
         const validation = validatePhoneNumber(formattedValue);
@@ -52,7 +57,7 @@ function ContactForm() {
       } else {
         setPhoneError(""); // Clear error if field is empty (optional field)
       }
-      
+
       setFormData({
         ...formData,
         [name]: formattedValue,
@@ -90,9 +95,11 @@ function ContactForm() {
       // Sanitize phone number before sending to backend
       const submitData = {
         ...formData,
-        phoneNumber: formData.phoneNumber.trim() ? sanitizePhoneNumber(formData.phoneNumber) : ""
+        phoneNumber: formData.phoneNumber.trim()
+          ? sanitizePhoneNumber(formData.phoneNumber)
+          : "",
       };
-      
+
       await apiService.post("/messages", submitData);
       setSuccess(true);
       setFormData({
@@ -167,7 +174,8 @@ function ContactForm() {
                 variant="outlined"
                 disabled={loading}
               />
-            </Grid>            <Grid item xs={12} sm={6}>
+            </Grid>{" "}
+            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="Phone Number (Optional)"

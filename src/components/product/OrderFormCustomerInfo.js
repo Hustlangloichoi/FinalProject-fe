@@ -11,7 +11,10 @@ import {
   useTheme,
 } from "@mui/material";
 import { ShoppingCart, LocationOn, Phone } from "@mui/icons-material";
-import { validatePhoneNumber, formatPhoneNumber } from "../../utils/phoneValidation";
+import {
+  validatePhoneNumber,
+  formatPhoneNumber,
+} from "../../utils/phoneValidation";
 
 const OrderFormCustomerInfo = ({
   quantity,
@@ -29,11 +32,11 @@ const OrderFormCustomerInfo = ({
     const value = e.target.value;
     // Format phone as user types
     const formattedValue = formatPhoneNumber(value);
-    
+
     // Validate phone
     const validation = validatePhoneNumber(formattedValue);
     setPhoneError(validation.isValid ? "" : validation.message);
-    
+
     // Update parent state
     setPhoneNumber(formattedValue);
   };
@@ -74,7 +77,6 @@ const OrderFormCustomerInfo = ({
               fullWidth
               size={isMobile ? "small" : "medium"}
             />
-
             <TextField
               label="Delivery Address"
               type="text"
@@ -94,7 +96,8 @@ const OrderFormCustomerInfo = ({
                   </InputAdornment>
                 ),
               }}
-            />            <TextField
+            />{" "}
+            <TextField
               label="Phone Number"
               type="text"
               value={phoneNumber}
