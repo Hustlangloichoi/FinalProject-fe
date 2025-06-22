@@ -19,8 +19,11 @@ function AdminStatsCard({ title, value, icon, color, trend, subtitle }) {
     <Grow in={true} timeout={800}>
       <Card
         sx={{
-          height: "280px", // Fixed height for square shape
-          aspectRatio: "1", // Make it square
+          height: { xs: "240px", sm: "260px", md: "280px" }, // Responsive height
+          width: "100%",
+          minHeight: "200px",
+          maxHeight: "320px",
+          aspectRatio: { xs: "auto", sm: "1", md: "1" }, // Responsive aspect ratio
           background: `linear-gradient(135deg, ${alpha(
             color || theme.palette.primary.main,
             0.1
@@ -60,27 +63,29 @@ function AdminStatsCard({ title, value, icon, color, trend, subtitle }) {
         {" "}
         <CardContent
           sx={{
-            p: 4,
+            p: { xs: 2, sm: 3, md: 4 },
             height: "100%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             textAlign: "center",
+            boxSizing: "border-box",
           }}
         >
+          {" "}
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              mb: 3,
+              mb: { xs: 2, sm: 2.5, md: 3 },
               width: "100%",
             }}
           >
             <Box
               sx={{
-                p: 2.5,
+                p: { xs: 1.5, sm: 2, md: 2.5 },
                 borderRadius: 4,
                 bgcolor: alpha(color || theme.palette.primary.main, 0.15),
                 color: color || theme.palette.primary.main,
@@ -88,9 +93,9 @@ function AdminStatsCard({ title, value, icon, color, trend, subtitle }) {
                 alignItems: "center",
                 justifyContent: "center",
                 transition: "all 0.3s ease",
-                mb: 2,
+                mb: { xs: 1, sm: 1.5, md: 2 },
                 "& .MuiSvgIcon-root": {
-                  fontSize: "2.5rem",
+                  fontSize: { xs: "1.8rem", sm: "2.2rem", md: "2.5rem" },
                 },
                 "&:hover": {
                   transform: "rotate(360deg)",
@@ -99,16 +104,20 @@ function AdminStatsCard({ title, value, icon, color, trend, subtitle }) {
               }}
             >
               {icon}
-            </Box>
+            </Box>{" "}
             <Typography
               variant="h5"
               color="text.secondary"
-              sx={{ fontWeight: 600, fontSize: "1.1rem" }}
+              sx={{
+                fontWeight: 600,
+                fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
+                textAlign: "center",
+                lineHeight: 1.2,
+              }}
             >
               {title}
             </Typography>
           </Box>
-
           <Box
             sx={{
               flexGrow: 1,
@@ -118,30 +127,41 @@ function AdminStatsCard({ title, value, icon, color, trend, subtitle }) {
               alignItems: "center",
             }}
           >
+            {" "}
             <Typography
               variant="h1"
               sx={{
                 fontWeight: 800,
-                mb: 2,
+                mb: { xs: 1, sm: 1.5, md: 2 },
                 color: color || theme.palette.primary.main,
                 lineHeight: 1,
-                fontSize: { xs: "3rem", sm: "3.5rem" },
+                fontSize: {
+                  xs: "2.2rem",
+                  sm: "2.8rem",
+                  md: "3.2rem",
+                  lg: "3.5rem",
+                },
                 background: `linear-gradient(45deg, ${
                   color || theme.palette.primary.main
                 }, ${alpha(color || theme.palette.primary.main, 0.7)})`,
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
+                textAlign: "center",
               }}
             >
               {value}
-            </Typography>
-
+            </Typography>{" "}
             {subtitle && (
               <Typography
                 variant="body1"
                 color="text.secondary"
-                sx={{ fontWeight: 500, textAlign: "center" }}
+                sx={{
+                  fontWeight: 500,
+                  textAlign: "center",
+                  fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
+                  lineHeight: 1.3,
+                }}
               >
                 {subtitle}
               </Typography>

@@ -5,101 +5,117 @@ import EditIcon from "@mui/icons-material/Edit";
 import styled from "styled-components";
 
 const MobileCard = styled(Paper)`
-  padding: 12px;
-  margin-bottom: 12px;
-  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 6px;
   border: 1px solid #e0e0e0;
-  min-height: 120px;
   width: 100%;
   box-sizing: border-box;
 
   @media (max-width: 480px) {
-    padding: 8px;
-    margin-bottom: 8px;
-    min-height: 100px;
+    padding: 6px;
+    margin-bottom: 6px;
   }
 
   @media (max-width: 360px) {
-    padding: 6px;
-    margin-bottom: 6px;
-    min-height: 80px;
+    padding: 4px;
+    margin-bottom: 4px;
   }
 `;
 
 const CardField = styled(Box)`
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: baseline;
   width: 100%;
   box-sizing: border-box;
+  gap: 4px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   @media (max-width: 480px) {
-    margin-bottom: 4px;
+    margin-bottom: 3px;
+    gap: 3px;
   }
 
   @media (max-width: 360px) {
-    margin-bottom: 3px;
+    margin-bottom: 2px;
+    gap: 2px;
   }
 `;
 
 const CardLabel = styled(Typography)`
   font-weight: 600;
   color: #666;
-  font-size: 0.7rem;
-  margin-bottom: 2px;
+  font-size: 0.75rem;
+  margin: 0;
+  padding: 0;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  line-height: 1.2;
+  letter-spacing: 0.3px;
+  line-height: 1.4;
+  min-width: 70px;
+  flex-shrink: 0;
+
+  &:after {
+    content: ":";
+    margin-left: 1px;
+  }
 
   @media (max-width: 480px) {
-    font-size: 0.65rem;
-    margin-bottom: 1px;
+    font-size: 0.7rem;
+    min-width: 60px;
+    letter-spacing: 0.2px;
   }
 
   @media (max-width: 360px) {
-    font-size: 0.6rem;
+    font-size: 0.65rem;
+    min-width: 55px;
+    letter-spacing: 0.1px;
   }
 `;
 
 const CardValue = styled(Typography)`
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #333;
   word-break: break-word;
-  line-height: 1.3;
-  min-height: 18px;
+  line-height: 1.4;
+  margin: 0;
+  padding: 0;
+  flex: 1;
 
   @media (max-width: 480px) {
     font-size: 0.75rem;
-    min-height: 16px;
   }
 
   @media (max-width: 360px) {
     font-size: 0.7rem;
-    min-height: 14px;
   }
 `;
 
 const ActionsContainer = styled(Box)`
-  margin-top: 8px;
-  padding-top: 8px;
+  margin-top: 6px;
+  padding-top: 6px;
   border-top: 1px solid #f0f0f0;
   display: flex;
-  gap: 6px;
+  gap: 4px;
   justify-content: flex-end;
   width: 100%;
   box-sizing: border-box;
 
   @media (max-width: 480px) {
-    gap: 4px;
+    gap: 3px;
     justify-content: center;
-    margin-top: 6px;
-    padding-top: 6px;
+    margin-top: 4px;
+    padding-top: 4px;
   }
 
   @media (max-width: 360px) {
     gap: 2px;
-    margin-top: 4px;
-    padding-top: 4px;
+    margin-top: 3px;
+    padding-top: 3px;
   }
 `;
 
@@ -210,10 +226,10 @@ const MobileCardView = ({
         maxWidth: "100%",
         overflow: "hidden",
         boxSizing: "border-box",
-        padding: "8px",
+        padding: "4px",
         margin: 0,
         "@media (max-width: 480px)": {
-          padding: "4px",
+          padding: "2px",
         },
       }}
     >
@@ -223,15 +239,20 @@ const MobileCardView = ({
 
         return (
           <MobileCard key={item._id || item.id || idx} elevation={2}>
+            {" "}
             {/* Show a title/identifier for each card */}
             {item.name && (
-              <CardField sx={{ mb: 2, pb: 1, borderBottom: "1px solid #eee" }}>
-                <CardValue variant="h6" sx={{ fontWeight: 600, color: "#333" }}>
+              <CardField
+                sx={{ mb: 1, pb: 0.5, borderBottom: "1px solid #eee" }}
+              >
+                <CardValue
+                  variant="h6"
+                  sx={{ fontWeight: 600, color: "#333", fontSize: "0.9rem" }}
+                >
                   {item.name}
                 </CardValue>
               </CardField>
             )}
-
             {columns.map((col, colIdx) => {
               const cellValue = renderCellValue(col, item);
 
@@ -257,7 +278,7 @@ const MobileCardView = ({
               }
               return (
                 <CardField key={colIdx}>
-                  <CardLabel variant="caption">{col.label}</CardLabel>{" "}
+                  <CardLabel variant="caption">{col.label}</CardLabel>
                   <CardValue variant="body2">
                     {/* Handle React elements (like images) with size constraint */}
                     {React.isValidElement(cellValue) ? (
@@ -281,7 +302,6 @@ const MobileCardView = ({
                 </CardField>
               );
             })}
-
             {/* Show actions only if there are any to show */}
             {(customActions.length > 0 || editUrl || deleteUrl) && (
               <ActionsContainer>

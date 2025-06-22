@@ -144,25 +144,39 @@ function AdminOverview() {
           store today.
         </Typography>
       </Box>{" "}
-      {/* Main Stats Grid - 3+2 Layout */}
+      {/* Main Stats Grid - Responsive Layout */}
       <Grid
         container
-        spacing={4}
-        sx={{ maxWidth: "1200px", margin: "0 auto", px: 2 }}
+        spacing={{ xs: 2, sm: 3, md: 4 }}
+        sx={{
+          maxWidth: "1400px",
+          margin: "0 auto",
+          px: { xs: 1, sm: 2, md: 3 },
+          width: "100%",
+        }}
       >
         {statsData.map((stat, index) => (
           <Grid
             item
             xs={12}
             sm={6}
-            md={index < 3 ? 4 : 6}
+            md={4}
+            lg={index < 3 ? 4 : 6}
+            xl={index < 3 ? 4 : 6}
             key={index}
             sx={{
               display: "flex",
               justifyContent: "center",
+              minWidth: 0, // Prevent overflow
             }}
           >
-            <Box sx={{ width: "100%", maxWidth: "300px" }}>
+            <Box
+              sx={{
+                width: "100%",
+                maxWidth: { xs: "100%", sm: "280px", md: "300px", lg: "320px" },
+                minWidth: { xs: "250px", sm: "240px" },
+              }}
+            >
               <AdminStatsCard
                 title={stat.title}
                 value={stat.value}
