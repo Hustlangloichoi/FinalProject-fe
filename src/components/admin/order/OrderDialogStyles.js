@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Box, Typography, Card } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export const DetailSection = styled(Box)`
   margin-bottom: 20px;
