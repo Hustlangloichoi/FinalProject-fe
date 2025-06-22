@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Card,
@@ -11,6 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { ShoppingCart, LocationOn, Phone } from "@mui/icons-material";
+import { validatePhoneNumber, formatPhoneNumber } from "../../utils/phoneValidation";
 
 const OrderFormCustomerInfo = ({
   quantity,
@@ -22,6 +23,20 @@ const OrderFormCustomerInfo = ({
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [phoneError, setPhoneError] = useState("");
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    // Format phone as user types
+    const formattedValue = formatPhoneNumber(value);
+    
+    // Validate phone
+    const validation = validatePhoneNumber(formattedValue);
+    setPhoneError(validation.isValid ? "" : validation.message);
+    
+    // Update parent state
+    setPhoneNumber(formattedValue);
+  };
 
   return (
     <Grid item xs={12} md={6}>
@@ -79,15 +94,16 @@ const OrderFormCustomerInfo = ({
                   </InputAdornment>
                 ),
               }}
-            />
-
-            <TextField
+            />            <TextField
               label="Phone Number"
               type="text"
               value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              onChange={handlePhoneChange}
               fullWidth
               size={isMobile ? "small" : "medium"}
+              error={!!phoneError}
+              helperText={phoneError || "Format: 0901234567 or +84901234567"}
+              placeholder="Enter your phone number (e.g., 0901234567)"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

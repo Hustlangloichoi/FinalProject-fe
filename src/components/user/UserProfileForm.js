@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -10,6 +10,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Close, Save } from "@mui/icons-material";
+import { validatePhoneNumber, formatPhoneNumber, sanitizePhoneNumber } from "../../utils/phoneValidation";
 
 const UserProfileForm = ({
   open,
@@ -18,11 +19,47 @@ const UserProfileForm = ({
   setEditProfile,
   onSave,
 }) => {
+  const [phoneError, setPhoneError] = useState("");
+
   const handleInputChange = (field) => (event) => {
+    let value = event.target.value;
+    
+    // Special handling for phone field
+    if (field === "phone") {
+      // Format phone as user types
+      value = formatPhoneNumber(value);
+      
+      // Validate phone
+      const validation = validatePhoneNumber(value);
+      setPhoneError(validation.isValid ? "" : validation.message);
+    }
+    
     setEditProfile({
       ...editProfile,
-      [field]: event.target.value,
+      [field]: value,
     });
+  };
+
+  const handleSave = () => {
+    // Validate phone before saving
+    if (editProfile.phone) {
+      const validation = validatePhoneNumber(editProfile.phone);
+      if (!validation.isValid) {
+        setPhoneError(validation.message);
+        return;
+      }
+      
+      // Sanitize phone number for backend
+      const sanitizedProfile = {
+        ...editProfile,
+        phone: sanitizePhoneNumber(editProfile.phone)
+      };
+      
+      // Update the profile with sanitized data
+      setEditProfile(sanitizedProfile);
+    }
+    
+    onSave();
   };
 
   return (
@@ -64,14 +101,15 @@ const UserProfileForm = ({
             variant="outlined"
             value={editProfile.email}
             onChange={handleInputChange("email")}
-          />
-          <TextField
+          />          <TextField
             label="Phone"
             fullWidth
             variant="outlined"
             value={editProfile.phone}
             onChange={handleInputChange("phone")}
-            placeholder="Enter your phone number"
+            placeholder="Enter your phone number (e.g., 0901234567)"
+            error={!!phoneError}
+            helperText={phoneError || "Format: 0901234567 or +84901234567"}
           />
           <TextField
             label="Address"
@@ -85,11 +123,15 @@ const UserProfileForm = ({
           />
         </Stack>
       </DialogContent>
-      <DialogActions sx={{ p: 2 }}>
-        <Button onClick={onClose} variant="outlined">
+      <DialogActions sx={{ p: 2 }}>        <Button onClick={onClose} variant="outlined">
           Cancel
         </Button>
-        <Button onClick={onSave} variant="contained" startIcon={<Save />}>
+        <Button 
+          onClick={handleSave} 
+          variant="contained" 
+          startIcon={<Save />}
+          disabled={!!phoneError}
+        >
           Save Changes
         </Button>
       </DialogActions>

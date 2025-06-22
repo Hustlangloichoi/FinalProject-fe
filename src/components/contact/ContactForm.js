@@ -13,10 +13,10 @@ import {
 } from "@mui/material";
 import { Send } from "@mui/icons-material";
 import apiService from "../../app/apiService";
+import { validatePhoneNumber, formatPhoneNumber, sanitizePhoneNumber } from "../../utils/phoneValidation";
 
 function ContactForm() {
-  const theme = useTheme();
-  const [formData, setFormData] = useState({
+  const theme = useTheme();  const [formData, setFormData] = useState({
     name: "",
     email: "",
     phoneNumber: "",
@@ -26,6 +26,7 @@ function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
 
   // Auto-clear success message after 5 seconds
   useEffect(() => {
@@ -36,14 +37,33 @@ function ContactForm() {
       return () => clearTimeout(timer);
     }
   }, [success]);
-
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    
+    // Special handling for phone field
+    if (name === "phoneNumber") {
+      // Format phone as user types
+      const formattedValue = formatPhoneNumber(value);
+      
+      // Validate phone if not empty (since it's optional)
+      if (formattedValue.trim()) {
+        const validation = validatePhoneNumber(formattedValue);
+        setPhoneError(validation.isValid ? "" : validation.message);
+      } else {
+        setPhoneError(""); // Clear error if field is empty (optional field)
+      }
+      
+      setFormData({
+        ...formData,
+        [name]: formattedValue,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -53,11 +73,27 @@ function ContactForm() {
       return;
     }
 
+    // Validate phone if provided (optional field)
+    if (formData.phoneNumber.trim()) {
+      const validation = validatePhoneNumber(formData.phoneNumber);
+      if (!validation.isValid) {
+        setPhoneError(validation.message);
+        setError("Please fix the phone number error before submitting");
+        return;
+      }
+    }
+
     setLoading(true);
     setError("");
 
     try {
-      await apiService.post("/messages", formData);
+      // Sanitize phone number before sending to backend
+      const submitData = {
+        ...formData,
+        phoneNumber: formData.phoneNumber.trim() ? sanitizePhoneNumber(formData.phoneNumber) : ""
+      };
+      
+      await apiService.post("/messages", submitData);
       setSuccess(true);
       setFormData({
         name: "",
@@ -66,6 +102,7 @@ function ContactForm() {
         subject: "",
         message: "",
       });
+      setPhoneError(""); // Clear phone error on success
     } catch (err) {
       setError(
         err.response?.data?.message ||
@@ -130,8 +167,7 @@ function ContactForm() {
                 variant="outlined"
                 disabled={loading}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            </Grid>            <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
                 label="Phone Number (Optional)"
@@ -140,6 +176,9 @@ function ContactForm() {
                 onChange={handleInputChange}
                 variant="outlined"
                 disabled={loading}
+                error={!!phoneError}
+                helperText={phoneError || "Format: 0901234567 or +84901234567"}
+                placeholder="Enter your phone number (optional)"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
