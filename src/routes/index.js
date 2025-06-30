@@ -12,6 +12,10 @@ import useAuth from "../hooks/useAuth";
 import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
 
+/**
+ * Router: defines all application routes and their layouts.
+ * Handles protected routes for admin and user pages using AuthRequire.
+ */
 function Router() {
   const { user } = useAuth();
   return (

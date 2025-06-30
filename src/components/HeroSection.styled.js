@@ -1,3 +1,4 @@
+// HeroSection.styled.js: contains styled-components for the HeroSection UI elements.
 import styled from "styled-components";
 
 export const HeroSectionWrapper = styled.section`

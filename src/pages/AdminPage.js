@@ -1,3 +1,5 @@
+// AdminPage: provides the admin dashboard with navigation and management sections for orders, products, categories, users, and messages.
+// Handles section switching and renders the appropriate management component.
 import React, { useState } from "react";
 import { Box, Typography, Stack, styled, Container, Fade } from "@mui/material";
 import OrderManagement from "../components/admin/OrderManagement";
@@ -194,6 +196,13 @@ const SectionList = styled(Stack)(({ theme }) => ({
 }));
 
 function AdminPage() {
+  /**
+   * AdminPage: dashboard for managing orders, products, categories, users, and messages.
+   * Renders navigation and management components for each admin section.
+   */
+  // Admin page: dashboard for managing orders, products, categories, users, and messages
+  // State: selected section for navigation
+  // UI: renders management components based on selected section
   const [selectedSection, setSelectedSection] = useState("Dashboard Overview");
   const SectionComponent = sectionComponents[selectedSection];
 

@@ -1,3 +1,6 @@
+// AuthContext.js: provides authentication state and actions using React context and reducer.
+// Handles login, logout, and initialization from localStorage.
+
 import { createContext, useReducer, useEffect } from "react";
 
 const initialState = {
@@ -9,6 +12,10 @@ const initialState = {
 const INITIALIZE = "INITIALIZE";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGOUT = "LOGOUT";
+
+/**
+ * Reducer for authentication state
+ */
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -39,7 +46,12 @@ const reducer = (state, action) => {
 
 const AuthContext = createContext({ ...initialState });
 
+/**
+ * AuthProvider component to wrap app and provide auth context
+ */
+
 function AuthProvider({ children }) {
+  // Provides authentication state and actions to the app
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {

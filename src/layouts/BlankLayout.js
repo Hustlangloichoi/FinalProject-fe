@@ -1,3 +1,4 @@
+// BlankLayout: minimal layout with centered logo, outlet for content, and persistent phone button.
 import { Outlet } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Logo from "../components/Logo";

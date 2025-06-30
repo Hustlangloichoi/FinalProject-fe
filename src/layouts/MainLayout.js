@@ -1,3 +1,4 @@
+// MainLayout: wraps all pages with header, footer, and persistent phone button for consistent app structure.
 import { Outlet } from "react-router-dom";
 import { Box, Stack } from "@mui/material";
 import MainFooter from "./MainFooter";

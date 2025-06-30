@@ -20,6 +20,11 @@ const ProfileContainer = styled(Container)(({ theme }) => ({
 }));
 
 const UserPage = () => {
+  // User page: displays and allows editing of user profile, password, and order history
+  // State: profile info, edit dialogs, password change, order list
+  // Side effects: fetch user profile and orders
+  // Handlers: edit profile, change password, view orders
+
   const { user } = useAuth();
   const [profile, setProfile] = useState({
     name: user?.username || "",

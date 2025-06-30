@@ -7,6 +7,7 @@ const LogoBox = styled.div`
   height: 40px;
 `;
 
+// Logo: renders the application's logo, optionally as a link to the homepage.
 function Logo({ disabledLink = false }) {
   const logo = (
     <LogoBox>

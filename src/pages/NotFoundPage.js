@@ -2,6 +2,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { Box, Button, Typography, Container } from "@mui/material";
 
 function NotFoundPage() {
+  // Not found page: displays 404 message and link to home
+  // UI: simple error message and navigation button
   return (
     <Container
       sx={{

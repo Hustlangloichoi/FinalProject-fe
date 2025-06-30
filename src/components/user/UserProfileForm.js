@@ -16,6 +16,11 @@ import {
   sanitizePhoneNumber,
 } from "../../utils/phoneValidation";
 
+/**
+ * UserProfileForm: dialog form for editing user profile information.
+ * Handles phone formatting, validation, and sanitization before saving.
+ * Calls onSave after successful validation and update.
+ */
 const UserProfileForm = ({
   open,
   onClose,

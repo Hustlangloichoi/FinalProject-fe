@@ -1,3 +1,5 @@
+// DetailPage: displays product details, handles order dialog, and order creation for a specific product.
+// Fetches product info by id, manages order form state, and submits orders via API.
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Box, useTheme, useMediaQuery } from "@mui/material";
@@ -11,6 +13,10 @@ import {
   OrderDialog,
 } from "../components/product";
 
+/**
+ * DetailPage component displays detailed information about a product,
+ * allows users to place an order, and handles order creation logic.
+ */
 function DetailPage() {
   const { id } = useParams();
   const theme = useTheme();
@@ -28,7 +34,11 @@ function DetailPage() {
   const [totalPrice, setTotalPrice] = useState(0); // New state for total price
   const [note, setNote] = useState(""); // New state for note
 
+  /**
+   * Fetch product details by id when component mounts or id changes
+   */
   useEffect(() => {
+    // Fetch product details by id when component mounts or id changes
     const fetchProduct = async () => {
       setLoading(true);
       try {
@@ -45,17 +55,31 @@ function DetailPage() {
     fetchProduct();
   }, [id]);
 
+  /**
+   * Recalculate total price whenever product or quantity changes
+   */
   useEffect(() => {
+    // Recalculate total price when product or quantity changes
     if (product) {
       setTotalPrice(product.price * quantity);
     }
   }, [product, quantity]); // Recalculate total price when product or quantity changes
 
+  /**
+   * Calls API to create a new order for this product
+   * @param {Object} orderData - The order details to send to the API
+   * @returns {Promise}
+   */
   const createOrder = async (orderData) => {
+    // Call API to create a new order for this product
     return await apiService.post(`/orders/${id}`, orderData);
   };
 
+  /**
+   * Handles order request: validates input, submits order, and manages dialog state
+   */
   const handleRequestOrder = async () => {
+    // Validate and submit order request
     if (!address || !phoneNumber) {
       alert("Please provide both address and phone number.");
       return;
@@ -74,7 +98,7 @@ function DetailPage() {
             ? "0382050156 Hoang Cong Minh (Momo e-wallet)"
             : paymentMethod === "Mb bank"
             ? "0382050156 Hoang Cong Minh (Mb bank)"
-            : "Cash on Delivery (COD)",
+            : "Cash on Delivery (COD)", // Set payment details based on selected method
       });
       alert("Order placed successfully!");
       setQuoteOpen(false);

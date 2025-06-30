@@ -23,6 +23,10 @@ const defaultValues = {
 };
 
 function LoginModal({ open, onClose }) {
+  // Login modal: handles user login with form validation and API call
+  // State: form fields, validation, authentication
+  // Handlers: submit login, close modal
+
   const auth = useAuth();
   const methods = useForm({
     resolver: yupResolver(LoginSchema),

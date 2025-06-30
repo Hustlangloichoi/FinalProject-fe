@@ -1,6 +1,10 @@
 import React from "react";
 import { Box } from "@mui/material";
 
+/**
+ * ProductImage: displays the main image of a product in a styled box.
+ * Returns null if no image is available.
+ */
 const ProductImage = ({ product }) => {
   if (!product?.image) return null;
 

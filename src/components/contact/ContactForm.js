@@ -20,6 +20,11 @@ import {
 } from "../../utils/phoneValidation";
 
 function ContactForm() {
+  // Contact form component: handles user input, validation, and submit to backend
+  // State: form fields, loading, success, error
+  // Side effects: auto-clear success message
+  // Handlers: input change, form submit
+
   const theme = useTheme();
   const [formData, setFormData] = useState({
     name: "",
@@ -33,8 +38,8 @@ function ContactForm() {
   const [error, setError] = useState("");
   const [phoneError, setPhoneError] = useState("");
 
-  // Auto-clear success message after 5 seconds
   useEffect(() => {
+    // Auto-clear success message after 5 seconds
     if (success) {
       const timer = setTimeout(() => {
         setSuccess(false);
@@ -42,20 +47,19 @@ function ContactForm() {
       return () => clearTimeout(timer);
     }
   }, [success]);
+
   const handleInputChange = (e) => {
+    // Handle input change and phone validation
     const { name, value } = e.target;
 
-    // Special handling for phone field
     if (name === "phoneNumber") {
-      // Format phone as user types
       const formattedValue = formatPhoneNumber(value);
 
-      // Validate phone if not empty (since it's optional)
       if (formattedValue.trim()) {
         const validation = validatePhoneNumber(formattedValue);
         setPhoneError(validation.isValid ? "" : validation.message);
       } else {
-        setPhoneError(""); // Clear error if field is empty (optional field)
+        setPhoneError("");
       }
 
       setFormData({
@@ -70,15 +74,14 @@ function ContactForm() {
     }
   };
   const handleSubmit = async (e) => {
+    // Validate and submit contact form
     e.preventDefault();
 
-    // Client-side validation
     if (formData.message.length < 5) {
       setError("Message must be at least 5 characters long");
       return;
     }
 
-    // Validate phone if provided (optional field)
     if (formData.phoneNumber.trim()) {
       const validation = validatePhoneNumber(formData.phoneNumber);
       if (!validation.isValid) {
@@ -90,17 +93,16 @@ function ContactForm() {
 
     setLoading(true);
     setError("");
+    setSuccess(false);
 
     try {
       // Sanitize phone number before sending to backend
-      const submitData = {
+      const payload = {
         ...formData,
-        phoneNumber: formData.phoneNumber.trim()
-          ? sanitizePhoneNumber(formData.phoneNumber)
-          : "",
+        phoneNumber: sanitizePhoneNumber(formData.phoneNumber),
       };
 
-      await apiService.post("/messages", submitData);
+      await apiService.post("/contact", payload);
       setSuccess(true);
       setFormData({
         name: "",

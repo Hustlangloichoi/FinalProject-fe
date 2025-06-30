@@ -1,3 +1,5 @@
+// ProductFilter component: allows users to filter products by category and price, and clear all filters.
+// Fetches categories from the API and manages filter state using react-hook-form.
 import { FMultiCheckbox, FRadioGroup } from "./form";
 import { useFormContext } from "react-hook-form";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
@@ -22,12 +24,12 @@ export const FILTER_PRICE_OPTIONS = [
 const FilterWrapper = styled.div`
   padding: 8px;
   width: 250px;
-  
+
   @media (max-width: 900px) {
     width: 100%;
     padding: 16px;
   }
-  
+
   @media (max-width: 600px) {
     padding: 12px;
   }
@@ -37,7 +39,7 @@ const SectionTitle = styled.h3`
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0 0 8px 0;
-  
+
   @media (max-width: 600px) {
     font-size: 1.3rem;
   }
@@ -58,12 +60,12 @@ const ClearButton = styled.button`
   transition: background 0.2s, color 0.2s;
   width: 100%;
   justify-content: center;
-  
+
   &:hover {
     background: #1976d2;
     color: #fff;
   }
-  
+
   @media (max-width: 600px) {
     padding: 12px 16px;
     font-size: 0.95rem;
@@ -76,6 +78,7 @@ function ProductFilter({ resetFilter, clearSearch }) {
   const selectedCategories = watch("category") || [];
 
   useEffect(() => {
+    // Fetch categories from the API when the component mounts
     async function fetchCategories() {
       try {
         const res = await apiService.get("/categories");
@@ -92,7 +95,7 @@ function ProductFilter({ resetFilter, clearSearch }) {
     fetchCategories();
   }, []);
 
-  // Custom handler for category selection
+  // Handles changes to the selected categories, ensuring 'All' logic is respected
   const handleCategoryChange = (option) => {
     if (option === "All") {
       setValue("category", ["All"]);

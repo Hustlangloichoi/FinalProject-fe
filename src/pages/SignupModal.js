@@ -11,6 +11,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { FormProvider, FTextField } from "../components/form";
 
+// SignupModal: Modal dialog for user registration with form validation and API call
+
+/**
+ * SignupModal component displays a modal dialog for user registration.
+ * It uses react-hook-form and Yup for form state and validation.
+ * On successful signup, it closes the modal and resets the form.
+ */
 const SignupSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -31,6 +38,10 @@ function SignupModal({ open, onClose }) {
   });
   const { handleSubmit, reset } = methods;
 
+  /**
+   * Handles form submission for user signup.
+   * Calls the register API and manages dialog state.
+   */
   const onSubmit = async (data) => {
     try {
       await import("../app/apiService").then((m) =>

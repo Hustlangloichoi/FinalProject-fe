@@ -1,3 +1,4 @@
+// MainHeader: displays the app's navigation bar, logo, user menu, and login/signup modals. Handles navigation and authentication actions.
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -21,7 +22,7 @@ function MainHeader() {
   const [openSignup, setOpenSignup] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleLogout = () => {
     logout(() => navigate("/"));
@@ -63,11 +64,7 @@ function MainHeader() {
 
   const renderMobileNav = () => (
     <>
-      <IconButton
-        color="inherit"
-        onClick={handleMenuOpen}
-        sx={{ ml: 1 }}
-      >
+      <IconButton color="inherit" onClick={handleMenuOpen} sx={{ ml: 1 }}>
         <MenuIcon />
       </IconButton>
       <Menu
@@ -75,12 +72,12 @@ function MainHeader() {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
+          vertical: "bottom",
+          horizontal: "right",
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: "top",
+          horizontal: "right",
         }}
       >
         {navigationItems.map((item) => (
@@ -115,21 +112,23 @@ function MainHeader() {
           </MenuItem>
         )}
         {isAuthenticated ? (
-          <MenuItem onClick={handleLogout}>
-            Logout
-          </MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         ) : (
           <>
-            <MenuItem onClick={() => {
-              setOpenLogin(true);
-              handleMenuClose();
-            }}>
+            <MenuItem
+              onClick={() => {
+                setOpenLogin(true);
+                handleMenuClose();
+              }}
+            >
               Login
             </MenuItem>
-            <MenuItem onClick={() => {
-              setOpenSignup(true);
-              handleMenuClose();
-            }}>
+            <MenuItem
+              onClick={() => {
+                setOpenSignup(true);
+                handleMenuClose();
+              }}
+            >
               Sign Up
             </MenuItem>
           </>
@@ -143,10 +142,10 @@ function MainHeader() {
       <AppBar position="static">
         <Toolbar
           variant="dense"
-          sx={{ 
-            px: { xs: 1, sm: 2 }, 
-            minHeight: { xs: 56, sm: 64 }, 
-            py: { xs: 1, sm: 1.5 } 
+          sx={{
+            px: { xs: 1, sm: 2 },
+            minHeight: { xs: 56, sm: 64 },
+            py: { xs: 1, sm: 1.5 },
           }}
         >
           <IconButton
@@ -169,24 +168,28 @@ function MainHeader() {
               fontSize: { xs: 18, sm: 22 },
               lineHeight: 1,
               minWidth: { xs: 50, sm: 60 },
-              cursor: 'pointer',
-              display: { xs: 'block', sm: 'block' }
+              cursor: "pointer",
+              display: { xs: "block", sm: "block" },
             }}
           >
             KN
             <br />
-            <span style={{ 
-              fontWeight: 400, 
-              fontSize: isMobile ? 14 : 16 
-            }}>store</span>
+            <span
+              style={{
+                fontWeight: 400,
+                fontSize: isMobile ? 14 : 16,
+              }}
+            >
+              store
+            </span>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          
+
           {/* Desktop Navigation */}
           {!isMobile && (
             <>
               {renderDesktopNav()}
-              
+
               {isAuthenticated ? (
                 <>
                   {user?.role === "admin" && (
@@ -257,13 +260,9 @@ function MainHeader() {
               )}
             </>
           )}
-          
+
           {/* Mobile Navigation */}
-          {isMobile && (
-            <>
-              {renderMobileNav()}
-            </>
-          )}
+          {isMobile && <>{renderMobileNav()}</>}
         </Toolbar>
       </AppBar>
       <LoginModal open={openLogin} onClose={() => setOpenLogin(false)} />

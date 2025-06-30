@@ -1,3 +1,4 @@
+// FSwitch: renders a Material-UI switch integrated with react-hook-form.
 import { useFormContext, Controller } from "react-hook-form";
 import { Switch, FormControlLabel } from "@mui/material";
 

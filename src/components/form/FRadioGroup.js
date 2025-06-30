@@ -1,3 +1,4 @@
+// FRadioGroup: renders a group of radio buttons for single selection in a form, integrated with react-hook-form.
 import { useFormContext, Controller } from "react-hook-form";
 import {
   Radio,

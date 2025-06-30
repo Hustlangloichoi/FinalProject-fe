@@ -1,3 +1,5 @@
+// HomePage: displays the main product list with filter, search, sort, and pagination controls.
+// Fetches products from the API and manages all UI state for the home view.
 import React, { useState, useEffect, useCallback } from "react";
 import {
   Alert,
@@ -26,6 +28,11 @@ import TestimonialSection from "../components/TestimonialSection";
 import Pagination from "@mui/material/Pagination";
 
 function HomePage() {
+  // Home page: displays product list, filter, search, sort, and pagination
+  // State: products, loading, error, filters, pagination
+  // Side effects: fetch products on filter/page change
+  // Handlers: filter, search, sort, pagination
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -53,6 +60,7 @@ function HomePage() {
   const totalPages = Math.ceil(totalProducts / productsPerPage);
 
   useEffect(() => {
+    // Fetch products from backend when filters or page change
     const getProducts = async () => {
       setLoading(true);
       try {
@@ -79,7 +87,7 @@ function HomePage() {
         setTotalProducts(res.data.data.total || 0);
         setError("");
       } catch (error) {
-        setError(error.message);
+        setError("Failed to fetch products");
       }
       setLoading(false);
     };
@@ -116,10 +124,21 @@ function HomePage() {
   );
 
   useEffect(() => {
+    // Reset search when resetSearch state is triggered
     if (resetSearch) {
-      setResetSearch(false); // Reset the flag after clearing
+      reset(defaultValues);
+      setResetSearch(false);
     }
-  }, [resetSearch]);
+  }, [resetSearch, reset]);
+
+  const handleFilterChange = useCallback(
+    (name, value) => {
+      // Update filter form state and trigger search
+      setValue(name, value);
+      setSearchTrigger((t) => t + 1);
+    },
+    [setValue]
+  );
 
   return (
     <>

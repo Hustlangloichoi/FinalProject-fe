@@ -3,6 +3,10 @@ import { Grid, Card, CardContent, Typography, Chip } from "@mui/material";
 import { Receipt } from "@mui/icons-material";
 import { fCurrency } from "../../utils";
 
+/**
+ * OrderSummary: displays a summary of the order including total price and quantity.
+ * Shows product price, quantity, and total in a styled card.
+ */
 const OrderSummary = ({ product, quantity, totalPrice }) => {
   return (
     <Grid item xs={12}>

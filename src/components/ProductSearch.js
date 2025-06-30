@@ -1,3 +1,4 @@
+// ProductSearch: provides a search input with debounce and instant search on Enter or button click.
 import styled from "styled-components";
 import React, { useRef, useState, useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
@@ -34,6 +35,7 @@ function ProductSearch({ value, onChange, onSearch, reset }) {
   const debounceTimerRef = useRef(null);
 
   useEffect(() => {
+    // Reset search value when reset prop changes
     if (reset) {
       setSearchValue("");
     }
@@ -66,8 +68,9 @@ function ProductSearch({ value, onChange, onSearch, reset }) {
         clearTimeout(debounceTimerRef.current);
       }
     };
-  }, [searchValue, onSearch]); // Added onSearch back since it's now wrapped in useCallback
+  }, [searchValue, onSearch]);
 
+  // Handles input changes and calls onChange if provided
   const handleInputChange = (e) => {
     const newValue = e.target.value;
     setSearchValue(newValue);
@@ -77,6 +80,7 @@ function ProductSearch({ value, onChange, onSearch, reset }) {
       onChange(e);
     }
   };
+  // Handles Enter key to trigger search immediately
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault(); // Prevent the page from scrolling to the top
@@ -91,7 +95,7 @@ function ProductSearch({ value, onChange, onSearch, reset }) {
       }
     }
   };
-
+  // Handles search button click
   const handleClick = (e) => {
     e.preventDefault(); // Prevent default form submission behavior
 

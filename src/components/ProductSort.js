@@ -1,3 +1,4 @@
+// ProductSort component: renders a select dropdown for sorting products by various options.
 import styled from "styled-components";
 import React from "react";
 
@@ -13,6 +14,7 @@ const Select = styled.select`
 `;
 
 function ProductSort({ value, onChange, options }) {
+  // Renders a select element with provided sorting options
   return (
     <SortWrapper>
       <Select value={value} onChange={onChange}>

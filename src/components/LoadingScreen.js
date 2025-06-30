@@ -12,6 +12,7 @@ const Wrapper = styled.div`
 `;
 
 function LoadingScreen() {
+  // LoadingScreen: displays a loading spinner or animation while content is being loaded.
   return (
     <Wrapper>
       <CircularProgress />

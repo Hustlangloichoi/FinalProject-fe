@@ -8,6 +8,9 @@ import {
 } from "../components/contact";
 
 function ContactPage() {
+  // Contact page: displays contact info, form, and floating action button
+  // UI: hero, info, form, and floating button sections
+
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh", py: 4 }}>
       <Container maxWidth="lg">

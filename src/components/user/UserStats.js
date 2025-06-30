@@ -17,6 +17,10 @@ const StatsBox = styled(Box)(({ theme }) => ({
   minHeight: "120px",
 }));
 
+/**
+ * UserStats: displays user order statistics including total, completed, and pending orders.
+ * Accepts an array of orders and calculates stats for display.
+ */
 const UserStats = ({ orders = [] }) => {
   const safeOrders = Array.isArray(orders) ? orders : [];
   const totalOrders = safeOrders.length;

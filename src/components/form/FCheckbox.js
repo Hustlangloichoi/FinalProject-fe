@@ -1,3 +1,4 @@
+// FCheckbox: renders a single checkbox integrated with react-hook-form.
 import { useFormContext, Controller } from "react-hook-form";
 import { Checkbox, FormControlLabel } from "@mui/material";
 

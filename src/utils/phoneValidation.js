@@ -1,43 +1,48 @@
-// Phone validation utilities
-export const phoneRegex = {
-  // Vietnam phone format: +84xxxxxxxxx hoặc 0xxxxxxxxx
-  vietnam: /^(\+84|84|0)([3|5|7|8|9])\d{8}$/,
+// phoneValidation.js: provides regex patterns and utility functions for validating and formatting phone numbers.
+// - phoneRegex: regex patterns for Vietnam, international, and basic phone numbers
+// - formatPhoneNumber: formats a phone number string for display
+// - validatePhoneNumber: checks if a phone number is valid and returns a result object
+// - sanitizePhoneNumber: removes spaces from a phone number string
 
-  // International format: +country_code + number
+export const phoneRegex = {
+  vietnam: /^(\+84|84|0)([3|5|7|8|9])\d{8}$/,
   international: /^\+?[1-9]\d{1,14}$/,
-  // Loose format for basic validation
   basic: /^[+]?[0-9\s\-()]{8,15}$/,
 };
 
+/**
+ * Formats the given phone number string for display.
+ * @param {string} value - The phone number string to format.
+ * @returns {string} - The formatted phone number string.
+ */
 export const formatPhoneNumber = (value) => {
-  // Remove all non-numeric characters except +
   const cleaned = value.replace(/[^\d+]/g, "");
 
-  // Auto-format Vietnam numbers
   if (cleaned.startsWith("0") && cleaned.length <= 11) {
-    // Format: 0xxx xxx xxxx
     return cleaned.replace(/(\d{4})(\d{3})(\d{4})/, "$1 $2 $3");
   } else if (cleaned.startsWith("+84") && cleaned.length <= 13) {
-    // Format: +84 xxx xxx xxxx
     return cleaned.replace(/(\+84)(\d{3})(\d{3})(\d{4})/, "$1 $2 $3 $4");
   }
 
   return cleaned;
 };
 
+/**
+ * Validates the given phone number and returns an object with the validation result.
+ * @param {string} phone - The phone number to validate.
+ * @returns {{ isValid: boolean, message: string }} - The validation result object.
+ */
 export const validatePhoneNumber = (phone) => {
   if (!phone || phone.trim() === "") {
-    return { isValid: true, message: "" }; // Optional field
+    return { isValid: true, message: "" };
   }
 
   const cleaned = phone.replace(/\s/g, "");
 
-  // Check Vietnam format first
   if (phoneRegex.vietnam.test(cleaned)) {
     return { isValid: true, message: "Valid phone number" };
   }
 
-  // Check international format
   if (phoneRegex.international.test(cleaned)) {
     return { isValid: true, message: "Valid international number" };
   }
@@ -49,7 +54,11 @@ export const validatePhoneNumber = (phone) => {
   };
 };
 
+/**
+ * Removes spaces from the given phone number string.
+ * @param {string} phone - The phone number string to sanitize.
+ * @returns {string} - The sanitized phone number string.
+ */
 export const sanitizePhoneNumber = (phone) => {
-  // Remove spaces and format for backend
   return phone.replace(/\s/g, "");
 };

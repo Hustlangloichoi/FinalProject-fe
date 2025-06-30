@@ -23,6 +23,11 @@ const GridItem = styled.div`
   }
 `;
 
+/**
+ * ProductList: displays a list/grid of product cards, handling loading and empty states.
+ * Accepts products, loading, and error props.
+ */
+
 function ProductList({ products, onResetFilters }) {
   return (
     <Grid>

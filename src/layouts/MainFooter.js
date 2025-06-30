@@ -1,9 +1,12 @@
+// MainFooter: displays about info, customer service, categories, and contact details in a responsive footer.
 import React from "react";
 import { Box, Grid, Typography, useTheme } from "@mui/material";
 
 function MainFooter() {
+  // Main footer: displays about info, customer service, and contact details
+  // UI: responsive grid with multiple sections
   const theme = useTheme();
-  
+
   return (
     <Box
       component="footer"

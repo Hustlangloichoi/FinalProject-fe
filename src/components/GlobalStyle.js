@@ -1,3 +1,4 @@
+// GlobalStyle: injects global CSS styles for the application using styled-components.
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`

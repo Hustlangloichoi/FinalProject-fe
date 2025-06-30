@@ -9,6 +9,9 @@ import {
 } from "../components/about";
 
 function AboutPage() {
+  // About page: displays information about the company, features, and stats
+  // UI: hero, stats, features, content, and sidebar sections
+
   return (
     <Box sx={{ bgcolor: "background.default", minHeight: "100vh", py: 4 }}>
       <Container maxWidth="lg">

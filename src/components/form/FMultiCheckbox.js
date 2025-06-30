@@ -1,3 +1,4 @@
+// FMultiCheckbox: renders a group of checkboxes for multiple selection in a form, integrated with react-hook-form.
 import { useFormContext, Controller } from "react-hook-form";
 import { Checkbox, FormGroup, FormControlLabel } from "@mui/material";
 

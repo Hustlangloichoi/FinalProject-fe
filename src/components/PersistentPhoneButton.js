@@ -3,6 +3,8 @@ import { Fab, Tooltip, Zoom } from "@mui/material";
 import { Phone } from "@mui/icons-material";
 import { useLocation } from "react-router-dom";
 
+// PersistentPhoneButton: renders a floating button for quick phone contact, visible on all pages.
+// UI: fixed position, hidden on contact page
 function PersistentPhoneButton() {
   const location = useLocation();
 

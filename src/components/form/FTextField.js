@@ -1,3 +1,4 @@
+// FTextField: renders a Material-UI text field integrated with react-hook-form, including error display.
 import { useFormContext, Controller } from "react-hook-form";
 import { TextField } from "@mui/material";
 

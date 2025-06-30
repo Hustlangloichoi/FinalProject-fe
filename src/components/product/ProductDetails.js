@@ -11,6 +11,10 @@ import {
 } from "@mui/material";
 import { fCurrency } from "../../utils";
 
+/**
+ * ProductDetails: displays detailed information about a product, including name, description, and price.
+ * Shows an order button for non-admin users and prompts login if not authenticated.
+ */
 const ProductDetails = ({ product, user, isAuthenticated, onOrderClick }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
